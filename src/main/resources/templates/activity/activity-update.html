@@ -79,6 +79,9 @@
                         <label for="activityName">活动名称</label>
                         <input name="activityName" type="text" class="form-control" id="activityName" th:value="${activity.activityName}"/>
                       </div>
+
+
+                      <!-- TODO:此处应该改为选择框 -->
                       <div class="form-group">
                         <label for="activitySponsorName[]">活动主办方</label>
                         <div class="form-group" th:each="mainName:${activity.activitySponsorName}">
