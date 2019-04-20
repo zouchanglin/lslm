@@ -1,5 +1,7 @@
 package lishan.live.lslm.service.impl;
 
+import lishan.live.lslm.convert.Activity2ActivityDTO;
+import lishan.live.lslm.dto.ActivityInfoDTO;
 import lishan.live.lslm.entity.ActivityInfo;
 import lishan.live.lslm.repository.ActivityInfoRepository;
 import lishan.live.lslm.service.ActivityService;
@@ -60,5 +62,15 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public void deleteActivityInfo(Integer activityId) {
         activityInfoRepository.deleteById(activityId);
+    }
+
+    @Override
+    public List<ActivityInfoDTO> findAllActivityInfoDTO() {
+        return Activity2ActivityDTO.convert(activityInfoRepository.findAll());
+    }
+
+    @Override
+    public List<ActivityInfoDTO> findAllActivityInfoDTONameLike(String activityName) {
+        return Activity2ActivityDTO.convert(activityInfoRepository.findByActivityNameLike("%" + activityName + "%"));
     }
 }

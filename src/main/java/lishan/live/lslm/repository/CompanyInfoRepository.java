@@ -21,4 +21,5 @@ public interface CompanyInfoRepository extends JpaRepository<CompanyInfo, String
     List<CompanyInfo> findByCompanyStatus(Integer productStatus);
 
     List<CompanyInfo> findByCompanyNameLike(String companyName);
+
 }

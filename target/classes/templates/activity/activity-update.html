@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" th:href="@{/img/favicon.ico}">
+
+    <title>仪表盘 Template for Bootstrap</title>
+    <script th:src="@{/js/jquery.js}"></script>
+    <script th:src="@{/js/bootstrap.js}"></script>
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/dashboard.css}" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">后台管理系统</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">仪表盘</a></li>
+            <li><a href="#">设置</a></li>
+            <li><a href="#">配置</a></li>
+            <li><a href="#">帮助</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/admin/index">总览 <span class="sr-only">(current)</span></a></li>
+            <li><a href="/admin/company/show">企业管理</a></li>
+            <li class="active"><a href="/admin/activity/show">活动管理</a></li>
+            <li><a href="#">用户管理</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+            <li><a href="">More navigation</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="">Nav item again</a></li>
+            <li><a href="">One more nav</a></li>
+            <li><a href="">Another nav item</a></li>
+          </ul>
+        </div>
+          <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+            <div class="container">
+              <div class="row clearfix">
+                <div class="col-md-12 column">
+                  <div class="col-md-8 column">
+                    <form role="form" method="post" action="/admin/activity/update-info">
+                      <!-- 隐藏此标签 -->
+                      <input name="activityId" type="hidden" class="form-control" id="activityId" th:value="${activity.activityId}"/>
+                      <div class="form-group">
+                        <label for="activityName">活动名称</label>
+                        <input name="activityName" type="text" class="form-control" id="activityName" th:value="${activity.activityName}"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activitySponsorName[]">活动主办方</label>
+                        <div class="form-group" th:each="mainName:${activity.activitySponsorName}">
+                          <input name="activitySponsorName[0]" type="text" class="form-control" id="activitySponsorName[]" th:value="${mainName}"/>
+                        </div>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityUnderName[]">活动承(协)办方</label>
+                        <div class="form-group" th:each="otherName:${activity.activityUnderName}">
+                          <input name="activityUnderName[0]" type="text" class="form-control" id="activityUnderName[]" th:value="${otherName}"/>
+                        </div>
+                      </div>
+
+
+
+                      <div class="form-group">
+                        <label for="activityAddress">活动地点</label>
+                        <input name="activityAddress" type="text" class="form-control" id="activityAddress" th:value="${activity.activityAddress}"/>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityStart">活动开始时间</label><input name="activityStart" type="date"
+                        class="form-control" id="activityStart" th:value="${#dates.format(activity.activityStart, 'yyyy-MM-dd')}"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activityEnd">活动结束时间</label><input name="activityEnd" type="date" class="form-control" id="activityEnd" th:value="${#dates.format(activity.activityEnd, 'yyyy-MM-dd')}"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activityApply">报名开始时间</label><input name="activityApply" type="date"
+                                                                        class="form-control" id="activityApply" th:value="${#dates.format(activity.activityApply, 'yyyy-MM-dd')}"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activityUnapply">报名结束时间</label><input name="activityUnapply" type="date" class="form-control" id="activityUnapply" th:value="${#dates.format(activity.activityUnapply, 'yyyy-MM-dd')}"/>
+                      </div>
+
+
+                      <div class="form-group">
+                        <label for="activityMaxpeople">参加人数限制</label>
+                        <input name="activityMaxpeople" type="number" class="form-control" id="activityMaxpeople" th:value="${activity.activityMaxpeople}"/>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityMode">活动类型</label>
+                        <input name="activityMode" type="number" class="form-control" id="activityMode" th:value="${activity.activityMode}"/>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityGeneralize">推广力度</label>
+                        <input name="activityGeneralize" type="number" class="form-control" id="activityGeneralize" th:value="${activity.activityGeneralize}"/>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityLink">活动链接</label>
+                        <input name="activityLink" type="text" class="form-control" id="activityLink" th:value="${activity.activityLink}"/>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityAbstract">活动简述</label>
+                        <textarea rows="5" cols="24" class="form-control" name="activityAbstract" id="activityAbstract" th:text="${activity.activityAbstract}">默认出现文本</textarea>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityLogo">宣传照片</label>
+                        <img th:src="${activity.activityLogo}" class="img-rounded" alt="无图片">
+                        <input name="activityLogo" type="text" class="form-control" id="activityLogo" th:value="${activity.activityLogo}"/>
+                      </div>
+
+                      <div class="form-group">
+                        <label for="activityAudit">审核情况</label>
+                        <input name="activityAudit" type="number" class="form-control" id="activityAudit" th:value="${activity.activityAudit}"/>
+                      </div>
+
+                      <div class="checkbox">
+                        <!--<label><input type="checkbox" />Check me out</label>-->
+                      </div> <button type="submit" class="btn btn-default">确认修改</button>
+                    </form>
+                  </div>
+                  <div class="col-md-4 column">
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- Bootstrap core JavaScript -->
+  </body>
+</html>
