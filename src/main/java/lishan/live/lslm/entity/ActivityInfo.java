@@ -36,12 +36,12 @@ public class ActivityInfo {
     private String activityName;
 
     /**
-     * 主办方公司Id#主办方公司Id
+     * 主办方公司Id
      */
     private String activitySponsor;
 
     /**
-     * 承办方或者协办方Id#承办方或者协办方Id
+     * 承办方或者协办方Id
      */
     private String activityUndertake;
 
@@ -53,26 +53,25 @@ public class ActivityInfo {
     /*
      * 活动开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date activityStart;
 
     /**
      * 活动结束时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date activityEnd;
 
     /**
      * 报名开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date activityApply;
 
     /**
      * 结束报名时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
     private Date activityUnapply;
 
     /**

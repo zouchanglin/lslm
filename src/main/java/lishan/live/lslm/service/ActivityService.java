@@ -1,8 +1,6 @@
 package lishan.live.lslm.service;
 
-import lishan.live.lslm.dto.ActivityInfoDTO;
 import lishan.live.lslm.entity.ActivityInfo;
-import lishan.live.lslm.entity.CompanyInfo;
 
 import java.util.List;
 
@@ -25,9 +23,4 @@ public interface ActivityService {
     List<ActivityInfo> findAllActivityInfoNameLike(String activityName);
 
     void deleteActivityInfo(Integer activityId);
-
-    List<ActivityInfoDTO> findAllActivityInfoDTO();
-
-    List<ActivityInfoDTO> findAllActivityInfoDTONameLike(String activityName);
-
 }

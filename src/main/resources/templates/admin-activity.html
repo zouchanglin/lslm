@@ -154,13 +154,13 @@
                 <tbody>
                 <tr th:each="activity: ${activities}">
                   <td th:text="${activity.activityName}">1,001</td>
-                  <td th:text="${activity.activitySponsorName}"></td>
-                  <td th:text="${activity.activityUnderName}">1,001</td>
+                  <td th:text="${activity.activitySponsor}">1,001</td>
+                  <td th:text="${activity.activityUndertake}">1,001</td>
                   <td th:text="${#dates.format(activity.activityStart, 'yyyy-MM-dd HH:mm')}">1,001</td>
                   <td th:text="${activity.activityAddress}">1,001</td>
                   <td>
                     <p th:if="${activity.activityAudit} eq 0" th:text="未审核"></p>
-                    <p th:if="${activity.activityAudit} eq 1" th:text="审核通过"></p>
+                    <p th:if="${activity.activityAudit} eq 1" th:text="已通过"></p>
                     <p th:if="${activity.activityAudit} eq 2" th:text="未通过"></p>
                   </td>
                   <td><div class="btn-group">

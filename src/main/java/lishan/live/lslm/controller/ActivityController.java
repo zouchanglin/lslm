@@ -1,7 +1,5 @@
 package lishan.live.lslm.controller;
 
-import lishan.live.lslm.convert.Activity2ActivityDTO;
-import lishan.live.lslm.dto.ActivityInfoDTO;
 import lishan.live.lslm.entity.ActivityInfo;
 import lishan.live.lslm.enums.ResultEnum;
 import lishan.live.lslm.exception.ActivityException;
@@ -39,11 +37,11 @@ public class ActivityController {
     @GetMapping("/show")
     public String showTableCompany(Map<String, Object> map,
         @RequestParam(value = "activityName", required = false) String activityName){
-        List<ActivityInfoDTO> activities;
+        List<ActivityInfo> activities;
         if(activityName != null){
-            activities = activityService.findAllActivityInfoDTONameLike(activityName);
+            activities = activityService.findAllActivityInfoNameLike(activityName);
         }else{
-            activities = activityService.findAllActivityInfoDTO();
+            activities = activityService.findAllActivityInfo();
         }
         map.put("activities", activities);
         return "admin-activity";
@@ -52,8 +50,7 @@ public class ActivityController {
     @GetMapping("/update")
     public String updateActivityInfo(@RequestParam(value = "activityId")Integer activityId,
                                     Map<String, Object> map){
-        ActivityInfoDTO activityInfoDTO = Activity2ActivityDTO.convert(activityService.findActivityInfoById(activityId));
-
+        ActivityInfo activityInfoDTO = activityService.findActivityInfoById(activityId);
         if(!activityId.equals(activityInfoDTO.getActivityId())){
             //如果公司信息不存在就抛出异常，因为这个是修改的接口
             throw new ActivityException(ResultEnum.ENTITY_NOT_EXIST);
@@ -62,9 +59,8 @@ public class ActivityController {
         return "activity/activity-update";
     }
 
-    //TODO 修改
     @RequestMapping("/update-info")
-    public String updateActivityInfo(@ModelAttribute ActivityInfoDTO activityInfo){
+    public String updateActivityInfo(@ModelAttribute ActivityInfo activityInfo){
         if(activityInfo == null) return "error";
         log.info("【页面传回ActivityInfo】{}", activityInfo);
         //收到修改后的数据

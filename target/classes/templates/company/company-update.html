@@ -96,6 +96,11 @@
                       </div>
 
                       <div class="form-group">
+                        <label for="companyStatus">注册状态</label>
+                        <input name="companyStatus" type="number" class="form-control" id="companyStatus" th:value="${company.companyStatus}"/>
+                      </div>
+
+                      <div class="form-group">
                         <label for="companyRegister">注册机关单位</label><input name="companyRegister" type="text" class="form-control" id="companyRegister" th:value="${company.companyRegister}"/>
                       </div>
                       <div class="form-group">

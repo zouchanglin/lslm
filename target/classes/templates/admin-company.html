@@ -158,7 +158,7 @@
                 <td th:text="${#dates.format(company.companyRegdate, 'yyyy-MM-dd')}">1,001</td>
                 <td>
                   <p th:if="${company.companyStatus} eq 0" th:text="未审核"></p>
-                  <p th:if="${company.companyStatus} eq 1" th:text="审核通过"></p>
+                  <p th:if="${company.companyStatus} eq 1" th:text="已通过"></p>
                   <p th:if="${company.companyStatus} eq 2" th:text="未通过"></p>
                 </td>
                 <td><div class="btn-group">
