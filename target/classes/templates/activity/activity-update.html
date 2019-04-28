@@ -97,19 +97,22 @@
 
                       <div class="form-group">
                         <label for="activityStart">活动开始时间</label><input name="activityStart" type="datetime-local"
-                        class="form-control" id="activityStart" th:value="${#dates.format(activity.activityStart, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityStart, 'HH:mm:ss')}"/>
+                        class="form-control" id="activityStart" th:value="${#dates.format(activity.activityStart, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityStart, 'HH:mm')}"/>
                       </div>
                       <div class="form-group">
-                        <label for="activityEnd">活动结束时间</label><input name="activityEnd" type="datetime-local" class="form-control" id="activityEnd" th:value="${#dates.format(activity.activityEnd, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityEnd, 'HH:mm:ss')}"/>
+                        <label for="activityEnd">活动结束时间</label>
+                        <input name="activityEnd" type="datetime-local" class="form-control" id="activityEnd"
+                        th:value="${#dates.format(activity.activityEnd, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityEnd, 'HH:mm')}"/>
                       </div>
                       <div class="form-group">
-                        <label for="activityApply">报名开始时间</label><input name="activityApply" type="datetime-local"
-                                                                        class="form-control" id="activityApply"
-                                                                        th:value="${#dates.format(activity.activityApply, 'yyyy-MM-dd')}+'T'
-                                                                        +${#dates.format(activity.activityApply, 'HH:mm:ss')}"/>
+                        <label for="activityApply">报名开始时间</label>
+                        <input name="activityApply" type="datetime-local" class="form-control" id="activityApply"
+                        th:value="${#dates.format(activity.activityApply, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityApply, 'HH:mm')}"/>
                       </div>
                       <div class="form-group">
-                        <label for="activityUnapply">报名结束时间</label><input name="activityUnapply" type="datetime-local" class="form-control" id="activityUnapply" th:value="${#dates.format(activity.activityUnapply, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityUnapply, 'HH:mm:ss')}"/>
+                        <label for="activityUnapply">报名结束时间</label>
+                        <input name="activityUnapply" type="datetime-local"class="form-control" id="activityUnapply"
+                        th:value="${#dates.format(activity.activityUnapply, 'yyyy-MM-dd')}+'T'+${#dates.format(activity.activityUnapply, 'HH:mm')}"/>
                       </div>
 
                       <div class="form-group">

@@ -53,25 +53,25 @@ public class ActivityInfo {
     /*
      * 活动开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date activityStart;
 
     /**
      * 活动结束时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date activityEnd;
 
     /**
      * 报名开始时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date activityApply;
 
     /**
      * 结束报名时间
      */
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private Date activityUnapply;
 
     /**

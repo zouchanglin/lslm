@@ -64,8 +64,8 @@ public class ActivityController {
         if(activityInfo == null) return "error";
         log.info("【页面传回ActivityInfo】{}", activityInfo);
         //收到修改后的数据
-        //ActivityInfo saveRet = activityService.saveActivityInfo(activityInfo);
-        ActivityInfo saveRet = new ActivityInfo();
+        ActivityInfo saveRet = activityService.saveActivityInfo(activityInfo);
+        //ActivityInfo saveRet = new ActivityInfo();
         return saveRet != null ? "success":"error";
     }
 
