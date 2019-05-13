@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,7 +52,7 @@
             <li><a href="/admin/index">总览 <span class="sr-only">(current)</span></a></li>
             <li class="active"><a href="/admin/company/show">企业管理</a></li>
             <li><a href="/admin/activity/show">活动管理</a></li>
-            <li><a href="#">用户管理</a></li>
+            <li><a href="/admin/user/show">用户管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="">Nav item again</a></li>
@@ -72,73 +72,91 @@
               <div class="row clearfix">
                 <div class="col-md-12 column">
                   <div class="col-md-8 column">
-                    <form role="form" method="post" action="/admin/company/add">
+                    <form role="form" method="post" action="/admin/activity/add">
                       <div class="form-group">
-                        <label for="companyId">统一社会信用码</label><input name="companyId" type="text" class="form-control" id="companyId"/>
+                        <label for="activityName">活动名称</label>
+                        <input name="activityName" type="text" class="form-control" id="activityName"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyName">企业名称</label><input name="companyName" type="text" class="form-control" id="companyName"/>
+                        <label for="activitySponsor">活动主办方</label>
+                        <input name="activitySponsor" type="text" class="form-control" id="activitySponsor"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyLogo">企业Logo</label>
-                        <img class="img-rounded" alt="无图片">
-                        <input name="companyLogo" type="text" class="form-control" id="companyLogo"/>
+                        <label for="activityUndertake">活动承办方</label>
+                        <input name="activityUndertake" type="text" class="form-control" id="activityUndertake"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyDescribe">业务描述</label>
-                        <textarea rows="5" cols="24" class="form-control" name="companyDescribe" id="companyDescribe">企业业务描述，企业简介之类的...</textarea>
+                        <label for="activityAddress">活动地点</label>
+                        <input name="activityAddress" type="text" class="form-control" id="activityAddress"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyLicense">企业营业执照</label>
-                        <img class="img-rounded" alt="无图片">
-                        <input name="companyLicense" type="text" class="form-control" id="companyLicense"/>
+                        <label for="activityStart">活动开始时间</label>
+                        <input name="activityStart" type="datetime-local" class="form-control" id="activityStart"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activityEnd">活动结束时间</label>
+                        <input name="activityEnd" type="datetime-local" class="form-control" id="activityEnd"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activityApply">报名开始时间</label>
+                        <input name="activityApply" type="datetime-local" class="form-control" id="activityApply"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="activityUnapply">报名结束时间</label>
+                        <input name="activityUnapply" type="datetime-local"class="form-control" id="activityUnapply" />
                       </div>
 
                       <div class="form-group">
-                        <label for="companyStatus">注册状态</label>
-                        <input name="companyStatus" type="number" class="form-control" id="companyStatus"/>
+                        <label for="activityMaxpeople">参加人数限制</label>
+                        <input name="activityMaxpeople" type="number" class="form-control" id="activityMaxpeople"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyRegister">注册机关单位</label><input name="companyRegister" type="text" class="form-control" id="companyRegister"/>
+                        <label for="activityMode">活动类型</label>
+                        <input name="activityMode" type="number" class="form-control" id="activityMode" />
                       </div>
+
                       <div class="form-group">
-                        <label for="companyManger">法人姓名</label><input  name="companyManger" type="text" class="form-control" id="companyManger"/>
+                        <label for="activityGeneralize">推广力度</label>
+                        <input name="activityGeneralize" type="number" class="form-control" id="activityGeneralize" />
                       </div>
+
                       <div class="form-group">
-                        <label for="companyPhone">联系方式</label><input name="companyPhone" type="text" class="form-control" id="companyPhone"/>
+                        <label for="activityLink">活动链接</label>
+                        <input name="activityLink" type="text" class="form-control" id="activityLink"/>
                       </div>
+
                       <div class="form-group">
-                        <label for="companyIdcard">身份证号码</label><input name="companyIdcard" type="text" class="form-control" id="companyIdcard"/>
+                        <label for="activityAbstract">活动简述</label>
+                        <textarea rows="5" cols="24" class="form-control" name="activityAbstract" id="activityAbstract" >默认出现文本</textarea>
                       </div>
+
                       <div class="form-group">
-                        <label for="companyRegdate">起始注册时间</label><input name="companyRegdate" type="date"
-                        class="form-control" id="companyRegdate"/>
+                        <label for="activityLogo">宣传照片</label>
+                        <img th:src="@{/img/activity.jpg}" class="img-rounded" alt="无图片">
+                        <input name="activityLogo" type="text" class="form-control" id="activityLogo"/>
                       </div>
+
                       <div class="form-group">
-                        <label for="companyUnregdate">注册到期时间</label><input name="companyUnregdate" type="date" class="form-control" id="companyUnregdate"/>
+                        <label for="activityAudit">审核情况</label>
+                        <input name="activityAudit" type="number" class="form-control" id="activityAudit"/>
                       </div>
+
                       <div class="checkbox">
-                        <!--<label><input type="checkbox" />Check me out</label>-->
-                      </div> <button type="submit" class="btn btn-default">确认添加</button>
+                      </div> <button type="submit" class="btn btn-default">确认新增</button>
                     </form>
                   </div>
                   <div class="col-md-4 column">
                   </div>
-
                 </div>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>
-
-    <!-- Bootstrap core JavaScript -->
   </body>
 </html>

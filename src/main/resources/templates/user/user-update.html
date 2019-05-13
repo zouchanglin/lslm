@@ -50,9 +50,9 @@
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="/admin/index">总览 <span class="sr-only">(current)</span></a></li>
-            <li class="active"><a href="/admin/company/show">企业管理</a></li>
+            <li><a href="/admin/company/show">企业管理</a></li>
             <li><a href="/admin/activity/show">活动管理</a></li>
-            <li><a href="/admin/user/show">用户管理</a></li>
+            <li class="active"><a href="/admin/user/show">用户管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="">Nav item again</a></li>
@@ -72,56 +72,49 @@
               <div class="row clearfix">
                 <div class="col-md-12 column">
                   <div class="col-md-8 column">
-                    <form role="form" method="post" action="/admin/company/update-info">
-                      <input name="companyId" type="hidden" class="form-control" id="companyId" th:value="${company.companyId}"/>
+                    <form role="form" method="post" action="/admin/user/update-info">
+                      <!-- 隐藏此标签 -->
+                      <input name="userOpenid" type="hidden" class="form-control" id="userOpenid" th:value="${userInfo.userOpenid}"/>
                       <div class="form-group">
-                        <label for="companyName">企业名称</label><input name="companyName" type="text" class="form-control" id="companyName" th:value="${company.companyName}"/>
+                        <label for="userName">用户名</label>
+                        <input name="userName" type="text" class="form-control" id="userName" th:value="${userInfo.userName}"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyLogo">企业Logo</label>
-                        <img th:src="${company.companyLogo}" class="img-rounded" alt="无图片">
-                        <input name="companyLogo" type="text" class="form-control" id="companyLogo" th:value="${company.companyLogo}"/>
+                        <label for="userAddress">用户地址</label>
+                        <input name="userAddress" type="text" class="form-control" id="userAddress" th:value="${userInfo.userAddress}"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyDescribe">业务描述</label>
-                        <textarea rows="5" cols="24" class="form-control" name="companyDescribe" id="companyDescribe" th:text="${company.companyDescribe}">默认出现文本</textarea>
+                        <label for="userSchool">用户学校</label>
+                        <input name="userSchool" type="text" class="form-control" id="userSchool" th:value="${userInfo.userSchool}"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyLicense">企业营业执照</label>
-                        <img th:src="${company.companyLicense}" class="img-rounded" alt="无图片">
-                        <input name="companyLicense" type="text" class="form-control" id="companyLicense" th:value="${company.companyLicense}"/>
+                        <label for="userPhone">联系电话</label>
+                        <input name="userPhone" type="number" class="form-control" id="userPhone" th:value="${userInfo.userPhone}"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyStatus">注册状态</label>
-                        <input name="companyStatus" type="number" class="form-control" id="companyStatus" th:value="${company.companyStatus}"/>
+                        <label for="userType">用户类型</label><input name="userType" type="number"
+                        class="form-control" id="userType" th:value="${userInfo.userType}"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="userRegdate">注册时间</label>
+                        <input name="userRegdate" type="date" class="form-control" id="userRegdate"
+                        th:value="${#dates.format(userInfo.userRegdate, 'yyyy-MM-dd')}"/>
+                      </div>
+                      <div class="form-group">
+                        <label for="userIntegral">积分</label>
+                        <input name="userIntegral" type="number" class="form-control" id="userIntegral"
+                        th:value="${userInfo.userIntegral}"/>
                       </div>
 
                       <div class="form-group">
-                        <label for="companyRegister">注册机关单位</label><input name="companyRegister" type="text" class="form-control" id="companyRegister" th:value="${company.companyRegister}"/>
+                        <label for="userOther">备注</label>
+                        <textarea rows="5" cols="24" class="form-control" name="userOther" id="userOther" th:text="${userInfo.userOther}">默认出现文本</textarea>
                       </div>
-                      <div class="form-group">
-                        <label for="companyManger">法人姓名</label><input  name="companyManger" type="text" class="form-control" id="companyManger" th:value="${company.companyManger}"/>
-                      </div>
-                      <div class="form-group">
-                        <label for="companyPhone">联系方式</label><input name="companyPhone" type="text" class="form-control" id="companyPhone" th:value="${company.companyPhone}"/>
-                      </div>
-                      <div class="form-group">
-                        <label for="companyIdcard">身份证号码</label><input name="companyIdcard" type="text" class="form-control" id="companyIdcard" th:value="${company.companyIdcard}"/>
-                      </div>
-                      <div class="form-group">
-                        <label for="companyRegdate">起始注册时间</label><input name="companyRegdate" type="date"
-                        class="form-control" id="companyRegdate" th:value="${#dates.format(company.companyRegdate, 'yyyy-MM-dd')}"/>
-                      </div>
-                      <div class="form-group">
-                        <label for="companyUnregdate">注册到期时间</label><input name="companyUnregdate" type="date" class="form-control" id="companyUnregdate" th:value="${#dates.format(company.companyUnregdate, 'yyyy-MM-dd')}"/>
-                      </div>
-                      <div class="checkbox">
-                        <!--<label><input type="checkbox" />Check me out</label>-->
-                      </div> <button type="submit" class="btn btn-default">确认修改</button>
+                      <button type="submit" class="btn btn-default">确认修改</button>
                     </form>
                   </div>
                   <div class="col-md-4 column">
@@ -130,8 +123,6 @@
                 </div>
               </div>
             </div>
-
-
           </div>
         </div>
       </div>

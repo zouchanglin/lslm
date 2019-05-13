@@ -44,11 +44,8 @@ public class CompanyController {
     public String showTableCompany(Map<String, Object> map,
                                    @RequestParam(value = "companyName", required = false) String companyName){
         List<CompanyInfo> companyList;
-        if(companyName == null){
-            companyList = companyService.findAllCompanyInfo();
-        }else{
-            companyList = companyService.findAllCompanyInfoNameLike(companyName);
-        }
+        if(companyName == null) companyList = companyService.findAllCompanyInfo();
+        else companyList = companyService.findAllCompanyInfoNameLike(companyName);
         log.info("[AdminController]: companyList.size() = {}", companyList.size());
         map.put("companies", companyList);
         return "admin-company";

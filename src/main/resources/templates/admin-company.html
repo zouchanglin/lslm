@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -52,7 +52,7 @@
             <li><a href="/admin/index">总览 <span class="sr-only">(current)</span></a></li>
             <li class="active"><a href="/admin/company/show">企业管理</a></li>
             <li><a href="/admin/activity/show">活动管理</a></li>
-            <li><a href="#">用户管理</a></li>
+            <li><a href="/admin/user/show">用户管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="">Nav item again</a></li>
@@ -157,9 +157,9 @@
                 <td th:text="${company.companyPhone}">1,001</td>
                 <td th:text="${#dates.format(company.companyRegdate, 'yyyy-MM-dd')}">1,001</td>
                 <td>
-                  <p th:if="${company.companyStatus} eq 0" th:text="未审核"></p>
-                  <p th:if="${company.companyStatus} eq 1" th:text="已通过"></p>
-                  <p th:if="${company.companyStatus} eq 2" th:text="未通过"></p>
+                  <p th:if="${company.companyStatus} eq 0" style="color: #5bc0de" th:text="未审核"></p>
+                  <p th:if="${company.companyStatus} eq 1" style="color: #4cae4c" th:text="已通过"></p>
+                  <p th:if="${company.companyStatus} eq 2" style="color: #d43f3a" th:text="未通过"></p>
                 </td>
                 <td><div class="btn-group">
                   <button class="btn btn-default"> 操作 </button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>

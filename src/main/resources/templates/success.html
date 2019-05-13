@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>操作成功</title>
@@ -18,7 +18,7 @@
         if(x>0){
             document.getElementById("return_time").innerHTML=x; //每次设置的x的值都不一样了。
         }else{
-            location.href='/admin/company/show';
+            location.href='/';
         }
     }
 </script>
@@ -34,7 +34,7 @@
                 <h2>
                     操作成功！<span id="return_time">3</span>秒后自动返回
                 </h2>
-                <strong>Success!</strong> 也可以点击<a href="/admin/company/show" class="alert-link">这里</a>直接返回
+                <strong>Success!</strong> 也可以点击<a href="/admin/index" class="alert-link">这里</a>直接返回
             </div>
         </div>
     </div>

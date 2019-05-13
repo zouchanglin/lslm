@@ -59,14 +59,12 @@ public class ActivityController {
         return "activity/activity-update";
     }
 
-    @RequestMapping("/update-info")
+    @RequestMapping(value = {"/update-info", "/add"})
     public String updateActivityInfo(@ModelAttribute ActivityInfo activityInfo){
         if(activityInfo == null) return "error";
         log.info("【页面传回ActivityInfo】{}", activityInfo);
         //收到修改后的数据
         ActivityInfo saveRet = activityService.saveActivityInfo(activityInfo);
-        //ActivityInfo saveRet = new ActivityInfo();
         return saveRet != null ? "success":"error";
     }
-
 }

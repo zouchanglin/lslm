@@ -51,8 +51,8 @@
           <ul class="nav nav-sidebar">
             <li><a href="/admin/index">总览 <span class="sr-only">(current)</span></a></li>
             <li><a href="/admin/company/show">企业管理</a></li>
-            <li class="active"><a href="/admin/activity/show">活动管理</a></li>
-            <li><a href="/admin/user/show">用户管理</a></li>
+            <li><a href="/admin/activity/show">活动管理</a></li>
+            <li class="active"><a href="/admin/user/show">用户管理</a></li>
           </ul>
           <ul class="nav nav-sidebar">
             <li><a href="">Nav item again</a></li>
@@ -76,7 +76,7 @@
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav">
                     <li class="active">
-                      <a href="/admin/activity/addHtml">新增活动信息</a>
+                      <a href="#">新增用户信息</a>
                     </li>
                     <li>
                       <a href="#">Link</a>
@@ -106,9 +106,9 @@
                       </ul>
                     </li>
                   </ul>
-                  <form class="navbar-form navbar-left" role="search" action="/admin/activity/show" method="get">
+                  <form class="navbar-form navbar-left" role="search" action="/admin/user/show" method="get">
                     <div class="form-group">
-                      <input type="text" class="form-control" name="activityName"/>
+                      <input type="text" class="form-control" name="userName"/>
                     </div>
                     <button type="submit" class="btn btn-default">查找</button>
                   </form>
@@ -142,35 +142,35 @@
               <table class="table table-striped">
                 <thead>
                 <tr>
-                  <th>活动名称</th>
-                  <th>主办方</th>
-                  <th>承办方</th>
-                  <th>开始时间</th>
-                  <th>活动地址</th>
-                  <th>审核情况</th>
+                  <th>用户名</th>
+                  <th>学校</th>
+                  <th>手机</th>
+                  <th>积分</th>
+                  <th>注册时间</th>
+                  <th>用户类型</th>
                   <th> </th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="activity: ${activities}">
-                  <td th:text="${activity.activityName}">1,001</td>
-                  <td th:text="${activity.activitySponsor}">1,001</td>
-                  <td th:text="${activity.activityUndertake}">1,001</td>
-                  <td th:text="${#dates.format(activity.activityStart, 'yyyy-MM-dd HH:mm')}">1,001</td>
-                  <td th:text="${activity.activityAddress}">1,001</td>
+                <tr th:each="user: ${userInfoList}">
+                  <td th:text="${user.userName}">1,001</td>
+                  <td th:text="${user.userSchool}">1,001</td>
+                  <td th:text="${user.userPhone}">1,001</td>
+                  <td th:text="${user.userIntegral}">1,001</td>
+                  <td th:text="${#dates.format(user.userRegdate, 'yyyy-MM-dd')}">1,001</td>
                   <td>
-                    <p th:if="${activity.activityAudit} eq 0" style="color: #5bc0de" th:text="未审核"></p>
-                    <p th:if="${activity.activityAudit} eq 1" style="color: #4cae4c" th:text="已通过"></p>
-                    <p th:if="${activity.activityAudit} eq 2" style="color: #d43f3a" th:text="未通过"></p>
+                    <p th:if="${user.userType} eq 0" th:text="在校学生"></p>
+                    <p th:if="${user.userType} eq 1" th:text="已毕业"></p>
+                    <p th:if="${user.userType} eq 2" th:text="其他"></p>
                   </td>
                   <td><div class="btn-group">
                     <button class="btn btn-default"> 操作 </button> <button data-toggle="dropdown" class="btn btn-default dropdown-toggle"><span class="caret"></span></button>
                     <ul class="dropdown-menu">
                       <li>
-                        <a th:href="@{/admin/activity/update(activityId=${activity.activityId})}">修改信息</a>
+                        <a th:href="@{/admin/user/update(userOpenid=${user.userOpenid})}">修改信息</a>
                       </li>
                       <li class="warning">
-                        <a th:href="@{/admin/activity/delete(activityId=${activity.activityId})}">删除数据</a>
+                        <a th:href="@{/admin/user/delete(userOpenid=${user.userOpenid})}">删除数据</a>
                       </li>
                       <li class="disabled">
                         <a onclick="" href="#">其他操作</a>

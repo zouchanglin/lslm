@@ -2,10 +2,11 @@ package lishan.live.lslm.entity;
 
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @ClassName UserInfo
@@ -54,7 +55,8 @@ public class UserInfo {
     /**
      * 用户注册时间
      */
-    private Timestamp userRegdate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date userRegdate;
 
     /**
      * 用户积分

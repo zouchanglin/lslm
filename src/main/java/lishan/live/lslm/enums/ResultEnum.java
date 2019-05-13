@@ -13,7 +13,8 @@ import lombok.Getter;
 public enum ResultEnum {
     SUCCESS(0, "成功"),
     PARAM_ERROR(1, "参数不正确"),
-    ENTITY_NOT_EXIST(2,"实体不存在")
+    ENTITY_NOT_EXIST(2,"实体不存在"),
+    WECHAT_MP_ERROR(3, "微信网页授权异常")
     ;
 
 

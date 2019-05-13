@@ -20,9 +20,13 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class CompanyServiceImpl implements CompanyService {
+    private final CompanyInfoRepository companyInfoRepository;
+
     @Autowired
-    private CompanyInfoRepository companyInfoRepository;
-    
+    public CompanyServiceImpl(CompanyInfoRepository companyInfoRepository) {
+        this.companyInfoRepository = companyInfoRepository;
+    }
+
     @Override
     public CompanyInfo findCompanyInfoById(String companyId) {
         Optional<CompanyInfo> byId = companyInfoRepository.findById(companyId);
