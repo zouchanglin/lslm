@@ -11,7 +11,7 @@ import java.util.Date;
  * @author tim
  * @version 1.0
  * @className UserInfo
- * @description 用户信息
+ * @description 用户信息实体类
  * @date 2019-06-10 23:23
  */
 @Data

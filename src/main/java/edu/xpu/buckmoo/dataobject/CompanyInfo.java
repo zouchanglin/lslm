@@ -1,23 +1,24 @@
 package edu.xpu.buckmoo.dataobject;
 
+import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.Date;
 
 /**
  * @author tim
  * @version 1.0
  * @className CompanyInfo
- * @description
+ * @description 公司信息实体类
  * @date 2019-06-10 23:23
  */
 @Data
 @Entity
 @DynamicUpdate
 public class CompanyInfo {
-
     /**
      * 社会统一信用码
      */
@@ -62,22 +63,22 @@ public class CompanyInfo {
     /**
      * 公司注册时间
      */
-    private String companyRegTime;
+    private Date companyRegTime;
 
     /**
      * 公司到期时间
      */
-    private String companyUnRegTime;
+    private Date companyUnRegTime;
 
     /**
      * 信息更新时间
      */
-    private String companyUpdateTime;
+    private Date companyUpdateTime;
 
     /**
      * 公司审核情况
      */
-    private Integer companyStatus;
+    private Integer companyStatus = CompanyStatusEnum.NEW.getCode();
 
     /**
      * 公司积分/信誉值

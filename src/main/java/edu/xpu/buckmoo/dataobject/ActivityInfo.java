@@ -13,7 +13,7 @@ import java.util.Date;
  * @author tim
  * @version 1.0
  * @className ActivityInfo
- * @description
+ * @description 活动信息实体类
  * @date 2019-06-10 23:23
  */
 @Data
@@ -29,12 +29,12 @@ public class ActivityInfo {
     private String activityName;
 
     /**
-     * 主办方
+     * 主办方Id
      */
     private String activityMain;
 
     /**
-     * 协办方
+     * 协办方Id
      */
     private String activityUnmain;
 

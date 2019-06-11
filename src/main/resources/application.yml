@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: 1Baiduyun$
+    url: jdbc:mysql://127.0.0.1/buckmoo?characterEncoding=utf-8&useSSL=false
+  jpa:
+    show-sql: true
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  servlet:
+    context-path: /
