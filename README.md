@@ -12,5 +12,10 @@ SpringBoot + MySQL + Nginx代理服务
 * part_info 存的是具体的兼职信息
 * part_category 存的是兼职的分类信息
 
+# 用户分类说明
+* user：普通用户（学生）
+* company：企业用户（活动发布方）
+* admin：管理员
+
 
 

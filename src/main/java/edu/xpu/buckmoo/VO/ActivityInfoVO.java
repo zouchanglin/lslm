@@ -1,26 +1,20 @@
-package edu.xpu.buckmoo.dataobject;
+package edu.xpu.buckmoo.VO;
 
 import edu.xpu.buckmoo.enums.ActivityModeEnum;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 import java.util.Date;
 
 /**
  * @author tim
  * @version 1.0
- * @className ActivityInfo
- * @description 活动信息实体类
- * @date 2019-06-10 23:23
+ * @className ActivityInfoVO
+ * @description
+ * @date 2019-06-20 22:12
  */
 @Data
-@Entity
-@DynamicUpdate
-public class ActivityInfo {
-    @Id
+public class ActivityInfoVO {
     private String activityId;
 
     /**
@@ -34,9 +28,19 @@ public class ActivityInfo {
     private String activityMain;
 
     /**
+     * 主办方公司/组织名称
+     */
+    private String activityMainName;
+
+    /**
      * 协办方Id
      */
     private String activityUnmain;
+
+    /**
+     * 协办方公司/组织名称
+     */
+    private String activityUnMainName;
 
     /**
      * 活动地点
@@ -88,17 +92,7 @@ public class ActivityInfo {
     private Integer activityAudit = ActivityStatusEnum.NEW.getCode();
 
     /**
-     * 此信息最后修改时间
-     */
-    private Date activityUpdate;
-
-    /**
-     * 信息新建时间
-     */
-    private Date activityCreate;
-
-    /**
      * 活动已经报名人数
      */
-    private Integer activityApply;
+    private Integer activityApply = 0;
 }

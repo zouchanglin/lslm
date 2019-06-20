@@ -11,4 +11,4 @@ spring:
 
 server:
   servlet:
-    context-path: /
+    context-path: /buckmoo
