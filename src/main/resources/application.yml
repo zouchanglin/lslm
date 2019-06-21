@@ -8,7 +8,15 @@ spring:
     show-sql: true
   jackson:
     default-property-inclusion: non_null
+  mvc:
+    static-path-pattern: /**
 
 server:
   servlet:
     context-path: /buckmoo
+
+
+wechat:
+  mpAppId: wxb39b42f5fd93c167
+  mpAppSecret: 3d63c96f84e4587baa5e4a6f85d1a515
+
