@@ -28,6 +28,26 @@ public class UserInfo {
     private String openId;
 
     /**
+     * 用户昵称
+     */
+    private String userName;
+
+    /**
+     * 用户头像
+     */
+    private String userIcon;
+
+    /**
+     * 用户性别
+     */
+    private Integer userSex;
+
+    /**
+     * 用户所在城市
+     */
+    private String userCity;
+
+    /**
      * 用户电话
      */
     private String userPhone;
