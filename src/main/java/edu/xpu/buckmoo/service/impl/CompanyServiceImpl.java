@@ -17,8 +17,15 @@ import org.springframework.stereotype.Service;
 public class CompanyServiceImpl implements CompanyService {
     @Autowired
     private CompanyInfoRepository companyRep;
+
     @Override
     public CompanyInfo findOne(String companyInfoId) {
         return companyRep.findById(companyInfoId).orElse(null);
+    }
+
+    @Override
+    public CompanyInfo findCompanyInfoByOpenid(String openId) {
+        return companyRep.findByOpenId(openId);
+        //TODO 完成扫码登录
     }
 }

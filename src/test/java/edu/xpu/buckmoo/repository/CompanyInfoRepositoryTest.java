@@ -3,6 +3,7 @@ package edu.xpu.buckmoo.repository;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import edu.xpu.buckmoo.utils.KeyUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class CompanyInfoRepositoryTest {
     @Autowired
     private CompanyInfoRepository repository;
@@ -34,9 +36,14 @@ public class CompanyInfoRepositoryTest {
         companyInfo.setCompanyUnRegTime(new Date());
         companyInfo.setCompanyStatus(CompanyStatusEnum.NEW.getCode());
         companyInfo.setCompanyGrade(0);
-
         CompanyInfo saveRet = repository.save(companyInfo);
         assertNotNull(saveRet);
     }
 
+    @Test
+    public void findByOpenId(){
+        CompanyInfo byOpenId = repository.findByOpenId("123");
+        log.info("CompanyInfo={}", byOpenId);
+        assertNotNull(byOpenId);
+    }
 }

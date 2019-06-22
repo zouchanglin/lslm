@@ -11,4 +11,6 @@ import edu.xpu.buckmoo.dataobject.CompanyInfo;
  */
 public interface CompanyService {
     CompanyInfo findOne(String companyInfoId);
+
+    CompanyInfo findCompanyInfoByOpenid(String openId);
 }

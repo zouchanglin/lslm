@@ -17,8 +17,13 @@ import java.util.List;
  */
 @Service
 public class ActivityServiceImpl implements ActivityService {
+    private final ActivityInfoRepository activityRep;
+
     @Autowired
-    private ActivityInfoRepository activityRep;
+    public ActivityServiceImpl(ActivityInfoRepository activityRep) {
+        this.activityRep = activityRep;
+    }
+
     @Override
     public ActivityInfo findOne(String activityId) {
         return activityRep.findById(activityId).orElse(null);
@@ -37,5 +42,10 @@ public class ActivityServiceImpl implements ActivityService {
     @Override
     public ActivityInfo save(ActivityInfo activityInfo) {
         return activityRep.save(activityInfo);
+    }
+
+    @Override
+    public void delete(String activityId) {
+        activityRep.deleteById(activityId);
     }
 }

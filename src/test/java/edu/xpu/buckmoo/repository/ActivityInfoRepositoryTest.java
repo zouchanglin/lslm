@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.Date;
@@ -38,5 +40,13 @@ public class ActivityInfoRepositoryTest {
         activityInfo.setActivityMode(ActivityModeEnum.COMPANY.getCode());
         ActivityInfo saveRet = repository.save(activityInfo);
         assertNotNull(saveRet);
+    }
+
+
+    @Test
+    public void find(){
+        PageRequest request = PageRequest.of(1,3);
+        //Page<ActivityInfo> page = repository.findAllByActivityAudit(ActivityStatusEnum.PASS.getCode(), request);
+        //assertNotEquals(0, page.getTotalElements());
     }
 }

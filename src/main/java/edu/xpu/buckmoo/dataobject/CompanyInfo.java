@@ -84,4 +84,14 @@ public class CompanyInfo {
      * 公司积分/信誉值
      */
     private Integer companyGrade;
+
+    /**
+     * 管理员OpenId
+     */
+    private String openId;
+
+    /**
+     * 管理员密码
+     */
+    private String password;
 }

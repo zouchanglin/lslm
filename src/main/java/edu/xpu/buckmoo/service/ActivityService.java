@@ -19,4 +19,6 @@ public interface ActivityService {
     List<ActivityInfo> findByActivityAudit(Integer activityAudit);
 
     ActivityInfo save(ActivityInfo activityInfo);
+
+    void delete(String activityId);
 }
