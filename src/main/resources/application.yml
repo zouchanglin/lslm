@@ -25,4 +25,8 @@ wechat:
   mchKey:
   mchPath:
 
-
+projecturl:
+  wechatMpAuthorize: http://tim.natapp1.cc
+  wechatOpenAuthorize: http://tim.natapp1.cc
+  buckmoo: http://tim.natapp1.cc/buckmoo
+  imgPath: /Users/tim/Desktop/img/

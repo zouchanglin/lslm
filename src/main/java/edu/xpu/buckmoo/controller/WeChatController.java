@@ -1,8 +1,7 @@
 package edu.xpu.buckmoo.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import edu.xpu.buckmoo.convert.WxMpUser2UserInfo;
-import edu.xpu.buckmoo.dataobject.UserInfo;
+import edu.xpu.buckmoo.config.ProjectUrlConfig;
 import edu.xpu.buckmoo.enums.ResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.UserInfoService;
@@ -11,7 +10,6 @@ import me.chanjar.weixin.common.api.WxConsts;
 import me.chanjar.weixin.common.error.WxErrorException;
 import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
-import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,13 +34,22 @@ public class WeChatController {
     private WxMpService wxMpService;
 
     @Autowired
+    private WxMpService wxOpenService;
+
+    @Autowired
     private UserInfoService userService;
+
+    @Autowired
+    private ProjectUrlConfig projectUrlConfig;
+
+
+
 
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl){
         //1、配置
         //2、调用方法
-        String url = "http://tim.natapp1.cc/buckmoo/wechat/userInfo";
+        String url = projectUrlConfig.getWechatMpAuthorize() + "/buckmoo/wechat/userInfo";
         String redirectUrl = wxMpService.oauth2buildAuthorizationUrl(url, WxConsts.OAuth2Scope.SNSAPI_USERINFO, URLEncoder.encode(returnUrl));
         return "redirect:" + redirectUrl;
     }
@@ -51,11 +58,8 @@ public class WeChatController {
     public String userInfo(@RequestParam("code") String code,
                          @RequestParam("state") String returnUrl){
         WxMpOAuth2AccessToken wxMpOAuth2AccessToken = new WxMpOAuth2AccessToken();
-        //用户信息保存
-        WxMpUser wxMpUser = new WxMpUser();
         try {
             wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-            //wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e);
             throw new BuckMooException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
@@ -64,14 +68,31 @@ public class WeChatController {
         String accessToken = wxMpOAuth2AccessToken.getAccessToken();
         log.info("openId={}", openId);
         log.info("accessToken={}", accessToken);
-
-        //UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
-        //UserInfo saveRet = userService.saveUser(userInfo);
-        //assert saveRet != null;
-
         return "redirect:" + returnUrl + "?openid=" + openId;
     }
 
+
+    @GetMapping("/qrAuthorize")
+    public String qrAuthorize(@RequestParam("returnUrl") String returnUrl){
+        String url = projectUrlConfig.getWechatOpenAuthorize() + "/buckmoo/wechat/qrUserInfo";
+        String redirectUrl = wxOpenService.buildQrConnectUrl(url,  WxConsts.QrConnectScope.SNSAPI_LOGIN, URLEncoder.encode(returnUrl));
+        return "redirect:" + redirectUrl;
+    }
+
+    @GetMapping("/qrUserInfo")
+    public String qrUserInfo(@RequestParam("code") String code,
+                           @RequestParam("state") String returnUrl){
+
+        WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+        try {
+            wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
+            log.info("wxMpOAuth2AccessToken={}", wxMpOAuth2AccessToken);
+        } catch (WxErrorException e) {
+            log.error("【微信网页授权】{}", e);
+            throw new BuckMooException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
+        }
+        return "redirect:" + returnUrl + "?openid=" + wxMpOAuth2AccessToken.getOpenId();
+    }
 
     /**
      * 原生的方式获取access_token

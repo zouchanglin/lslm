@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class WechatPayConfig {
+    //TODO 微信支付刚把秘钥设置好
     @Autowired
     private WechatAccountConfig accountConfig;
 

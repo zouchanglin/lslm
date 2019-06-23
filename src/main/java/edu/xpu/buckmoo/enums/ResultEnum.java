@@ -9,6 +9,7 @@ public enum ResultEnum {
     ACTIVITY_ERROR(2, "活动信息不正确"),
     WECHAT_MP_ERROR(3, "微信公众账号方面错误"),
     PART_NOT_EXIT(4, "兼职信息不存在"),
+    NULL_FILE(5, "文件为空")
     ;
 
     private Integer code;
