@@ -22,16 +22,19 @@ public class UserInfoRepositoryTest {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(KeyUtil.genUniqueKey());
         userInfo.setOpenId(KeyUtil.genUniqueKey());
+        userInfo.setUserName("Test Name");
+        userInfo.setUserSex(1);
+        userInfo.setUserIcon("http://www.png");
+        userInfo.setUserCity("陕西省西安市");
         userInfo.setUserGrade(0);
         userInfo.setUserPhone("15278780512");
-
         assertNotNull(repository.save(userInfo));
     }
 
 
     @Test
     public void findByOpenId(){
-        UserInfo byId = repository.findByOpenId("123456789");
+        UserInfo byId = repository.findByOpenId("1561532064367550376");
         assertNotNull(byId);
     }
 

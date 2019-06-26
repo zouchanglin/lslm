@@ -36,6 +36,7 @@ public class CompanyInfoRepositoryTest {
         companyInfo.setCompanyUnRegTime(new Date());
         companyInfo.setCompanyStatus(CompanyStatusEnum.NEW.getCode());
         companyInfo.setCompanyGrade(0);
+
         CompanyInfo saveRet = repository.save(companyInfo);
         assertNotNull(saveRet);
     }

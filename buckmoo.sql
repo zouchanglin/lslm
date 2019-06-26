@@ -1,17 +1,17 @@
 /*
  Navicat MySQL Data Transfer
 
- Source Server         : 本地Mysql
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50725
+ Source Server Version : 50726
  Source Host           : localhost
  Source Database       : buckmoo
 
  Target Server Type    : MySQL
- Target Server Version : 50725
+ Target Server Version : 50726
  File Encoding         : utf-8
 
- Date: 06/20/2019 23:10:14 PM
+ Date: 06/26/2019 14:48:16 PM
 */
 
 SET NAMES utf8;
@@ -67,6 +67,8 @@ CREATE TABLE `company_info` (
   `company_update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '企业信息最后修改更新时间',
   `company_status` int(5) NOT NULL DEFAULT '0' COMMENT '企业注册状态 0、未审核 1、通过 2、未通过（暂时设置了3种状态）',
   `company_grade` int(11) DEFAULT NULL COMMENT '信誉积分',
+  `open_id` varchar(255) DEFAULT NULL COMMENT '企业管理员微信Id',
+  `password` varchar(20) DEFAULT NULL COMMENT '管理员密码',
   PRIMARY KEY (`company_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -74,7 +76,7 @@ CREATE TABLE `company_info` (
 --  Records of `company_info`
 -- ----------------------------
 BEGIN;
-INSERT INTO `company_info` VALUES ('1560234861488151072', '比特科技', 'http://logo.png', '培训C/C++高级工程师，Java工程师，Python工程师', 'http://license.png', '张鹏伟', '13724344782', '612328198008083417', '2019-06-11 01:34:21', '2019-06-11 01:34:21', '2019-06-11 14:34:21', '0', '0'), ('1560234861488151073', '骊山鹿鸣', 'http://logo.png', '培训C/C++高级工程师，Java工程师，Python工程师', 'http://license.png', '张鹏伟', '13724344782', '612328198008083417', '2019-06-11 01:34:21', '2019-06-11 01:34:21', '2019-06-20 22:36:16', '0', '0');
+INSERT INTO `company_info` VALUES ('1560234861488151072', '比特科技', 'http://logo.png', '培训C/C++高级工程师，Java工程师，Python工程师', 'http://license.png', '张鹏伟', '13724344782', '612328198008083417', '2019-06-11 01:34:21', '2019-06-11 01:34:21', '2019-06-11 14:34:21', '0', '0', null, null), ('1560234861488151073', '骊山鹿鸣', 'http://logo.png', '培训C/C++高级工程师，Java工程师，Python工程师', 'http://license.png', '张鹏伟', '13724344782', '612328198008083417', '2019-06-11 01:34:21', '2019-06-11 01:34:21', '2019-06-20 22:36:16', '0', '0', null, null);
 COMMIT;
 
 -- ----------------------------
@@ -132,18 +134,15 @@ DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info` (
   `user_id` varchar(25) NOT NULL DEFAULT '' COMMENT '用户Id',
   `open_id` varchar(255) NOT NULL COMMENT '微信的OpenId',
-  `user_phone` varchar(255) DEFAULT NULL COMMENT '电话',
+  `user_name` varchar(30) DEFAULT NULL,
+  `user_icon` varchar(255) DEFAULT NULL,
+  `user_sex` int(11) DEFAULT NULL,
+  `user_city` varchar(50) DEFAULT NULL,
+  `user_phone` varchar(25) DEFAULT NULL COMMENT '电话',
   `user_grade` int(11) DEFAULT NULL COMMENT '积分',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- ----------------------------
---  Records of `user_info`
--- ----------------------------
-BEGIN;
-INSERT INTO `user_info` VALUES ('1560235033558307246', '1560235033558807224', '15278780512', '0', '2019-06-11 14:37:13', '2019-06-11 14:37:13');
-COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

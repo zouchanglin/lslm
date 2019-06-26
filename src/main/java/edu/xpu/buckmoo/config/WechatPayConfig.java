@@ -23,7 +23,6 @@ public class WechatPayConfig {
     public BestPayServiceImpl bestPayService(){
         BestPayServiceImpl bestPayService = new BestPayServiceImpl();
         bestPayService.setWxPayH5Config(wxPayH5Config());
-
         return bestPayService;
     }
 
