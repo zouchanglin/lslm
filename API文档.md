@@ -133,7 +133,62 @@ pageindex : Integer 分页索引（从0开始）
 }
 ```
 
+### 2、发布兼职
+
+```
+POST http://tim.natapp1.cc/buckmoo/user/part/create
+```
+
+参数
+
+```
+partName 兼职名称 String
+partCategory 兼职分类 Integer
+partAddress 兼职地点 String
+partOverview 描述 String
+partStart 开始时间 Long
+partEnd 结束时间 Long
+partTime 时间的附加描述 String
+partMoney 支付金额 Double
+partRemark 备注信息 String
+```
+
+返回值
+
+```
+{
+	"code":2,
+	"msg":"请先登录"
+}
+
+{
+	"code":1,
+	"msg":"网络繁忙"
+}
+
+{
+	"code":0,
+	"data":{
+		"partAddress":"不限",
+		"partCategory":5,
+		"partEnd":1563269870,
+		"partId":"1563270667200359519",
+		"partMoney":75,
+		"partName":"抄写论文 -1000字50元",
+		"partOverview":"1000字50元，抄完即可通知抄写结束，非常方便",
+		"partRemark":"备注信息：无",
+		"partStart":1563269870,
+		"partStatus":0,
+		"partTime":"时间最多两天，抄3000字左右"
+	},
+	"msg":"成功"
+}
+```
+
+
+
 ## 账户相关
+
 ### 1、用户基本信息获取
 ```
 GET http://tim.natapp1.cc/buckmoo/user/info/show

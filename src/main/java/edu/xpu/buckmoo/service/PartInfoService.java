@@ -10,4 +10,6 @@ public interface PartInfoService {
     Page<PartInfo> listByCategory(Integer category, Pageable pageable);
 
     Page<PartInfo> listByCategoryAndStatus(Integer category, Integer status, Pageable pageable);
+
+    PartInfo addOnePartTime(PartInfo partInfo);
 }

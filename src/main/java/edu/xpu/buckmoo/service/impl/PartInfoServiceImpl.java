@@ -35,4 +35,9 @@ public class PartInfoServiceImpl implements PartInfoService {
         return partRep.findAllByPartCategoryAndPartStatus(category, status, pageable);
     }
 
+    @Override
+    public PartInfo addOnePartTime(PartInfo partInfo) {
+        return partRep.save(partInfo);
+    }
+
 }

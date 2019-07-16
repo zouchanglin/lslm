@@ -59,7 +59,7 @@ public class PartInfo {
     private String partTime;
 
     /**
-     * 兼职信息发布者
+     * 兼职发布者
      */
     private String partCreator;
 
