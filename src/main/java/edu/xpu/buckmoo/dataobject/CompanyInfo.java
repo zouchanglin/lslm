@@ -1,6 +1,7 @@
 package edu.xpu.buckmoo.dataobject;
 
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
+import edu.xpu.buckmoo.enums.MemberLEVELEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -56,11 +57,6 @@ public class CompanyInfo {
     private String companyPhone;
 
     /**
-     * 公司法人身份证号
-     */
-    private String companyIdCard;
-
-    /**
      * 公司注册时间
      */
     private Date companyRegTime;
@@ -94,4 +90,9 @@ public class CompanyInfo {
      * 管理员密码
      */
     private String password;
+
+    /**
+     * 会员等级
+     */
+    private Integer companyMember = MemberLEVELEnum.COMMON.getCode();
 }

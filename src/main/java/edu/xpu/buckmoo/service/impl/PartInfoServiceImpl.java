@@ -4,6 +4,8 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.repository.PartInfoRepository;
 import edu.xpu.buckmoo.service.PartInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 /**
@@ -22,4 +24,15 @@ public class PartInfoServiceImpl implements PartInfoService {
     public PartInfo findOneById(String partId) {
         return partRep.findById(partId).orElse(null);
     }
+
+    @Override
+    public Page<PartInfo> listByCategory(Integer category, Pageable pageable) {
+        return partRep.findAllByPartCategory(category, pageable);
+    }
+
+    @Override
+    public Page<PartInfo> listByCategoryAndStatus(Integer category, Integer status, Pageable pageable) {
+        return partRep.findAllByPartCategoryAndPartStatus(category, status, pageable);
+    }
+
 }

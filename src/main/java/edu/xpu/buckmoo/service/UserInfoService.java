@@ -11,4 +11,6 @@ import edu.xpu.buckmoo.dataobject.UserInfo;
  */
 public interface UserInfoService {
     UserInfo saveUser(UserInfo userInfo);
+
+    UserInfo findById(String openId);
 }

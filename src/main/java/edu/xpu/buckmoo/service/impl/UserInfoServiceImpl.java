@@ -21,8 +21,11 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo saveUser(UserInfo userInfo) {
-        UserInfo notExit = userRep.findByOpenId(userInfo.getOpenId());
-        if(notExit == null) userInfo.setUserId(KeyUtil.genUniqueKey());
         return userRep.save(userInfo);
+    }
+
+    @Override
+    public UserInfo findById(String openId) {
+        return userRep.findById(openId).orElse(null);
     }
 }

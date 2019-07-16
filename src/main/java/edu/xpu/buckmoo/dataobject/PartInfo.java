@@ -59,9 +59,14 @@ public class PartInfo {
     private String partTime;
 
     /**
+     * 兼职信息发布者
+     */
+    private String partCreator;
+
+    /**
      * 发起方支付金额
      */
-    private BigDecimal partMoney;
+    private BigDecimal partMoney = new BigDecimal(0);
 
     /**
      * 此兼职信息的状态
@@ -72,6 +77,11 @@ public class PartInfo {
      * 兼职任务接受者UserId
      */
     private String partEmploy;
+
+    /**
+     * 兼职的备注信息
+     */
+    private String partRemark;
 
     /**
      * 创建时间

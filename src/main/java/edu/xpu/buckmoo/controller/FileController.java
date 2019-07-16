@@ -42,6 +42,7 @@ public class FileController {
             throw new BuckMooException(ResultEnum.NULL_FILE);
         }
         String fileName = file.getOriginalFilename();  // 文件名
+        assert fileName != null;
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         String filePath = projectUrlConfig.getImgPath(); // 上传后的路径
         fileName = UUID.randomUUID() + suffixName; // 新文件名
@@ -62,9 +63,11 @@ public class FileController {
 
 
     private ResponseEntity<FileSystemResource> export(File file) {
+
         if (file == null) {
             return null;
         }
+
         HttpHeaders headers = new HttpHeaders();
         headers.add("accept-ranges", "bytes");
         headers.add("cache-control", "max-age=2592000");

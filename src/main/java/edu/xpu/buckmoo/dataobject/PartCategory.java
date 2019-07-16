@@ -36,9 +36,9 @@ public class PartCategory {
     private String categoryName;
 
     /**
-     * 分类类型
+     * 此分类的兼职信息数量
      */
-    private Integer categoryType;
+    private Integer categoryNum;
 
     /**
      * 创建时间
@@ -49,11 +49,4 @@ public class PartCategory {
      * 修改时间
      */
     private Date updateTime;
-
-    public PartCategory() {
-    }
-    public PartCategory(String categoryName, Integer categoryType) {
-        this.categoryName = categoryName;
-        this.categoryType = categoryType;
-    }
 }

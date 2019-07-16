@@ -17,6 +17,6 @@ public class PartCategoryRepositoryTest {
 
     @Test
     public void save(){
-        assertNotNull(repository.save(new PartCategory("代课", 1)));
+
     }
 }

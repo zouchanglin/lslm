@@ -6,10 +6,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -18,7 +21,6 @@ import static org.junit.Assert.*;
 public class PartInfoRepositoryTest {
     @Autowired
     private PartInfoRepository repository;
-
 
     @Test
     public void save(){
@@ -32,6 +34,47 @@ public class PartInfoRepositoryTest {
         partInfo.setPartEnd(new Date());
         partInfo.setPartTime("对兼职时间的一个补充");
         partInfo.setPartMoney(new BigDecimal(40.00));
+        partInfo.setPartCreator("oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk");
         assertNotNull(repository.save(partInfo));
+    }
+
+    @Test
+    public void find_01(){
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<PartInfo> category = repository.findAllByPartCategory(3, pageRequest);
+        List<PartInfo> content = category.getContent();
+        for(PartInfo partInfo: content){
+            System.out.println(partInfo);
+        }
+    }
+
+    @Test
+    public void find_02(){
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<PartInfo> category = repository.findAllByPartCreator("oxrwq0xrKKyqiAGE8O9TM3L1yaQY", pageRequest);
+        List<PartInfo> content = category.getContent();
+        for(PartInfo partInfo: content){
+            System.out.println(partInfo);
+        }
+    }
+
+    @Test
+    public void find_03(){
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<PartInfo> category = repository.findAllByPartCreatorAndPartStatus("oxrwq0xrKKyqiAGE8O9TM3L1yaQY", 1, pageRequest);
+        List<PartInfo> content = category.getContent();
+        for(PartInfo partInfo: content){
+            System.out.println(partInfo);
+        }
+    }
+
+    @Test
+    public void find_04(){
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        Page<PartInfo> category = repository.findAllByPartCategoryAndPartStatus(2, 1, pageRequest);
+        List<PartInfo> content = category.getContent();
+        for(PartInfo partInfo: content){
+            System.out.println(partInfo);
+        }
     }
 }

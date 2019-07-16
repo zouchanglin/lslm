@@ -1,285 +1,179 @@
-# 普通用户
+# 一、普通用户
 ## 活动相关
+## 兼职相关
 
-### 1、查看审核通过的活动
-
+### 1、兼职列表（审核通过的兼职）
+请求地址
 ```
-GET /buckmoo/user/activity/list
+GET http://tim.natapp1.cc/buckmoo/user/part/list
 ```
-
 参数
-
 ```
-无
+pageindex : Integer 分页索引（从0开始）
 ```
-
-返回值
-
+返回值示例
 ```json
 {
 	"code":0,
 	"data":[
 		{
-			"activityAbstract":"欣赏终南山美景，品尝终南山的美食！",
-			"activityAddress":"终南山",
-			"activityApply":0,
-			"activityAudit":1,
-			"activityEnd":1560234128000,
-			"activityGeneralize":2000,
-			"activityId":"1560234127693562090",
-			"activityLink":"https://s2.ax1x.com/2019/06/20/VxE6AS.png",
-			"activityLogo":"https://s2.ax1x.com/2019/06/20/VxVF9H.png",
-			"activityMain":"1560234861488151072",
-			"activityMainName":"比特科技",
-			"activityMax":50,
-			"activityMode":1,
-			"activityName":"钟南山一日游",
-			"activityStart":1560234128000,
-			"activityUnMainName":"比特科技",
-			"activityUnmain":"1560234861488151072"
+			"partCategory":{    //兼职分类信息
+				"categoryId":1, //兼职分类Id
+				"categoryName":"其他", //兼职分类名称
+				"categoryNum":0,    //此分类下的兼职数量
+				"createTime":1560308075000, //创建时间
+				"updateTime":1563299669000  //最后更新时间
+			},
+			"partInfoList":[]
 		},
 		{
-			"activityAbstract":"欣赏XPU美景，品尝终南山的美食！",
-			"activityAddress":"西安工程大学",
-			"activityApply":0,
-			"activityAudit":1,
-			"activityEnd":1560234128000,
-			"activityGeneralize":50,
-			"activityId":"1560234127693562091",
-			"activityLink":"https://s2.ax1x.com/2019/06/20/VxEHNF.png",
-			"activityLogo":"https://s2.ax1x.com/2019/06/20/VxVF9H.png",
-			"activityMain":"1560234861488151073",
-			"activityMainName":"骊山鹿鸣",
-			"activityMax":50,
-			"activityMode":1,
-			"activityName":"XPU一日游",
-			"activityStart":1560234128000,
-			"activityUnMainName":"比特科技",
-			"activityUnmain":"1560234861488151072"
+			"partCategory":{
+				"categoryId":2,
+				"categoryName":"代课/会议",
+				"categoryNum":1,
+				"createTime":1563310081000,
+				"updateTime":1563310112000
+			},
+			"partInfoList":[
+				{
+					"createTime":1560307214000, //此条兼职信息创建时间
+					"partAddress":"西安工程大学临潼校区A326", //兼职地点
+					"partCategory":2,   //分类Id
+					"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY", //兼职发布者的微信openid
+					"partEnd":1563255614000, //兼职结束时间
+					"partId":"1560260414182640052", //兼职信息Id
+					"partMoney":30, //兼职费用
+					"partName":"周四大学英语代课", //兼职名称
+					"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326", //兼职详情描述
+					"partStart":1563457214000,  //兼职开始时间
+					"partStatus":2, //兼职状态
+					"partTime":"只要点名了就可以走，记住时间是周四34节",  //备注之类的信息
+					"updateTime":1563313667000  //最后更新时间
+				},
+				{
+					"createTime":1560307214000,
+					"partAddress":"西安工程大学临潼校区A326",
+					"partCategory":2,
+					"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+					"partEnd":1563255614000,
+					"partId":"1560260414182640053",
+					"partMoney":30,
+					"partName":"周四大学英语代课",
+					"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
+					"partStart":1563457214000,
+					"partStatus":2,
+					"partTime":"只要点名了就可以走，记住时间是周四34节",
+					"updateTime":1563313669000
+				}
+			]
+		},
+		{
+			"partCategory":{
+				"categoryId":3,
+				"categoryName":"传单",
+				"categoryNum":0,
+				"createTime":1563310103000,
+				"updateTime":1563310103000
+			},
+			"partInfoList":[
+				{
+					"createTime":1560307214000,
+					"partAddress":"西安工程大学临潼校区A326",
+					"partCategory":3,
+					"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+					"partEnd":1563255614000,
+					"partId":"1560260414182640054",
+					"partMoney":30,
+					"partName":"周四大学英语代课",
+					"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
+					"partStart":1563457214000,
+					"partStatus":2,
+					"partTime":"只要点名了就可以走，记住时间是周四34节",
+					"updateTime":1563313671000
+				},
+				{
+					"createTime":1560307214000,
+					"partAddress":"西安工程大学临潼校区A326",
+					"partCategory":3,
+					"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+					"partEnd":1563255614000,
+					"partId":"1560260414182640055",
+					"partMoney":30,
+					"partName":"周四大学英语代课",
+					"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
+					"partStart":1563457214000,
+					"partStatus":2,
+					"partTime":"只要点名了就可以走，记住时间是周四34节",
+					"updateTime":1563313675000
+				}
+			]
+		},
+		{
+			"partCategory":{
+				"categoryId":4,
+				"categoryName":"配送",
+				"categoryNum":0,
+				"createTime":1563310126000,
+				"updateTime":1563310126000
+			},
+			"partInfoList":[]
+		},
+		{
+			"partCategory":{
+				"categoryId":5,
+				"categoryName":"抄写",
+				"categoryNum":0,
+				"createTime":1563310148000,
+				"updateTime":1563310148000
+			},
+			"partInfoList":[]
 		}
 	],
 	"msg":"成功"
 }
 ```
 
-
-
-## 兼职相关
 ## 账户相关
+### 1、用户基本信息获取
+```
+GET http://tim.natapp1.cc/buckmoo/user/info/show
+```
+参数
+```
+openid : String
+```
+返回值
+```json
+{
+	"code":1,
+	"msg":"用户信息为空"
+}
 
-# 活动发布方
+{
+	"code":0,
+	"data":{
+		"createTime":1563307248000, //用户注册时间
+		"openId":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk", //用户openid
+		"updateTime":1563307248000,	//最后更新时间
+		"userAddress":"泽西岛",	//地点
+		"userGrade":0, //用户积分
+		"userIcon":"http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmOLibgHtYurJxvW0yicXLVcTCUiaDQDqibEyoIKwS7ZRdOsZL02RibF79vdNt6cFEYU1v53r1plygOAL60hw/132", 	//用户头像
+		"userMember":0,	//会员级别
+		"userName":"Tim",	//用户昵称
+		"userSex":1	//性别
+	},
+	"msg":"成功"
+}
+```
+
+
+# 二、活动发布方
 ## 活动相关
-
 ## 账户相关
-
 ## 支付相关
 
-# 超级管理员
+# 三、超级管理员
 ## 活动相关
-
-### 1、活动列表(分状态展示)
-
-```
-GET /buckmoo/admin/activity/show
-```
-
-参数
-
-```
-type:Integer 活动的状态(见如下代码)
-```
-
-Java中活动状态的枚举
-
-```
-NEW(0, "未审核"),
-PASS(1, "审核通过"),
-NOT_PASS(2, "审核未通过"),
-FINISH(3, "活动结束")
-```
-
-返回值
-
-```json
-{
-    "code": 0,
-    "msg": "成功",
-    "data": [
-        {
-            "activityId": "1560234127693562090",
-            "activityName": "钟南山一日游",
-            "activityMain": "1560234861488151072",
-            "activityUnmain": "1560234861488151072",
-            "activityAddress": "终南山",
-            "activityStart": "2019-06-11T06:22:08.000+0000",
-            "activityEnd": "2019-06-11T06:22:08.000+0000",
-            "activityMax": 50,
-            "activityMode": 1,
-            "activityGeneralize": 2000,
-            "activityLink": "https://s2.ax1x.com/2019/06/20/VxE6AS.png",
-            "activityAbstract": "欣赏终南山美景，品尝终南山的美食！",
-            "activityLogo": "https://s2.ax1x.com/2019/06/20/VxVF9H.png",
-            "activityAudit": 1,
-            "activityUpdate": "2019-06-21T04:09:00.000+0000",
-            "activityCreate": "2019-06-11T19:22:07.000+0000",
-            "activityApply": 0
-        }
-    ]
-}
-```
-
-错误返回（活动状态参数错误，即不存在于枚举中）：
-
-```json
-{
-    "timestamp": "2019-06-22T02:25:15.998+0000",
-    "status": 500,
-    "error": "Internal Server Error",
-    "message": "参数不正确",
-    "path": "/buckmoo/admin/activity/show"
-}
-```
-
-### 2、根据Id删除活动
-
-```
-GET /buckmoo/admin/activity/delete
-```
-
-参数：
-
-```
-activityId:String 活动的Id
-```
-
-返回值：
-
-```json
-{
-    "code": 0,
-    "msg": "成功"
-}
-```
-
-失败时的返回值(只有可能是参数对应的活动那个信息不存在)：
-
-```json
-{
-    "timestamp": "2019-06-22T02:44:39.502+0000",
-    "status": 500,
-    "error": "Internal Server Error",
-    "message": "活动信息不正确",
-    "path": "/buckmoo/admin/activity/delete"
-}
-```
-
-### 3、修改活动信息
-
-```
-GET /buckmoo/admin/activity/update
-```
-
-参数（activityId是必传，只传单个属性就只会改单个值）
-
-```
-activityId String 活动Id
-activityName String 活动名称
-activityMain String 主办方Id
-activityUnmain String 协办方Id
-activityAddress String 活动地点
-activityStart Long 开始时间
-activityEnd Long 结束时间
-activityMax Integer 最大人数
-activityMode Integer 活动模式：(0)学生社团活动  (1)企业组织的活动  (2) 其他
-activityGeneralize Integer 推广力度
-activityLink String 活动链接
-activityAbstract String 活动简介
-activityLogo String 活动宣传图
-```
-
-### 4、新建活动信息
-
-```
-POST /buckmoo/admin/activity/add
-```
-
-参数
-
-```
-activityId String 活动Id
-activityName String 活动名称
-activityMain String 主办方Id
-activityUnmain String 协办方Id
-activityAddress String 活动地点
-activityStart Long 开始时间
-activityEnd Long 结束时间
-activityMax Integer 最大人数
-activityMode Integer 活动模式：(0)学生社团活动  (1)企业组织的活动  (2) 其他
-activityGeneralize Integer 推广力度
-activityLink String 活动链接
-activityAbstract String 活动简介
-activityLogo String 活动宣传图
-```
-
-返回值
-
-```json
-{
-    "code": 0,
-    "msg": "成功",
-    "data": {
-        "activityId": "1561204690446267854",
-        "activityName": "AAA",
-        "activityMain": "1560234861488151072",
-        "activityUnmain": "1560234861488151072",
-        "activityAddress": "XPU",
-        "activityStart": "1970-01-19T01:40:03.760+0000",
-        "activityEnd": "1970-01-19T01:40:03.760+0000",
-        "activityMax": 111,
-        "activityMode": 1,
-        "activityGeneralize": 100,
-        "activityLink": "https://www.baidu.com",
-        "activityAbstract": "描述",
-        "activityLogo": "https://lpogo.png",
-        "activityAudit": 0
-    }
-}
-```
-
-### 5、审核活动信息
-
-```
-GET /buckmoo/admin/activity/audit
-```
-
-参数
-
-```
-activityId String 活动Id
-activityAudit Integer 活动状态（0）未审核 （1）通过（2）未通过 (3)已经结束
-```
-
-返回值
-
-```json
-{
-    "code": 0,
-    "msg": "成功"
-}
-```
-
-失败返回
-
-```json
-{
-    "timestamp": "2019-06-22T12:56:29.279+0000",
-    "status": 500,
-    "error": "Internal Server Error",
-    "message": "参数不正确",
-    "path": "/buckmoo/admin/activity/audit"
-}
-```
-
 ## 兼职相关
 ## 账户相关
 ## 支付相关

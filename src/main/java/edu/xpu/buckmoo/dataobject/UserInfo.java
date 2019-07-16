@@ -1,5 +1,6 @@
 package edu.xpu.buckmoo.dataobject;
 
+import edu.xpu.buckmoo.enums.MemberLEVELEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -18,13 +19,10 @@ import java.util.Date;
 @Entity
 @DynamicUpdate
 public class UserInfo {
-
-    @Id
-    private String userId;
-
     /**
      * 微信的openId
      */
+    @Id
     private String openId;
 
     /**
@@ -43,9 +41,9 @@ public class UserInfo {
     private Integer userSex;
 
     /**
-     * 用户所在城市
+     * 用户地址
      */
-    private String userCity;
+    private String userAddress;
 
     /**
      * 用户电话
@@ -55,7 +53,7 @@ public class UserInfo {
     /**
      * 用户积分
      */
-    private Integer userGrade;
+    private Integer userGrade = 0;
 
     /**
      * 信息注册时间
@@ -66,4 +64,9 @@ public class UserInfo {
      * 信息更新时间
      */
     private Date updateTime;
+
+    /**
+     * 会员等级
+     */
+    private Integer userMember = MemberLEVELEnum.COMMON.getCode();
 }

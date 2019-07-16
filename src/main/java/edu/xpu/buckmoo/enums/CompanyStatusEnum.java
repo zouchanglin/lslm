@@ -10,7 +10,7 @@ import lombok.Getter;
  * @date 2019-06-11 14:31
  */
 @Getter
-public enum CompanyStatusEnum {
+public enum CompanyStatusEnum implements CodeEnum {
     NEW(0, "未审核"),
     PASS(1, "审核通过"),
     NOT_PASS(2, "审核未通过"),

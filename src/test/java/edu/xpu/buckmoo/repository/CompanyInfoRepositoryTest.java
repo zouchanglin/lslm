@@ -31,7 +31,6 @@ public class CompanyInfoRepositoryTest {
         companyInfo.setCompanyLicense("http://license.png");
         companyInfo.setCompanyManger("张鹏伟");
         companyInfo.setCompanyPhone("13724344782");
-        companyInfo.setCompanyIdCard("612328198008083417");
         companyInfo.setCompanyRegTime(new Date());
         companyInfo.setCompanyUnRegTime(new Date());
         companyInfo.setCompanyStatus(CompanyStatusEnum.NEW.getCode());

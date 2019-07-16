@@ -3,7 +3,7 @@ package edu.xpu.buckmoo.enums;
 import lombok.Getter;
 
 @Getter
-public enum ResultEnum {
+public enum ResultEnum implements CodeEnum{
     SUCCESS(0, "成功"),
     PARAM_ERROR(1, "参数不正确"),
     ACTIVITY_ERROR(2, "活动信息不正确"),

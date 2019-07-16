@@ -10,7 +10,7 @@ import lombok.Getter;
  * @date 2019-06-11 21:23
  */
 @Getter
-public enum  PartTimeStatusEnum {
+public enum  PartTimeStatusEnum implements CodeEnum{
     NEW_PART(0, "未审核"),
     PASS_NO_PAY(1, "审核通过 未付款"),
     PASS_PAY(2, "审核 已经付款"),

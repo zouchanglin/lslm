@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class WechatOpenConfig {
-    //TODO 微信扫码登录
     @Autowired
     private WechatAccountConfig accountConfig;
 

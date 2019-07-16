@@ -17,7 +17,7 @@ public class WxMpUser2UserInfo {
         userInfo.setUserName(wxMpUser.getNickname());
         userInfo.setUserIcon(wxMpUser.getHeadImgUrl());
         userInfo.setUserSex(wxMpUser.getSex());
-        userInfo.setUserCity(wxMpUser.getCity());
+        userInfo.setUserAddress(wxMpUser.getCountry() + wxMpUser.getCity());
         return userInfo;
     }
 }
