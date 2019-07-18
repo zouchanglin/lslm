@@ -36,7 +36,13 @@ public class CompanyOrder {
      */
     private Integer activityStatus;
 
+    /**
+     * 信息创建时间
+     */
     private Date createTime;
 
+    /**
+     * 信息最后更新时间
+     */
     private Date updateTime;
 }

@@ -7,6 +7,9 @@ import org.springframework.beans.BeanUtils;
 
 import java.util.Date;
 
+/**
+ * 兼职表单转为兼职信息对象
+ */
 public class PartTimeForm2Info {
     public static PartInfo form2partInfo(PartTimeForm partTimeForm){
         PartInfo partInfo = new PartInfo();

@@ -5,6 +5,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * 兼职信息的表单
+ */
 @Data
 public class PartTimeForm {
     /**

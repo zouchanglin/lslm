@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @author tim
  * @version 1.0
  * @className UserLoginController
- * @description
+ * @description 用户信息控制器
  * @date 2019-06-20 21:36
  */
 @RestController

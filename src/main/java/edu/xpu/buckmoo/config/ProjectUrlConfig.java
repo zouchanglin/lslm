@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author tim
  * @version 1.0
  * @className ProjectUrl
- * @description
+ * @description 对应application.yml的ProjectUrl中配置
  * @date 2019-06-23 09:36
  */
 @Data

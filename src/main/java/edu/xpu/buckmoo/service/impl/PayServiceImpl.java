@@ -5,6 +5,8 @@ import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
+import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.service.PayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +26,9 @@ public class PayServiceImpl implements PayService{
     @Autowired
     private BestPayServiceImpl bestPayService;
 
+    @Autowired
+    private PartInfoService partInfoService;
+
     @Override
     public PayResponse partPay(PartInfo partInfo) {
         PayRequest payRequest = new PayRequest();
@@ -36,6 +41,15 @@ public class PayServiceImpl implements PayService{
         log.info("payRequest={}", JsonUtil.toJson(payRequest));
         PayResponse payResponse = bestPayService.pay(payRequest);
         log.info("payResponse={}", JsonUtil.toJson(payResponse));
+        return payResponse;
+    }
+
+    @Override
+    public PayResponse payNotify(String notifyData) {
+        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
+        log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
+        //TODO 修改订单支付状态
+        PartInfo partInfo = partInfoService.modifyPartStatus(payResponse.getOrderId(), PartTimeStatusEnum.PASS_PAY.getCode());
         return payResponse;
     }
 }

@@ -24,7 +24,7 @@ import java.util.List;
  * @author tim
  * @version 1.0
  * @className UserActivityController
- * @description
+ * @description 普通用户查看活动列表
  * @date 2019-06-20 21:39
  */
 @RestController

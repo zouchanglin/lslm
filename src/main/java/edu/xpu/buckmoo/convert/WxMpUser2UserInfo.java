@@ -7,7 +7,7 @@ import me.chanjar.weixin.mp.bean.result.WxMpUser;
  * @author tim
  * @version 1.0
  * @className WxMpUser2UserInfo
- * @description
+ * @description WxMpUser转为用户实体对象
  * @date 2019-06-21 21:58
  */
 public class WxMpUser2UserInfo {

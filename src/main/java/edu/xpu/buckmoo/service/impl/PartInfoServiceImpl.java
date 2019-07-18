@@ -51,4 +51,10 @@ public class PartInfoServiceImpl implements PartInfoService {
         return partRep.findAllByPartEmployAndPartStatus(openid, status, pageRequest);
     }
 
+
+    @Override
+    public PartInfo modifyPartStatus(String orderId, Integer code) {
+        return null;
+    }
+
 }

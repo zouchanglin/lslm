@@ -34,7 +34,6 @@ public class PartInfo {
      */
     private Integer partCategory;
 
-
     /**
      * 兼职地点
      */

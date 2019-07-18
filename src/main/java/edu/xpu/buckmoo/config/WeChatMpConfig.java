@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author tim
  * @version 1.0
  * @className WeChatMpConfig
- * @description
+ * @description 微信公众号配置
  * @date 2019-06-21 16:30
  */
 @Component

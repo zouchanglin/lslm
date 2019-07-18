@@ -8,7 +8,7 @@ import lombok.Data;
  * @author tim
  * @version 1.0
  * @className ActivityForm
- * @description
+ * @description 活动页面的表单
  * @date 2019-06-22 10:30
  */
 @Data

@@ -8,14 +8,28 @@ import java.util.List;
  * @author tim
  * @version 1.0
  * @className ActivityService
- * @description
+ * @description 活动信息的相关服务
  * @date 2019-06-20 21:09
  */
 public interface ActivityService {
+    /**
+     * 查找一个活动信息实体
+     * @param activityId 活动信息主键
+     * @return 动信息实体
+     */
     ActivityInfo findOne(String activityId);
 
+    /**
+     * 查找所有活动信息
+     * @return 所有活动信息
+     */
     List<ActivityInfo> findAll();
 
+    /**
+     * 根据状态查找所有活动信息
+     * @param activityAudit 活动状态
+     * @return 活动信息
+     */
     List<ActivityInfo> findByActivityAudit(Integer activityAudit);
 
     ActivityInfo save(ActivityInfo activityInfo);

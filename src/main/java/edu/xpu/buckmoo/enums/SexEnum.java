@@ -2,6 +2,9 @@ package edu.xpu.buckmoo.enums;
 
 import lombok.Getter;
 
+/**
+ * 性别枚举
+ */
 @Getter
 public enum SexEnum implements CodeEnum{
     MAN(1, "男"),

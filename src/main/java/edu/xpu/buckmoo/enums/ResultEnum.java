@@ -2,6 +2,9 @@ package edu.xpu.buckmoo.enums;
 
 import lombok.Getter;
 
+/**
+ * 返回值状态枚举
+ */
 @Getter
 public enum ResultEnum implements CodeEnum{
     SUCCESS(0, "成功"),

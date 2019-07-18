@@ -9,10 +9,12 @@ import java.util.Date;
  * @author tim
  * @version 1.0
  * @className ActivityForm2ActivityInfo
- * @description 暂时先考虑这么解决了
+ * @description 活动页面表单转为活动信息对象
  * @date 2019-06-22 10:57
  */
 public class ActivityForm2ActivityInfo {
+
+    //TODO 修改+找BUG
     public static void activityForm2ActivityInfo(ActivityInfo activityInfo, ActivityForm activityForm){
         String activityName = activityForm.getActivityName();
         if(activityName != null) activityInfo.setActivityName(activityName);
@@ -49,6 +51,5 @@ public class ActivityForm2ActivityInfo {
 
         String activityLogo = activityForm.getActivityLogo();
         if(activityLogo != null) activityInfo.setActivityLogo(activityLogo);
-
     }
 }

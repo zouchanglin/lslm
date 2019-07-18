@@ -25,7 +25,7 @@ import java.util.List;
  * @author tim
  * @version 1.0
  * @className UserPartController
- * @description
+ * @description 用户兼职模块控制器
  * @date 2019-06-20 21:37
  */
 @RestController

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @author tim
  * @version 1.0
  * @className WechatOpenConfig
- * @description
+ * @description 微信开放平台配置
  * @date 2019-06-23 09:05
  */
 @Component

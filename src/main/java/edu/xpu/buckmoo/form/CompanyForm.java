@@ -4,6 +4,9 @@ import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import edu.xpu.buckmoo.enums.MemberLEVELEnum;
 import lombok.Data;
 
+/**
+ * 公司注册信息的表单
+ */
 @Data
 public class CompanyForm {
     /**

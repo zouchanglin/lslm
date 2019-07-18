@@ -1,6 +1,5 @@
 package edu.xpu.buckmoo.enums;
 
-import edu.xpu.buckmoo.utils.EnumUtil;
 import lombok.Getter;
 
 

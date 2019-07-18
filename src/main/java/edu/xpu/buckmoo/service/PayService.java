@@ -12,4 +12,6 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
  */
 public interface PayService {
     PayResponse partPay(PartInfo partInfo);
+
+    PayResponse payNotify(String notifyData);
 }

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
  * @author tim
  * @version 1.0
  * @className WechatAccountConfig
- * @description
+ * @description 微信支付和微信登录相关配置
  * @date 2019-06-21 16:39
  */
 @Data
