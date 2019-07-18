@@ -1,6 +1,7 @@
 package edu.xpu.buckmoo.dataobject;
 
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
+import edu.xpu.buckmoo.enums.SexEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -32,6 +33,7 @@ public class PartInfo {
      * 兼职类型
      */
     private Integer partCategory;
+
 
     /**
      * 兼职地点
@@ -79,9 +81,19 @@ public class PartInfo {
     private String partEmploy;
 
     /**
+     * 任务接受者要求：男、女、男女不限
+     */
+    private Integer employSex = SexEnum.OTHER.getCode();
+
+    /**
      * 兼职的备注信息
      */
     private String partRemark;
+
+    /**
+     * 兼职信息发布者的联系方式
+     */
+    private String creatorPhone;
 
     /**
      * 创建时间

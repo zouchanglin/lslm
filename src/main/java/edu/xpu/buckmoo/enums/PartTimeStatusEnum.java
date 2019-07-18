@@ -6,7 +6,7 @@ import lombok.Getter;
  * @author tim
  * @version 1.0
  * @className PartTimeStatusEnum
- * @description 兼职订单枚举
+ * @description 兼职订单状态枚举
  * @date 2019-06-11 21:23
  */
 @Getter

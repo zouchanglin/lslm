@@ -21,9 +21,10 @@ wechat:
   mpAppSecret: 3d63c96f84e4587baa5e4a6f85d1a515
   openAppId:
   openAppSecret:
-  mchId:
-  mchKey:
-  mchPath:
+  mchId: 1545797881
+  mchKey: lhl123456anxlhl123456anxlhl12345
+  mchPath: /Users/zouchanglin/cert/1545797881_20190718_cert/apiclient_cert.p12
+  notifyUrl: http://tim.natapp1.cc/buckmoo/user/pay/notify
 
 projecturl:
   wechatMpAuthorize: http://tim.natapp1.cc

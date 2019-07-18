@@ -1,5 +1,6 @@
 package edu.xpu.buckmoo.service;
 
+import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.PartInfo;
 
 /**
@@ -10,5 +11,5 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
  * @date 2019-06-22 00:44
  */
 public interface PayService {
-    void partPay(PartInfo partInfo);
+    PayResponse partPay(PartInfo partInfo);
 }

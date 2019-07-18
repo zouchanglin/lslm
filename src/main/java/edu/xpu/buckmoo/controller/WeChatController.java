@@ -14,7 +14,6 @@ import me.chanjar.weixin.mp.api.WxMpService;
 import me.chanjar.weixin.mp.bean.result.WxMpOAuth2AccessToken;
 import me.chanjar.weixin.mp.bean.result.WxMpUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,6 +48,11 @@ public class WeChatController {
     @Autowired
     private ProjectUrlConfig projectUrlConfig;
 
+    /**
+     * 用户信息授权
+     * @param returnUrl 重定向的链接
+     * @return 合并链接
+     */
     @GetMapping("/authorize")
     public String authorize(@RequestParam("returnUrl") String returnUrl){
         //1、配置
@@ -64,34 +68,46 @@ public class WeChatController {
         return "redirect:" + redirectUrl;
     }
 
+
+    /**
+     * 用户登录时获取用户信息
+     * @param code 获取信息时的code字段
+     * @param returnUrl 返回的链接
+     * @param openid Cookie里面存储的useropenid
+     * @return 重新向和并连接
+     */
     @GetMapping("/userInfo")
     public String userInfo(@RequestParam("code") String code,
                            @RequestParam("state") String returnUrl,
                            HttpServletResponse response,
-                           @CookieValue(value = "userid", required = false) String userid){
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
-        try {
-            wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-            WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
-            UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
-            UserInfo saveOrUpdate = userInfoService.saveUser(userInfo);
-            log.info("saveOrUpdate = {}", saveOrUpdate);
-        } catch (WxErrorException e) {
-            log.error("【微信网页授权】{}", e.toString());
-            throw new BuckMooException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
-        }
-        String openId = wxMpOAuth2AccessToken.getOpenId();
-
-        if(userid == null){
-            Cookie cookie = new Cookie("userid", openId);
+                           @CookieValue(value = "openid", required = false) String openid){
+        if(openid == null){
+            WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+            try {
+                wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+                WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+                UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
+                UserInfo saveOrUpdate = userInfoService.saveUser(userInfo);
+                log.info("saveOrUpdate = {}", saveOrUpdate);
+            } catch (WxErrorException e) {
+                log.error("【微信网页授权】{}", e.toString());
+                throw new BuckMooException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
+            }
+            String openId = wxMpOAuth2AccessToken.getOpenId();
+            Cookie cookie = new Cookie("openid", openId);
             cookie.setPath("/");
-            cookie.setMaxAge(3600);
+            //cookie有效时间为2小时
+            cookie.setMaxAge(7200);
             response.addCookie(cookie);
         }
-        return "redirect:" + returnUrl + "?openid=" + openId;
+        return "redirect:" + returnUrl + "?openid=" + openid;
     }
 
-
+    /**
+     * 微信开放平台获取access_token
+     * @param returnUrl 返回的链接
+     * @return 合并链接
+     */
     @GetMapping("/qrAuthorize")
     public String qrAuthorize(@RequestParam("returnUrl") String returnUrl){
         String url = projectUrlConfig.getWechatOpenAuthorize() + "/buckmoo/wechat/qrUserInfo";
@@ -104,6 +120,12 @@ public class WeChatController {
         return "redirect:" + redirectUrl;
     }
 
+    /**
+     * 微信开放平台获取用户信息
+     * @param code 微信开放平台的Code字段
+     * @param returnUrl 返回的链接
+     * @return 组合链接
+     */
     @GetMapping("/qrUserInfo")
     public String qrUserInfo(@RequestParam("code") String code,
                            @RequestParam("state") String returnUrl){
@@ -131,11 +153,14 @@ public class WeChatController {
         String url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxb39b42f5fd93c167&secret=3d63c96f84e4587baa5e4a6f85d1a515&code="+code+"&grant_type=authorization_code";
         RestTemplate restTemplate = new RestTemplate();
         String forObject = restTemplate.getForObject(url, String.class);
+
         log.info("response={}", forObject);
+
         String openId = JSONObject.parseObject(forObject).getString("openid");
         String accessToken = JSONObject.parseObject(forObject).getString("access_token");
         String userInfoUrl = "https://api.weixin.qq.com/sns/userinfo?access_token="+accessToken+"&openid="+openId+"&lang=zh_CN";
         RestTemplate restTemplateUserInfo = new RestTemplate();
+
         String userInfo = restTemplateUserInfo.getForObject(userInfoUrl, String.class);
         log.info("userInfo={}", userInfo);
     }

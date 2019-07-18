@@ -5,6 +5,7 @@ import edu.xpu.buckmoo.repository.PartInfoRepository;
 import edu.xpu.buckmoo.service.PartInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -38,6 +39,16 @@ public class PartInfoServiceImpl implements PartInfoService {
     @Override
     public PartInfo addOnePartTime(PartInfo partInfo) {
         return partRep.save(partInfo);
+    }
+
+    @Override
+    public Page<PartInfo> listByUserCreate(String openid, PageRequest pageRequest, Integer status) {
+        return partRep.findAllByPartCreatorAndPartStatus(openid, status, pageRequest);
+    }
+
+    @Override
+    public Page<PartInfo> listByUserAccept(String openid, PageRequest pageRequest, Integer status) {
+        return partRep.findAllByPartEmployAndPartStatus(openid, status, pageRequest);
     }
 
 }

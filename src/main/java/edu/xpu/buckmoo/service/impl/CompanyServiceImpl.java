@@ -4,7 +4,11 @@ import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author tim
@@ -26,6 +30,20 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyInfo findCompanyInfoByOpenid(String openId) {
         return companyRep.findByOpenId(openId);
-        //TODO 完成扫码登录
+    }
+
+    @Override
+    public Page<CompanyInfo> findByCompanyAudit(Integer status, Pageable pageable) {
+        return companyRep.findAllByCompanyStatus(status, pageable);
+    }
+
+    @Override
+    public void delete(String companyId) {
+        companyRep.deleteById(companyId);
+    }
+
+    @Override
+    public CompanyInfo save(CompanyInfo companyInfo) {
+        return companyRep.save(companyInfo);
     }
 }
