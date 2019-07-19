@@ -29,6 +29,8 @@ public interface PartInfoRepository extends JpaRepository<PartInfo, String> {
      */
     Page<PartInfo> findAllByPartCreator(String partCreator, Pageable pageable);
 
+    Page<PartInfo> findAllByPartEmploy(String partEmploy, Pageable pageable);
+
     /**
      * @param partCreator 兼职发布者
      * @param partStatus 兼职状态

@@ -66,4 +66,20 @@ public interface PartInfoService {
      * @return 修改并保存后的兼职信息
      */
     PartInfo modifyPartStatus(String orderId, Integer code);
+
+    /**
+     * 根据用户发布的兼职分页查询(所有)
+     * @param openid 用户的openId
+     * @param pageRequest 分页参数
+     * @return 分页查询结果
+     */
+    Page<PartInfo> userAllCreate(String openid, PageRequest pageRequest);
+
+    /**
+     * 根据用户接受的兼职分页查询(所有)
+     * @param openid 用户的openId
+     * @param pageRequest 分页参数
+     * @return 分页查询结果
+     */
+    Page<PartInfo> userAllAccept(String openid, PageRequest pageRequest);
 }

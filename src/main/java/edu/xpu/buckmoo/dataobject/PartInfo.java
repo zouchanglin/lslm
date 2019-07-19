@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -70,9 +71,14 @@ public class PartInfo {
     private BigDecimal partMoney = new BigDecimal(0);
 
     /**
+     * 接收方接收金额
+     */
+    private BigDecimal partMoneyShow = new BigDecimal(0);
+
+    /**
      * 此兼职信息的状态
      */
-    private Integer partStatus = PartTimeStatusEnum.NEW_PART.getCode();
+    private Integer partStatus = PartTimeStatusEnum.NO_PAY.getCode();
 
     /**
      * 兼职任务接受者UserId

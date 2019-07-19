@@ -6,12 +6,17 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
+import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.service.PayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
+import edu.xpu.buckmoo.utils.MathUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 
 /**
  * @author tim
@@ -48,8 +53,21 @@ public class PayServiceImpl implements PayService{
     public PayResponse payNotify(String notifyData) {
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
         log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
-        //TODO 修改订单支付状态
-        PartInfo partInfo = partInfoService.modifyPartStatus(payResponse.getOrderId(), PartTimeStatusEnum.PASS_PAY.getCode());
+
+        //先查找兼职信息
+        PartInfo findRet = partInfoService.findOneById(payResponse.getOrderId());
+        if(findRet == null) throw new BuckMooException(ResultEnum.PART_NOT_EXIT);
+
+        //判断兼职支付金额
+        if(!MathUtil.equals(payResponse.getOrderAmount(), findRet.getPartMoney().doubleValue())){
+            log.error("[微信支付异步通知] payResponse.getOrderAmount() = {}", payResponse);
+            throw new BuckMooException(ResultEnum.WECHAT_PAY_ERROR);
+        }
+
+        PartInfo partInfo = partInfoService.modifyPartStatus(payResponse.getOrderId(), PartTimeStatusEnum.NEW_PART.getCode());
+
+        //抽取10%佣金
+        partInfo.setPartMoneyShow(partInfo.getPartMoney().multiply(new BigDecimal(0.1)));
         return payResponse;
     }
 }

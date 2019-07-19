@@ -49,7 +49,7 @@ public class UserPayController {
         return "pay";
     }
 
-
+    //TODO 微信异步通知支付结果 8-5 微信异步通知（上）00:07 start
     @PostMapping("notify")
     public String payNotify(@RequestBody String notifyData){
         PayResponse payResponse = payService.payNotify(notifyData);

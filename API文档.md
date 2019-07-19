@@ -99,6 +99,7 @@ category : Integer 分类Id
 				"partEnd":1563255614000, //结束时间
 				"partId":"1560260414182640052", //兼职Id
 				"partMoney":30, //兼职金额
+        "partMoneyShow", //抽成后兼职支付金额
 				"partName":"周四大学英语代课", //标题
 				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326", //描述
 				"partStart":1563457214000, //兼职开始时间
@@ -131,11 +132,23 @@ category : Integer 分类Id
 
 兼职状态参考值:
 
-![](https://s2.ax1x.com/2019/07/17/ZLY82j.png)
+```java
+@Getter
+public enum  PartTimeStatusEnum implements CodeEnum{
+    NO_PAY(0, "未付款 & 未审核"),
+    NEW_PART(1, "必须付款 & 未审核"),
+    NOT_PASS(2, "审核失败 & 已退款"),
+    PASS_PAY(3, "审核通过 & 已发布"),
+    TAKE_ORDER(4, "已经接单"),
+    FINISH_ORDER(5, "已经完成"),
+    FINISH_CREATE(6, "发布方确认已完成"),
+    CANCEL_CREATE(7, "取消订单 未付款"),
+    CANCEL_PAY(8, "取消订单 已付款/接单"),
+    OTHER(9, "其他情况")
+}
+```
 
-
-
-### 3、发布兼职
+### 3、发布兼职信息
 
 ```
 POST http://tim.natapp1.cc/buckmoo/user/part/create
@@ -180,6 +193,7 @@ creatorPhone 联系方式(手机号码)
 		"partEnd":1563269870,
 		"partId":"1563348836534761769",
 		"partMoney":9900,
+    "partMoneyShow": 9890,
 		"partName":"SpringBoot商城毕业设计",
 		"partOverview":"SpringBoot商城毕业设计，非常方便，待遇优厚！！",
 		"partRemark":"备注信息：无",
@@ -191,7 +205,7 @@ creatorPhone 联系方式(手机号码)
 }
 ```
 
-### 4、查看我发布的兼职信息
+### 4、查看发布兼职 (分状态)
 
 ```
 GET http://tim.natapp1.cc/buckmoo/user/part/created_list
@@ -223,6 +237,7 @@ pageindex Integer 分页索引
 				"partEnd":1563270000,
 				"partId":"1563348810541158695",
 				"partMoney":9900,
+        "partMoneyShow": 9890,
 				"partName":"SpringBoot商城毕业设计",
 				"partOverview":"SpringBoot商城毕业设计，非常方便，待遇优厚！！",
 				"partRemark":"备注信息：无",
@@ -241,6 +256,7 @@ pageindex Integer 分页索引
 				"partEnd":1563270000,
 				"partId":"1563270667200359519",
 				"partMoney":75,
+        "partMoneyShow": 9890,
 				"partName":"抄写论文 -1000字50元",
 				"partOverview":"1000字50元，抄完即可通知抄写结束，非常方便",
 				"partRemark":"备注信息：无",
@@ -278,6 +294,7 @@ pageindex Integer 分页索引
 				"partEnd":1563255614000,
 				"partId":"1560260414182640053",
 				"partMoney":30,
+        "partMoneyShow": 9890,
 				"partName":"周四大学英语代课",
 				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
 				"partStart":1563457214000,
@@ -291,7 +308,7 @@ pageindex Integer 分页索引
 }
 ```
 
-### 5、查看我接手的兼职信息
+### 5、查看接手兼职 (分状态)
 
 和`4、查看我发布的兼职信息`一模一样
 
@@ -325,6 +342,7 @@ pageindex Integer 分页索引
 				"partEnd":1563255614000,
 				"partId":"1560260414182640055",
 				"partMoney":30,
+        "partMoneyShow": 9890,
 				"partName":"周四大学英语代课",
 				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
 				"partStart":1563457214000,
@@ -343,6 +361,7 @@ pageindex Integer 分页索引
 				"partEnd":1563255614000,
 				"partId":"1560260414182640054",
 				"partMoney":30,
+        "partMoneyShow": 9890,
 				"partName":"周四大学英语代课",
 				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
 				"partStart":1563457214000,
@@ -355,6 +374,55 @@ pageindex Integer 分页索引
 	"msg":"成功"
 }
 ```
+
+
+
+### 6、查看发布兼职 (不分状态)
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/part/all_created
+```
+
+参数
+
+```
+pageindex 分页参数
+```
+
+返回值 `4、查看发布兼职 (分状态) 一样`
+
+### 7、查看接手兼职  (不分状态)
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/part/all_accepted 
+```
+
+参数
+
+```
+pageindex 分页参数
+```
+
+返回值 `5、查看接手兼职 (分状态) 一样`
+
+
+
+### 8、发布兼职付款
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/pay/create
+```
+
+参数
+
+```
+partId : String 兼职Id
+returnUrl : String 支付完成后跳转地址
+```
+
+返回值
+
+H5 支付页面
 
 
 
@@ -395,6 +463,8 @@ openid : String
 ### 
 
 
+
+### 
 
 # 二、活动发布方
 

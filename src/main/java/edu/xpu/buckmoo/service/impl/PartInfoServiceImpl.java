@@ -1,13 +1,19 @@
 package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
+import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.PartInfoRepository;
 import edu.xpu.buckmoo.service.PartInfoService;
+import edu.xpu.buckmoo.utils.EnumUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author tim
@@ -54,7 +60,24 @@ public class PartInfoServiceImpl implements PartInfoService {
 
     @Override
     public PartInfo modifyPartStatus(String orderId, Integer code) {
-        return null;
+        PartInfo partInfo = partRep.findById(orderId).orElse(null);
+        if(partInfo == null) throw new BuckMooException(ResultEnum.PART_NOT_EXIT);
+
+        PartTimeStatusEnum partStatusEnum = EnumUtil.getByCode(code, PartTimeStatusEnum.class);
+        if(partStatusEnum == null) throw new BuckMooException(ResultEnum.ENUM_NOT_EXITS);
+
+        partInfo.setPartStatus(partStatusEnum.getCode());
+        return partRep.save(partInfo);
+    }
+
+    @Override
+    public Page<PartInfo> userAllCreate(String openid, PageRequest pageRequest) {
+        return partRep.findAllByPartCreator(openid, pageRequest);
+    }
+
+    @Override
+    public Page<PartInfo> userAllAccept(String openid, PageRequest pageRequest) {
+        return partRep.findAllByPartEmploy(openid, pageRequest);
     }
 
 }

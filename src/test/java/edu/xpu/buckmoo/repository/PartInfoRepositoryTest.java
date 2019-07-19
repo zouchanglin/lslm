@@ -11,8 +11,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +27,7 @@ public class PartInfoRepositoryTest {
     public void save(){
         PartInfo partInfo = new PartInfo();
         partInfo.setPartId(KeyUtil.genUniqueKey());
-        partInfo.setPartName("周三代课");
+        partInfo.setPartName("XXXXXXXXXXXX");
         partInfo.setPartCategory(0);
         partInfo.setPartAddress("西安工程大学临潼校区");
         partInfo.setPartOverview("这是详细描述信息");
@@ -76,5 +77,15 @@ public class PartInfoRepositoryTest {
         for(PartInfo partInfo: content){
             System.out.println(partInfo);
         }
+    }
+
+
+    @Test
+    public void save2(){
+        Optional<PartInfo> byId = repository.findById("111111111111111");
+        Date startTime = byId.get().getPartStart();
+        Date endTime = byId.get().getPartEnd();
+        System.out.println(startTime);
+        System.out.println(endTime);
     }
 }

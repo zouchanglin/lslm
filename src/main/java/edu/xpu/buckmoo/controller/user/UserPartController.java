@@ -1,7 +1,6 @@
 package edu.xpu.buckmoo.controller.user;
 
 import edu.xpu.buckmoo.VO.PartInfoVO;
-import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.convert.PartTimeForm2Info;
 import edu.xpu.buckmoo.dataobject.PartCategory;
 import edu.xpu.buckmoo.dataobject.PartInfo;
@@ -18,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -92,6 +90,13 @@ public class UserPartController {
         return null;
     }
 
+    /**
+     * 查看用户发布的兼职列表（分状态查看）
+     * @param openid 用户openid
+     * @param status 兼职信息的状态
+     * @param pageindex 分页参数
+     * @return 用户发布的兼职列表
+     */
     @GetMapping("/created_list")
     public String createdPartList(@CookieValue(value = "openid", required = false) String openid,
                                   @RequestParam("status") Integer status,
@@ -108,6 +113,13 @@ public class UserPartController {
         return JsonUtil.toJson(ResultVOUtil.success(partInfoVO));
     }
 
+    /**
+     * 查看用户接手的兼职列表（分状态查看）
+     * @param openid 用户openid
+     * @param status 兼职信息的状态
+     * @param pageindex 分页参数
+     * @return 用户接手的兼职列表
+     */
     @GetMapping("/accepted_list")
     public String acceptPartList(@CookieValue(value = "openid", required = false) String openid,
                                   @RequestParam("status") Integer status,
@@ -116,6 +128,49 @@ public class UserPartController {
         Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
         PageRequest pageRequest = PageRequest.of(pageindex, 4, sort);
         Page<PartInfo> partInfoPage = partInfoService.listByUserAccept(openid, pageRequest, status);
+
+        PartInfoVO partInfoVO = new PartInfoVO();
+        partInfoVO.setPageCount(partInfoPage.getTotalPages());
+        partInfoVO.setPartInfoList(partInfoPage.getContent());
+
+        return JsonUtil.toJson(ResultVOUtil.success(partInfoVO));
+    }
+
+
+    /**
+     * 查看用户创建的兼职列表（不分状态的那种）
+     * @param openid openid
+     * @param pageindex 分页参数
+     * @return 用户创建的兼职列表
+     */
+    @GetMapping("/all_created")
+    public String allCreatedPart(@CookieValue(value = "openid", required = false) String openid,
+                                  @RequestParam("pageindex") Integer pageindex){
+        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
+        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+        PageRequest pageRequest = PageRequest.of(pageindex, 4, sort);
+        Page<PartInfo> partInfoPage = partInfoService.userAllCreate(openid, pageRequest);
+
+        PartInfoVO partInfoVO = new PartInfoVO();
+        partInfoVO.setPageCount(partInfoPage.getTotalPages());
+        partInfoVO.setPartInfoList(partInfoPage.getContent());
+
+        return JsonUtil.toJson(ResultVOUtil.success(partInfoVO));
+    }
+
+    /**
+     * 查看用户接手的兼职列表（不分状态的那种）
+     * @param openid 用户Id
+     * @param pageindex 分页参数
+     * @return 用户接手的兼职列表
+     */
+    @GetMapping("/all_accepted")
+    public String allAcceptPart(@CookieValue(value = "openid", required = false) String openid,
+                                 @RequestParam("pageindex") Integer pageindex){
+        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
+        Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
+        PageRequest pageRequest = PageRequest.of(pageindex, 4, sort);
+        Page<PartInfo> partInfoPage = partInfoService.userAllAccept(openid, pageRequest);
 
         PartInfoVO partInfoVO = new PartInfoVO();
         partInfoVO.setPageCount(partInfoPage.getTotalPages());
