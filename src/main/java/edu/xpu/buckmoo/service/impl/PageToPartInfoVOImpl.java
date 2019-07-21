@@ -11,7 +11,6 @@ import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartCategoryService;
 import edu.xpu.buckmoo.service.UserInfoService;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
@@ -20,11 +19,14 @@ import java.util.List;
 
 @Service
 public class PageToPartInfoVOImpl implements PageToPartInfoVO {
-    @Autowired
-    private PartCategoryService partCategoryService;
+    private final PartCategoryService partCategoryService;
 
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
+
+    public PageToPartInfoVOImpl(PartCategoryService partCategoryService, UserInfoService userInfoService) {
+        this.partCategoryService = partCategoryService;
+        this.userInfoService = userInfoService;
+    }
 
     @Override
     public PartInfoVO partPageToPartInfoVO(Page<PartInfo> partInfoPage) {

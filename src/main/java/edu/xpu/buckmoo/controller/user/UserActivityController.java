@@ -12,7 +12,6 @@ import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,11 +31,14 @@ import java.util.List;
 @RequestMapping("/user/activity")
 public class UserActivityController {
 
-    @Autowired
-    private ActivityService activityService;
+    private final ActivityService activityService;
 
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
+
+    public UserActivityController(ActivityService activityService, CompanyService companyService) {
+        this.activityService = activityService;
+        this.companyService = companyService;
+    }
 
     /**
      * 展示正在进行的活动

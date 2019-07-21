@@ -19,8 +19,11 @@ import java.util.List;
  */
 @Service
 public class CompanyServiceImpl implements CompanyService {
-    @Autowired
-    private CompanyInfoRepository companyRep;
+    private final CompanyInfoRepository companyRep;
+
+    public CompanyServiceImpl(CompanyInfoRepository companyRep) {
+        this.companyRep = companyRep;
+    }
 
     @Override
     public CompanyInfo findOne(String companyInfoId) {

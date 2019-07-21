@@ -10,7 +10,6 @@ import edu.xpu.buckmoo.service.PayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,11 +26,14 @@ import java.util.Map;
 @Slf4j
 @RequestMapping("/user/pay")
 public class UserPayController {
-    @Autowired
-    private PartInfoService partService;
+    private final PartInfoService partService;
 
-    @Autowired
-    private PayService payService;
+    private final PayService payService;
+
+    public UserPayController(PartInfoService partService, PayService payService) {
+        this.partService = partService;
+        this.payService = payService;
+    }
 
     /**
      * 支付已经发布的兼职信息

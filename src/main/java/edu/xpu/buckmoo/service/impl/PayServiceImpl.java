@@ -15,7 +15,6 @@ import edu.xpu.buckmoo.service.PayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.MathUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -30,11 +29,13 @@ import java.math.BigDecimal;
 @Service
 @Slf4j
 public class PayServiceImpl implements PayService{
-    @Autowired
-    private BestPayServiceImpl bestPayService;
+    private final BestPayServiceImpl bestPayService;
+    private final PartInfoService partInfoService;
 
-    @Autowired
-    private PartInfoService partInfoService;
+    public PayServiceImpl(BestPayServiceImpl bestPayService, PartInfoService partInfoService) {
+        this.bestPayService = bestPayService;
+        this.partInfoService = partInfoService;
+    }
 
     @Override
     public PayResponse partPay(PartInfo partInfo) {

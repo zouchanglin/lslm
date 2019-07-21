@@ -12,8 +12,6 @@ import edu.xpu.buckmoo.utils.EnumUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +27,11 @@ import java.util.List;
 @RequestMapping("/admin/activity")
 @Slf4j
 public class AdminActivityController {
-    @Autowired
-    private ActivityService activityService;
+    private final ActivityService activityService;
+
+    public AdminActivityController(ActivityService activityService) {
+        this.activityService = activityService;
+    }
 
     /**
      * 管理员查看活动

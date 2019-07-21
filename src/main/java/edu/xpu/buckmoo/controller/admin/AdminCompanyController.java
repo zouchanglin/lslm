@@ -33,8 +33,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin/company")
 @Slf4j
 public class AdminCompanyController {
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
+
+    public AdminCompanyController(CompanyService companyService) {
+        this.companyService = companyService;
+    }
 
     /**
      * 管理员查看活动

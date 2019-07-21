@@ -3,8 +3,6 @@ package edu.xpu.buckmoo.service.impl;
 import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.repository.UserInfoRepository;
 import edu.xpu.buckmoo.service.UserInfoService;
-import edu.xpu.buckmoo.utils.KeyUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,8 +14,11 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserInfoServiceImpl implements UserInfoService {
-    @Autowired
-    private UserInfoRepository userRep;
+    private final UserInfoRepository userRep;
+
+    public UserInfoServiceImpl(UserInfoRepository userRep) {
+        this.userRep = userRep;
+    }
 
     @Override
     public UserInfo saveUser(UserInfo userInfo) {

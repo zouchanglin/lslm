@@ -13,7 +13,6 @@ import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -32,14 +31,17 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/user/part")
 public class UserPartController {
-    @Autowired
-    private PartInfoService partInfoService;
+    private final PartInfoService partInfoService;
 
-    @Autowired
-    private PartCategoryService partCategoryService;
+    private final PartCategoryService partCategoryService;
 
-    @Autowired
-    private PageToPartInfoVO pageToPartInfoVO;
+    private final PageToPartInfoVO pageToPartInfoVO;
+
+    public UserPartController(PartCategoryService partCategoryService, PageToPartInfoVO pageToPartInfoVO, PartInfoService partInfoService) {
+        this.partCategoryService = partCategoryService;
+        this.pageToPartInfoVO = pageToPartInfoVO;
+        this.partInfoService = partInfoService;
+    }
 
     /**
      * 兼职信息列表
@@ -129,9 +131,6 @@ public class UserPartController {
         PartInfoVO partInfoVO = pageToPartInfoVO.partPageToPartInfoVO(partInfoPage);
         return JsonUtil.toJson(ResultVOUtil.success(partInfoVO));
     }
-
-
-
 
     /**
      * 查看用户发布的兼职列表（分状态查看）

@@ -19,8 +19,11 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RequestMapping("/user/info")
 public class UserInfoController {
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
+
+    public UserInfoController(UserInfoService userInfoService) {
+        this.userInfoService = userInfoService;
+    }
 
     @GetMapping("/show")
     public String getUserInfo(@CookieValue(value = "openid", required = false) String openid){

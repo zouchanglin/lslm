@@ -17,6 +17,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/company/login")
 @Slf4j
 public class ComLoginController {
-    @Autowired
-    private WxMpService wxMpService;
+
 }

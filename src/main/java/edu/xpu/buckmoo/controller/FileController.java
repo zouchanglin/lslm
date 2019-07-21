@@ -5,7 +5,6 @@ import edu.xpu.buckmoo.config.ProjectUrlConfig;
 import edu.xpu.buckmoo.enums.ResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -26,8 +25,11 @@ import java.util.UUID;
 @RequestMapping("/file")
 public class FileController {
 
-    @Autowired
-    private ProjectUrlConfig projectUrlConfig;
+    private final ProjectUrlConfig projectUrlConfig;
+
+    public FileController(ProjectUrlConfig projectUrlConfig) {
+        this.projectUrlConfig = projectUrlConfig;
+    }
 
     @GetMapping("/fileDownload")
     public ResponseEntity<FileSystemResource> file(@RequestParam("fileUrl") String fileName) {

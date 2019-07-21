@@ -14,7 +14,6 @@ import java.util.Date;
  */
 public class ActivityForm2ActivityInfo {
 
-    //TODO 修改+找BUG
     public static void activityForm2ActivityInfo(ActivityInfo activityInfo, ActivityForm activityForm){
         String activityName = activityForm.getActivityName();
         if(activityName != null) activityInfo.setActivityName(activityName);

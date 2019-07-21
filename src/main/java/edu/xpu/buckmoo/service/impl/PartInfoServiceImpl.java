@@ -7,13 +7,10 @@ import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.PartInfoRepository;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.utils.EnumUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * @author tim
@@ -24,8 +21,11 @@ import java.util.Optional;
  */
 @Service
 public class PartInfoServiceImpl implements PartInfoService {
-    @Autowired
-    private PartInfoRepository partRep;
+    private final PartInfoRepository partRep;
+
+    public PartInfoServiceImpl(PartInfoRepository partRep) {
+        this.partRep = partRep;
+    }
 
     @Override
     public PartInfo findOneById(String partId) {
