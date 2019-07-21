@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PartCategoryService {
     List<PartCategory> getAll();
+
+    PartCategory findById(Integer partCategory);
 }

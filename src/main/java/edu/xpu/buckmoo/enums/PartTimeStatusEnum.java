@@ -31,4 +31,12 @@ public enum  PartTimeStatusEnum implements CodeEnum{
         this.code = code;
         this.message = message;
     }
+
+    public static PartTimeStatusEnum getOneByStatus(Integer status){
+        for(PartTimeStatusEnum partTimeStatusEnum: values()){
+            if(partTimeStatusEnum.getCode().equals(status))
+                return partTimeStatusEnum;
+        }
+        return null;
+    }
 }

@@ -19,4 +19,9 @@ public class PartCategoryServiceImpl implements PartCategoryService {
     public List<PartCategory> getAll() {
         return partCategoryRepository.findAll();
     }
+
+    @Override
+    public PartCategory findById(Integer partCategory) {
+        return partCategoryRepository.findById(partCategory).orElse(null);
+    }
 }
