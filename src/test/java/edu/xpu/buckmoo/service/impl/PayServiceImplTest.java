@@ -25,4 +25,9 @@ public class PayServiceImplTest {
         PartInfo oneById = partInfoService.findOneById("1963348810541158995");
         PayResponse payResponse = payService.partPay(oneById);
     }
+
+    @Test
+    public void refund(){
+        payService.refund(partInfoService.findOneById("1563528411222170787"));
+    }
 }

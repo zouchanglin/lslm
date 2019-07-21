@@ -3,6 +3,8 @@ package edu.xpu.buckmoo.service.impl;
 import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.model.RefundRequest;
+import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
@@ -50,7 +52,7 @@ public class PayServiceImpl implements PayService{
     }
 
     @Override
-    public PayResponse payNotify(String notifyData) {
+    public void payNotify(String notifyData) {
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
         log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
 
@@ -66,8 +68,21 @@ public class PayServiceImpl implements PayService{
 
         PartInfo partInfo = partInfoService.modifyPartStatus(payResponse.getOrderId(), PartTimeStatusEnum.NEW_PART.getCode());
 
-        //抽取10%佣金
-        partInfo.setPartMoneyShow(partInfo.getPartMoney().multiply(new BigDecimal(0.1)));
-        return payResponse;
+        //抽取5%佣金
+        partInfo.setPartMoneyShow(partInfo.getPartMoney().multiply(new BigDecimal(0.05)));
+        partInfoService.addOnePartTime(partInfo);
+    }
+
+    @Override
+    public RefundResponse refund(PartInfo partInfo) {
+        RefundRequest refundRequest = new RefundRequest();
+        refundRequest.setOrderId(partInfo.getPartId());
+        refundRequest.setOrderAmount(partInfo.getPartMoney().doubleValue());
+        refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
+
+        log.info("[微信退款] refundRequest={}", JsonUtil.toJson(refundRequest));
+        RefundResponse refundResponse = bestPayService.refund(refundRequest);
+        log.info("[微信退款] refundResponse={}", JsonUtil.toJson(refundResponse));
+        return refundResponse;
     }
 }

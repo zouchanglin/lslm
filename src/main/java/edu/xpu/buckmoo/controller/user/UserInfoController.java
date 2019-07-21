@@ -23,11 +23,14 @@ public class UserInfoController {
     private UserInfoService userInfoService;
 
     @GetMapping("/show")
-    public String getUserInfo(@RequestParam("openid") String openid){
+    public String getUserInfo(@CookieValue(value = "openid", required = false) String openid){
+        if(openid == null){
+            return JsonUtil.toJson(ResultVOUtil.error(1, "😁请授权登录后使用"));
+        }
         UserInfo findRet = userInfoService.findById(openid);
         if(findRet != null)
             return JsonUtil.toJson(ResultVOUtil.success(findRet));
-        return JsonUtil.toJson(ResultVOUtil.error(1, "用户信息为空"));
+        return JsonUtil.toJson(ResultVOUtil.error(2, "😁当前人数过多，请客观稍后再来~"));
     }
 
 

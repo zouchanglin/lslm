@@ -1,6 +1,7 @@
 package edu.xpu.buckmoo.service;
 
 import com.lly835.bestpay.model.PayResponse;
+import com.lly835.bestpay.model.RefundResponse;
 import edu.xpu.buckmoo.dataobject.PartInfo;
 
 /**
@@ -13,5 +14,7 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
 public interface PayService {
     PayResponse partPay(PartInfo partInfo);
 
-    PayResponse payNotify(String notifyData);
+    void payNotify(String notifyData);
+
+    RefundResponse refund(PartInfo partInfo);
 }
