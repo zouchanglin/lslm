@@ -4,6 +4,7 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import retrofit2.http.Part;
 
 /**
  * 此接口是兼职信息的操作接口
@@ -82,4 +83,11 @@ public interface PartInfoService {
      * @return 分页查询结果
      */
     Page<PartInfo> userAllAccept(String openid, PageRequest pageRequest);
+
+
+    PartInfo acceptOnePart(String openid, String partId);
+
+    PartInfo finishOnePart(String openid, String partId);
+
+    PartInfo affirmFinishPart(String openid, String partId);
 }

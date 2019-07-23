@@ -430,9 +430,54 @@ H5 支付页面
 
 
 
-用户主动退款
+用户主动退款（尚未设置接口）
 
-审核未通过退款
+审核未通过退款（后台）
+
+
+
+### 10、接手一个兼职
+
+```
+POST http://tim.natapp1.cc/buckmoo/user/part/accept
+```
+
+参数
+
+```
+partId : String要接受的兼职信息Id 
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":{
+		"createTime":1563395610000,
+		"creatorPhone":"12321313123",
+		"employSex":3,
+		"partAddress":"西安芷阳新苑19栋1单元301",
+		"partCategory":6,
+		"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+		"partEmploy":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
+		"partEnd":1547864070000,
+		"partId":"1963348810541158999",
+		"partMoney":0.02,
+		"partMoneyShow":0.00,
+		"partName":"周六家教-辅导数学-测试",
+		"partOverview":"周六家教-辅导数学，周六整天，孩子数学差，需要辅导可长期联系",
+		"partRemark":"备注信息：无",
+		"partStart":1547864070000,
+		"partStatus":4,
+		"partTime":"时间最多两个月，三个月也行",
+		"updateTime":1563746701000
+	},
+	"msg":"成功"
+}
+```
+
+
 
 ## 账户相关
 

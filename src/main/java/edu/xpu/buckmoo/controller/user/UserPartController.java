@@ -5,11 +5,15 @@ import edu.xpu.buckmoo.VO.PartInfoVO;
 import edu.xpu.buckmoo.convert.PartTimeForm2Info;
 import edu.xpu.buckmoo.dataobject.PartCategory;
 import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
+import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.form.PartTimeForm;
 import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartCategoryService;
 import edu.xpu.buckmoo.service.PartInfoService;
+import edu.xpu.buckmoo.service.UserInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -37,10 +41,14 @@ public class UserPartController {
 
     private final PageToPartInfoVO pageToPartInfoVO;
 
-    public UserPartController(PartCategoryService partCategoryService, PageToPartInfoVO pageToPartInfoVO, PartInfoService partInfoService) {
+    private final UserInfoService userInfoService;
+
+    public UserPartController(PartCategoryService partCategoryService, PageToPartInfoVO pageToPartInfoVO,
+                              PartInfoService partInfoService, UserInfoService userInfoService) {
         this.partCategoryService = partCategoryService;
         this.pageToPartInfoVO = pageToPartInfoVO;
         this.partInfoService = partInfoService;
+        this.userInfoService = userInfoService;
     }
 
     /**
@@ -74,13 +82,14 @@ public class UserPartController {
 
 
     /**
-     * 发布兼职
+     * 用户发布兼职
      * @version 1.0
      * @param openid cookie里面存储的openid
      * @param partTimeForm 兼职表单
      */
     @PostMapping("/create")
-    public String createPartInfo(@CookieValue(value = "openid", required = false) String openid, PartTimeForm partTimeForm){
+    public String createPartInfo(@CookieValue(value = "openid", required = false) String openid,
+                                 PartTimeForm partTimeForm){
         PartInfo partInfo = PartTimeForm2Info.form2partInfo(partTimeForm);
         log.info("partInfo = {}", partInfo);
         if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "😁请先登录"));
@@ -91,6 +100,55 @@ public class UserPartController {
             return JsonUtil.toJson(ResultVOUtil.success(addRet));
         else
             return JsonUtil.toJson(ResultVOUtil.error(1, "网络繁忙"));
+    }
+
+
+    /**
+     * 用户接受兼职
+     * @param openid 用户的openid
+     * @param partId 兼职id
+     * @return 更新后的兼职信息
+     */
+    @PostMapping("/accept")
+    public String acceptPartInfo(@CookieValue(value = "openid", required = false) String openid,
+                             String partId){
+        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
+
+        //检查接单人电话信息
+        UserInfo byId = userInfoService.findById(openid);
+        String userPhone = byId.getUserPhone();
+        //手机号正则
+        if(userPhone == null || userPhone.trim().equals("")){
+            return JsonUtil.toJson(ResultVOUtil.error(1, "请先绑定手机号"));
+        }
+
+        PartInfo updatePartInfo = partInfoService.acceptOnePart(openid, partId);
+        return JsonUtil.toJson(ResultVOUtil.success(updatePartInfo));
+    }
+
+    /**
+     * 接受者完成兼职
+     * @param openid 接受者openid
+     * @param partId 兼职id
+     * @return 更新状态后的信息
+     */
+    @PostMapping("/accepter_finish")
+    public String acceptFinishPart(@CookieValue(value = "openid", required = false) String openid,
+                                   String partId){
+        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
+
+        PartInfo partInfo = partInfoService.finishOnePart(openid, partId);
+        return JsonUtil.toJson(ResultVOUtil.success(partInfo));
+    }
+    
+    @PostMapping("/affirm_finish")
+    public String affirmFinishPart(@CookieValue(value = "openid", required = false) String openid,
+                                   String partId){
+        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
+
+        PartInfo updatePartInfo = partInfoService.affirmFinishPart(openid, partId);
+
+        return "";
     }
 
 
@@ -168,6 +226,7 @@ public class UserPartController {
      * @deprecated Use {@link #allAcceptPart(String, Integer)} instead
      */
     @GetMapping("/accepted_list")
+    @Deprecated
     public String acceptPartList(@CookieValue(value = "openid", required = false) String openid,
                                  @RequestParam("status") Integer status,
                                  @RequestParam("pageindex") Integer pageindex){
