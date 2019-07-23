@@ -62,11 +62,11 @@ public interface PartInfoService {
 
     /**
      * 修改兼职信息状态
-     * @param orderId 兼职信息Id
+     * @param partId 兼职信息Id
      * @param code 要修改的状态
      * @return 修改并保存后的兼职信息
      */
-    PartInfo modifyPartStatus(String orderId, Integer code);
+    PartInfo modifyPartStatus(String partId, Integer code);
 
     /**
      * 根据用户发布的兼职分页查询(所有)

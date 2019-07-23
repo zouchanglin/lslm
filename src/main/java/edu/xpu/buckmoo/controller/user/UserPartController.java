@@ -138,7 +138,7 @@ public class UserPartController {
         if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
 
         PartInfo partInfo = partInfoService.finishOnePart(openid, partId);
-        return JsonUtil.toJson(ResultVOUtil.success(partInfo));
+        return JsonUtil.toJson(partInfo);
     }
     
     @PostMapping("/affirm_finish")
@@ -148,7 +148,8 @@ public class UserPartController {
 
         PartInfo updatePartInfo = partInfoService.affirmFinishPart(openid, partId);
 
-        return "";
+        //TODO 付款到账户
+        return JsonUtil.toJson(ResultVOUtil.success(updatePartInfo));
     }
 
 

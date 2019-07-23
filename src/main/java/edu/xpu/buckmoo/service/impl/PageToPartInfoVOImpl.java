@@ -68,7 +68,6 @@ public class PageToPartInfoVOImpl implements PageToPartInfoVO {
                 partInfoOther.setPartEmployPhone("");
             }
 
-
             //状态
             PartTimeStatusEnum oneByStatus = PartTimeStatusEnum.getOneByStatus(partInfo.getPartStatus());
             assert oneByStatus != null;
