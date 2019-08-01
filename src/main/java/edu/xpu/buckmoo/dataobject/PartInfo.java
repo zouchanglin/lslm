@@ -8,8 +8,6 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * @author tim
@@ -48,12 +46,12 @@ public class PartInfo {
     /**
      * 兼职开始时间
      */
-    private Date partStart;
+    private Long partStart;
 
     /**
      * 兼职结束时间
      */
-    private Date partEnd;
+    private Long partEnd;
 
     /**
      * 对兼职时间的一个补充
@@ -103,10 +101,10 @@ public class PartInfo {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private Long createTime;
 
     /**
      * 信息更新时间
      */
-    private Date updateTime;
+    private Long updateTime;
 }

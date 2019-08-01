@@ -15,8 +15,8 @@ public class PartTimeForm2Info {
         PartInfo partInfo = new PartInfo();
         BeanUtils.copyProperties(partTimeForm, partInfo);
 
-        partInfo.setPartStart(new Date(partTimeForm.getPartStart()));
-        partInfo.setPartEnd(new Date(partTimeForm.getPartEnd()));
+        partInfo.setPartStart(partTimeForm.getPartStart());
+        partInfo.setPartEnd(partTimeForm.getPartEnd());
         partInfo.setPartId(KeyUtil.genUniqueKey());
 
         return partInfo;

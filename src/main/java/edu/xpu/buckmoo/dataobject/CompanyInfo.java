@@ -1,7 +1,7 @@
 package edu.xpu.buckmoo.dataobject;
 
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
-import edu.xpu.buckmoo.enums.MemberLEVELEnum;
+import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -32,11 +32,6 @@ public class CompanyInfo {
     private String companyName;
 
     /**
-     * 公司Logo路径
-     */
-    private String companyLogo;
-
-    /**
      * 公司经营描述
      */
     private String companyDescribe;
@@ -62,11 +57,6 @@ public class CompanyInfo {
     private Date companyRegTime;
 
     /**
-     * 公司到期时间
-     */
-    private Date companyUnRegTime;
-
-    /**
      * 信息更新时间
      */
     private Date companyUpdateTime;
@@ -79,20 +69,20 @@ public class CompanyInfo {
     /**
      * 公司积分/信誉值
      */
-    private Integer companyGrade;
+    private Integer companyGrade = 0;
 
     /**
      * 管理员OpenId
      */
-    private String openId;
+    private String loginOpenid;
 
     /**
      * 管理员密码
      */
-    private String password;
+    private String loginPassword;
 
     /**
      * 会员等级
      */
-    private Integer companyMember = MemberLEVELEnum.COMMON.getCode();
+    private Integer companyMember = MemberLevelEnum.COMMON.getCode();
 }

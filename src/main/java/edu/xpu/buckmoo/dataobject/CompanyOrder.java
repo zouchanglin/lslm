@@ -39,10 +39,10 @@ public class CompanyOrder {
     /**
      * 信息创建时间
      */
-    private Date createTime;
+    private Long createTime;
 
     /**
      * 信息最后更新时间
      */
-    private Date updateTime;
+    private Long updateTime;
 }

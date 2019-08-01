@@ -21,7 +21,6 @@ import java.util.Date;
 @Entity
 @DynamicUpdate
 public class PartCategory {
-
     /**
      * 分类的Id
      * 主键由数据库生成, 采用数据库自增长: GenerationType.IDENTITY

@@ -42,7 +42,7 @@ public class UserInfo {
     /**
      * 用户地址
      */
-    private String userAddress;
+    private String userCity;
 
     /**
      * 用户电话

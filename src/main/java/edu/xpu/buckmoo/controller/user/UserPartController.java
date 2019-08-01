@@ -7,8 +7,6 @@ import edu.xpu.buckmoo.dataobject.PartCategory;
 import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
-import edu.xpu.buckmoo.enums.ResultEnum;
-import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.form.PartTimeForm;
 import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartCategoryService;
@@ -148,7 +146,7 @@ public class UserPartController {
 
         PartInfo updatePartInfo = partInfoService.affirmFinishPart(openid, partId);
 
-        //TODO 付款到账户
+        //TODO 付款到账户(90-days)
         return JsonUtil.toJson(ResultVOUtil.success(updatePartInfo));
     }
 

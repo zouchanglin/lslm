@@ -90,6 +90,7 @@ public class WeChatController {
                 wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
                 WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
                 UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
+                //判断是否需要增加用户
                 UserInfo saveOrUpdate = userInfoService.saveUser(userInfo);
                 log.info("saveOrUpdate = {}", saveOrUpdate);
             } catch (WxErrorException e) {

@@ -23,19 +23,20 @@ public class UserInfoRepositoryTest {
     public void save(){
         UserInfo userInfo = new UserInfo();
         userInfo.setOpenId("oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk");
-        userInfo.setUserAddress("Address");
+        userInfo.setUserCity("Address");
         userInfo.setUserIcon("http://www.baidu.com/a.png");
         userInfo.setUserSex(SexEnum.MAN.getCode());
         userInfo.setCreateTime(System.currentTimeMillis());
         userInfo.setUpdateTime(System.currentTimeMillis());
         userInfo.setUserMember(MemberLevelEnum.COMMON.getCode());
-    }
 
+        UserInfo save = repository.save(userInfo);
+        assertNotNull(save);
+    }
 
     @Test
     public void findByOpenId(){
         UserInfo byId = repository.findByOpenId("oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk");
         assertNotNull(byId);
     }
-
 }

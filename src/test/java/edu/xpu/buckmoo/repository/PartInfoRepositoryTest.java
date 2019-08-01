@@ -27,14 +27,14 @@ public class PartInfoRepositoryTest {
     public void save(){
         PartInfo partInfo = new PartInfo();
         partInfo.setPartId(KeyUtil.genUniqueKey());
-        partInfo.setPartName("XXXXXXXXXXXX");
+        partInfo.setPartName("兼职名称_01");
         partInfo.setPartCategory(0);
-        partInfo.setPartAddress("西安工程大学临潼校区");
-        partInfo.setPartOverview("这是详细描述信息");
-        partInfo.setPartStart(new Date());
-        partInfo.setPartEnd(new Date());
-        partInfo.setPartTime("对兼职时间的一个补充");
-        partInfo.setPartMoney(new BigDecimal(40.00));
+        partInfo.setPartAddress("兼职地点_01");
+        partInfo.setPartOverview("兼职详细描述信息");
+        partInfo.setPartStart(System.currentTimeMillis());
+        partInfo.setPartEnd(System.currentTimeMillis());
+        partInfo.setPartTime("兼职时间补充");
+        partInfo.setPartMoney(new BigDecimal(0.01));
         partInfo.setPartCreator("oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk");
         assertNotNull(repository.save(partInfo));
     }
@@ -77,15 +77,5 @@ public class PartInfoRepositoryTest {
         for(PartInfo partInfo: content){
             System.out.println(partInfo);
         }
-    }
-
-
-    @Test
-    public void save2(){
-        Optional<PartInfo> byId = repository.findById("111111111111111");
-        Date startTime = byId.get().getPartStart();
-        Date endTime = byId.get().getPartEnd();
-        System.out.println(startTime);
-        System.out.println(endTime);
     }
 }

@@ -1,7 +1,7 @@
 package edu.xpu.buckmoo.form;
 
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
-import edu.xpu.buckmoo.enums.MemberLEVELEnum;
+import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import lombok.Data;
 
 /**
@@ -62,5 +62,5 @@ public class CompanyForm {
     /**
      * 会员等级
      */
-    private Integer companyMember = MemberLEVELEnum.COMMON.getCode();
+    private Integer companyMember = MemberLevelEnum.COMMON.getCode();
 }
