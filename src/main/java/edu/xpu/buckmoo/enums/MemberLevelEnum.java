@@ -3,7 +3,7 @@ package edu.xpu.buckmoo.enums;
 import lombok.Getter;
 
 @Getter
-public enum MemberLEVELEnum implements CodeEnum{
+public enum MemberLevelEnum implements CodeEnum{
     COMMON(0, "非会员"),
     ONE_LEVEL(1, "白银会员"),
     TWO_LEVEL(2, "黄金会员"),
@@ -14,7 +14,7 @@ public enum MemberLEVELEnum implements CodeEnum{
 
     private String message;
 
-    MemberLEVELEnum(Integer code, String message) {
+    MemberLevelEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

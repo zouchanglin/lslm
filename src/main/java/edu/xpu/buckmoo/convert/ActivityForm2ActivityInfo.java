@@ -3,8 +3,6 @@ package edu.xpu.buckmoo.convert;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.form.ActivityForm;
 
-import java.util.Date;
-
 /**
  * @author tim
  * @version 1.0
@@ -21,17 +19,14 @@ public class ActivityForm2ActivityInfo {
         String activityMain = activityForm.getActivityMain();
         if(activityMain != null) activityInfo.setActivityMain(activityMain);
 
-        String activityUnMain = activityForm.getActivityUnmain();
-        if(activityUnMain != null) activityInfo.setActivityUnmain(activityUnMain);
-
         String activityAddress = activityForm.getActivityAddress();
         if(activityAddress != null) activityInfo.setActivityAddress(activityAddress);
 
         Long activityStart = activityForm.getActivityStart();
-        if(activityStart != null) activityInfo.setActivityStart(new Date(activityStart));
+        if(activityStart != null) activityInfo.setActivityStart(activityStart);
 
         Long activityEnd = activityForm.getActivityEnd();
-        if(activityEnd != null) activityInfo.setActivityEnd(new Date(activityEnd));
+        if(activityEnd != null) activityInfo.setActivityEnd(activityEnd);
 
         Integer activityMax = activityForm.getActivityMax();
         if(activityMax != null) activityInfo.setActivityMax(activityMax);

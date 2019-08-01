@@ -22,7 +22,6 @@ import java.util.Date;
 public class ActivityInfo {
     @Id
     private String activityId;
-
     /**
      * 活动名称
      */
@@ -34,11 +33,6 @@ public class ActivityInfo {
     private String activityMain;
 
     /**
-     * 协办方Id
-     */
-    private String activityUnmain;
-
-    /**
      * 活动地点
      */
     private String activityAddress;
@@ -46,11 +40,11 @@ public class ActivityInfo {
     /**
      * 开始时间
      */
-    private Date activityStart;
+    private Long activityStart;
     /**
      * 结束时间
      */
-    private Date activityEnd;
+    private Long activityEnd;
 
     /**
      * 最大人数
@@ -90,12 +84,12 @@ public class ActivityInfo {
     /**
      * 此信息最后修改时间
      */
-    private Date activityUpdate;
+    private Long activityUpdate;
 
     /**
      * 信息新建时间
      */
-    private Date activityCreate;
+    private Long activityCreate;
 
     /**
      * 活动已经报名人数

@@ -20,17 +20,15 @@ import static org.junit.Assert.*;
 public class ActivityInfoRepositoryTest {
     @Autowired
     private ActivityInfoRepository repository;
-
     @Test
     public void save(){
         ActivityInfo activityInfo = new ActivityInfo();
         activityInfo.setActivityId(KeyUtil.genUniqueKey());
         activityInfo.setActivityName("钟南山一日游");
         activityInfo.setActivityMain(KeyUtil.genUniqueKey());
-        activityInfo.setActivityUnmain(KeyUtil.genUniqueKey());
         activityInfo.setActivityAddress("终南山");
-        activityInfo.setActivityStart(new Date());
-        activityInfo.setActivityEnd(new Date());
+        activityInfo.setActivityStart(System.currentTimeMillis());
+        activityInfo.setActivityEnd(System.currentTimeMillis());
         activityInfo.setActivityMax(50);
         activityInfo.setActivityGeneralize(2000);
         activityInfo.setActivityLink("http://lslm.jeck");
@@ -45,8 +43,8 @@ public class ActivityInfoRepositoryTest {
 
     @Test
     public void find(){
-        PageRequest request = PageRequest.of(1,3);
-        //Page<ActivityInfo> page = repository.findAllByActivityAudit(ActivityStatusEnum.PASS.getCode(), request);
-        //assertNotEquals(0, page.getTotalElements());
+        PageRequest request = PageRequest.of(0,3);
+        Page<ActivityInfo> page = repository.findAllByActivityAudit(ActivityStatusEnum.PASS.getCode(), request);
+        assertNotEquals(0, page.getTotalElements());
     }
 }

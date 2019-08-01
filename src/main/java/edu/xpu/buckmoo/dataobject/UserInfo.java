@@ -1,12 +1,11 @@
 package edu.xpu.buckmoo.dataobject;
 
-import edu.xpu.buckmoo.enums.MemberLEVELEnum;
+import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
 
 /**
  * @author tim
@@ -58,15 +57,15 @@ public class UserInfo {
     /**
      * 信息注册时间
      */
-    private Date createTime;
+    private Long createTime;
 
     /**
      * 信息更新时间
      */
-    private Date updateTime;
+    private Long updateTime;
 
     /**
      * 会员等级
      */
-    private Integer userMember = MemberLEVELEnum.COMMON.getCode();
+    private Integer userMember = MemberLevelEnum.COMMON.getCode();
 }

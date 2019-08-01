@@ -4,6 +4,8 @@ import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.repository.ActivityInfoRepository;
 import edu.xpu.buckmoo.service.ActivityService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,8 +37,8 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public List<ActivityInfo> findByActivityAudit(Integer activityAudit) {
-        return activityRep.findAllByActivityAudit(activityAudit);
+    public Page<ActivityInfo> findByActivityAudit(Integer activityAudit, Pageable pageable) {
+        return activityRep.findAllByActivityAudit(activityAudit, pageable);
     }
 
     @Override

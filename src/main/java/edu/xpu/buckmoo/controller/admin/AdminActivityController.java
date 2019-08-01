@@ -12,6 +12,7 @@ import edu.xpu.buckmoo.utils.EnumUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,7 +45,9 @@ public class AdminActivityController {
             log.error("ActivityType={}", type);
             throw new BuckMooException(ResultEnum.PARAM_ERROR);
         }
-        List<ActivityInfo> activityListByStatus = activityService.findByActivityAudit(type);
+
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        List<ActivityInfo> activityListByStatus = activityService.findByActivityAudit(type, pageRequest).getContent();
         return ResultVOUtil.success(activityListByStatus);
     }
 

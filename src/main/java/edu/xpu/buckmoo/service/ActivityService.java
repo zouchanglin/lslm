@@ -1,6 +1,8 @@
 package edu.xpu.buckmoo.service;
 
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -30,7 +32,7 @@ public interface ActivityService {
      * @param activityAudit 活动状态
      * @return 活动信息
      */
-    List<ActivityInfo> findByActivityAudit(Integer activityAudit);
+    Page<ActivityInfo> findByActivityAudit(Integer activityAudit, Pageable pageable);
 
     ActivityInfo save(ActivityInfo activityInfo);
 

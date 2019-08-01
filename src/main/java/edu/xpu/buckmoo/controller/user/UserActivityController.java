@@ -12,6 +12,8 @@ import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,20 +48,21 @@ public class UserActivityController {
      */
     @GetMapping("/list")
     public String list(){
-        List<ActivityInfo> underwayActivity = activityService.findByActivityAudit(ActivityStatusEnum.PASS.getCode());
+        PageRequest pageRequest = PageRequest.of(0, 10);
+
+        Page<ActivityInfo> byActivityAudit = activityService.findByActivityAudit(ActivityStatusEnum.PASS.getCode(), pageRequest);
+        List<ActivityInfo> underwayActivity = byActivityAudit.getContent();
         List<ActivityInfoVO> retVO = new ArrayList<>();
         //需要使用活动的主办方Id、协办方Id查询对应的企业名称
         for(ActivityInfo activity: underwayActivity){
             ActivityInfoVO vo = new ActivityInfoVO();
             BeanUtils.copyProperties(activity, vo);
             CompanyInfo main = companyService.findOne(activity.getActivityMain());
-            CompanyInfo unmain = companyService.findOne(activity.getActivityUnmain());
-            if(main == null || unmain == null){
-                log.error("【活动展示】活动对应主(协)办方Id不正确");
+            if(main == null){
+                log.error("【活动展示】活动对应主办方Id不正确");
                 throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);
             }
             vo.setActivityMainName(main.getCompanyName());
-            vo.setActivityUnMainName(unmain.getCompanyName());
             retVO.add(vo);
         }
         return JsonUtil.toJson(ResultVOUtil.success(retVO));
