@@ -27,7 +27,6 @@ public class CompanyServiceImplTest {
     @Test
     public void findCompanyInfoByOpenid() {
         CompanyInfo openid = service.findCompanyInfoByOpenid("123");
-        log.info("openid={}", openid.getOpenId());
         assertNotNull(openid);
     }
 }

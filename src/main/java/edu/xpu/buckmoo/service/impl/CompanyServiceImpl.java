@@ -3,12 +3,9 @@ package edu.xpu.buckmoo.service.impl;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.service.CompanyService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author tim
@@ -32,7 +29,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyInfo findCompanyInfoByOpenid(String openId) {
-        return companyRep.findByOpenId(openId);
+        return companyRep.findByLoginOpenid(openId);
     }
 
     @Override

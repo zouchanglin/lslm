@@ -1,23 +1,16 @@
 package edu.xpu.buckmoo.controller.admin;
 
 import edu.xpu.buckmoo.VO.ResultVO;
-import edu.xpu.buckmoo.convert.ActivityForm2ActivityInfo;
-import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import edu.xpu.buckmoo.enums.ResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
-import edu.xpu.buckmoo.form.ActivityForm;
 import edu.xpu.buckmoo.form.CompanyForm;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.utils.EnumUtil;
-import edu.xpu.buckmoo.utils.JsonUtil;
-import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
