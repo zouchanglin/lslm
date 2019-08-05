@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 01/08/2019 20:15:11
+ Date: 05/08/2019 21:03:48
 */
 
 SET NAMES utf8mb4;
@@ -53,25 +53,23 @@ DROP TABLE IF EXISTS `company_info`;
 CREATE TABLE `company_info`  (
   `company_id` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业统一社会信用码，长度为30的varchar',
   `company_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业名称',
-  `company_describe` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业的描述，经营范围之类的',
-  `company_license` varchar(300) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业营业执照图片路径',
-  `company_manger` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业法人姓名',
-  `company_phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业法人电话',
-  `company_reg_time` bigint(20) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '企业在此平台注册时间',
-  `company_update_time` bigint(20) NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '企业信息最后修改更新时间',
-  `company_status` int(5) NOT NULL DEFAULT 0 COMMENT '企业注册状态 0、未审核 1、通过 2、未通过（暂时设置了3种状态）',
-  `company_grade` int(11) DEFAULT NULL COMMENT '信誉积分',
-  `login_openid` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业管理员微信Id',
+  `company_license` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业营业执照图片路径',
+  `company_phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业法人电话',
+  `company_reg_time` bigint(20) DEFAULT 0 COMMENT '企业在此平台注册时间',
+  `company_update_time` bigint(20) DEFAULT 0 COMMENT '企业信息最后修改更新时间',
+  `company_status` int(5) DEFAULT 0 COMMENT '企业注册状态 0、未审核 1、通过 2、未通过（暂时设置了3种状态）',
   `login_password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '管理员密码',
-  `company_member` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `company_member` tinyint(11) DEFAULT 0,
   PRIMARY KEY (`company_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of company_info
 -- ----------------------------
-INSERT INTO `company_info` VALUES ('1560234861488151072', '比特科技', '致力于教育行业设备开发、服务、维护', 'http://license.png', '杨楠', '13724344781', 20190611013421, 20190611143421, 0, 0, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', '123456', '0');
-INSERT INTO `company_info` VALUES ('1560234861488151073', '骊山鹿鸣', '培训C/C++高级工程师，Java工程师，Python工程师', 'http://license.png', '张鹏伟', '13724344782', 20190611013421, 20190620223616, 0, 0, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', '123456', '0');
+INSERT INTO `company_info` VALUES ('1560234861488151072', '比特科技', 'http://license.png', '13724344781', 20190611013421, 20190611143421, 0, '123456', 0);
+INSERT INTO `company_info` VALUES ('1560234861488151073', '骊山鹿鸣', 'http://license.png', '13724344782', 20190611013421, 20190620223616, 0, '123456', 0);
+INSERT INTO `company_info` VALUES ('1564903855687991507', 'companyName', 'CompanyLicense', 'CompanyPhone', 1564903855687, 1564903855687, 0, NULL, 0);
+INSERT INTO `company_info` VALUES ('91610115MA6UAC9Q21', 'RNG', 'http://sws.png', '15291418231', 1564998571327, 1564998571327, 0, NULL, 0);
 
 -- ----------------------------
 -- Table structure for company_order
@@ -89,6 +87,24 @@ CREATE TABLE `company_order`  (
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
+-- Table structure for member_order
+-- ----------------------------
+DROP TABLE IF EXISTS `member_order`;
+CREATE TABLE `member_order`  (
+  `order_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '开通会员的订单Id',
+  `order_company` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '开通会员的公司Id',
+  `order_money` decimal(5, 2) DEFAULT NULL COMMENT '支付费用',
+  `pay_status` tinyint(11) DEFAULT NULL COMMENT '支付状态',
+  `openid` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  PRIMARY KEY (`order_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of member_order
+-- ----------------------------
+INSERT INTO `member_order` VALUES ('1565000420023199896', '1560234861488151073', 350.00, 0, NULL);
+
+-- ----------------------------
 -- Table structure for part_category
 -- ----------------------------
 DROP TABLE IF EXISTS `part_category`;
@@ -99,7 +115,7 @@ CREATE TABLE `part_category`  (
   `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of part_category
@@ -135,7 +151,24 @@ CREATE TABLE `part_info`  (
 -- ----------------------------
 -- Records of part_info
 -- ----------------------------
-INSERT INTO `part_info` VALUES ('1564658763535673412', '兼职名称_01', 0, '兼职地点_01', '兼职详细描述信息', 1564658763535, 1564658763535, '兼职时间补充', 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 0.01, 0.00, 1, NULL, 3, NULL, NULL, NULL, NULL);
+INSERT INTO `part_info` VALUES ('1564658763535673415', '兼职名称_01', 0, '兼职地点_01', '兼职详细描述信息', 1564658763535, 1564658763535, '兼职时间补充', 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk2', 0.01, 0.00, 0, NULL, 3, NULL, NULL, NULL, NULL);
+
+-- ----------------------------
+-- Table structure for system_config
+-- ----------------------------
+DROP TABLE IF EXISTS `system_config`;
+CREATE TABLE `system_config`  (
+  `params_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT ' 系统参数主键',
+  `params_value` decimal(10, 2) NOT NULL COMMENT ' 值',
+  PRIMARY KEY (`params_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of system_config
+-- ----------------------------
+INSERT INTO `system_config` VALUES ('member_month_money', 0.01);
+INSERT INTO `system_config` VALUES ('member_year_money', 0.02);
+INSERT INTO `system_config` VALUES ('part_kickback', 0.10);
 
 -- ----------------------------
 -- Table structure for user_info
@@ -158,6 +191,10 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
+INSERT INTO `user_info` VALUES ('oxrwq039kPU4K-U1AyuqKru0sI7E', '子皿ξ曦', 'http://thirdwx.qlogo.cn/mmopen/vi_32/gFgXhVibyHlzMQFd3VNMYbDaylNxsOBFPeLWuus6f6bCTNMiahXhFwrlfTib2eaQ60TW1HvEhm7weH3DAysIWyT5g/132', 2, '中国渭南', NULL, 0, NULL, NULL, 0);
+INSERT INTO `user_info` VALUES ('oxrwq04NqJmF_OXFrZoz-DH11QJs', '淡蓝色15686152998', 'http://thirdwx.qlogo.cn/mmopen/vi_32/A3k6UTcTeCYfm937ibflqibFsycRicXjYYHS7eDB7ut0BeO4bWmSxfhALq2cXbxNibmvzyjZO5LjUBxkjHrdYibQGGw/132', 2, '法国', NULL, 0, NULL, NULL, 0);
+INSERT INTO `user_info` VALUES ('oxrwq0xrKKyqiAGE8O9TM3L1yaQY', 'ahojcn', 'http://thirdwx.qlogo.cn/mmopen/vi_32/hyCfOptGJaWH4dYwqJNlCSBnPmJqJHBJ32FtxIjia3yQonGLHjQu1BYq9EBQ2BjM5icSrjojSV3QakvkSt9YJUkA/132', 1, '中国', NULL, 0, NULL, NULL, 0);
 INSERT INTO `user_info` VALUES ('oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 'Tim', 'http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmOLibgHtYurJxvW0yicXLVcTCUiaDQDqibEyoIKwS7ZRdOsZL02RibF79vdNt6cFEYU1v53r1plygOAL60hw/132', 1, '泽西岛', NULL, 0, NULL, NULL, 0);
+INSERT INTO `user_info` VALUES ('oxrwq0_nsAuRAfEiI5JXnL_oMDzI', '之文康', 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJBzcWHFreCYwiaJicr8EZVU2eYEFu1C0Fr9Xic8RR28cNQHMbz4x2KqaadpIXW3SM9TttJaoXlNsRSQ/132', 0, '', NULL, 0, NULL, NULL, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
