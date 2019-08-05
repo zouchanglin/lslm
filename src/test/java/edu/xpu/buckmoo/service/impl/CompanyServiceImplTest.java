@@ -19,14 +19,8 @@ public class CompanyServiceImplTest {
     private CompanyService service;
     @Test
     public void findOne() {
-        CompanyInfo one = service.findOne("1560234861488151072");
+        CompanyInfo one = service.findById("1560234861488151072");
         log.info("CompanyInfo={}", one);
         assertNotNull(one);
-    }
-
-    @Test
-    public void findCompanyInfoByOpenid() {
-        CompanyInfo openid = service.findCompanyInfoByOpenid("123");
-        assertNotNull(openid);
     }
 }

@@ -1,10 +1,10 @@
 package edu.xpu.buckmoo.service;
 
+import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
+import edu.xpu.buckmoo.dataobject.MemberOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import java.util.List;
 
 /**
  * @author tim
@@ -14,13 +14,44 @@ import java.util.List;
  * @date 2019-06-20 22:19
  */
 public interface CompanyService {
-    CompanyInfo findOne(String companyInfoId);
 
-    CompanyInfo findCompanyInfoByOpenid(String openId);
 
+    /**
+     * 根据公司Id寻找公司信息
+     * @param companyInfoId 公司Id
+     * @return 公司信息，不存在返回null
+     */
+    CompanyInfo findById(String companyInfoId);
+
+    /**
+     * 根据状态获取公司列表
+     * @param status 状态
+     * @param pageable 分页参数
+     * @return 公司列表
+     */
     Page<CompanyInfo> findByCompanyAudit(Integer status, Pageable pageable);
 
+    /**
+     * 删除公司信息
+     * @param companyId 公司ID
+     */
     void delete(String companyId);
 
+    /**
+     * 保存公司信息
+     * @param companyInfo 公司信息
+     * @return 保存后的公司信息
+     */
     CompanyInfo save(CompanyInfo companyInfo);
+
+    /**
+     * 公司注册
+     * @param companyInfo 公司的注册信息
+     * @return 保存的公司注册信息
+     */
+    CompanyInfo register(CompanyInfo companyInfo);
+
+    MemberOrder becomeMemberPay(String companyId);
+
+    PayResponse memberPay(MemberOrder memberOrder);
 }

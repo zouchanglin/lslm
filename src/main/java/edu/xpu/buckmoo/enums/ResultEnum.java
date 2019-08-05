@@ -15,7 +15,11 @@ public enum ResultEnum implements CodeEnum{
     NULL_FILE(5, "文件为空"),
     WECHAT_PAY_ERROR(6, "微信支付金额校验不通过"),
     ENUM_NOT_EXITS(7, "枚举不存在"),
-    PART_STATUS_ERROR(8, "兼职状态不正确")
+    PART_STATUS_ERROR(8, "兼职状态不正确"),
+    ALREADY_EXISTED(9, "此信息已经存在"),
+    COMPANY_INFO_FORMAT_ERROR(10, "公司信息格式错误"),
+    COMPANY_INFO_NOT_EXIT(11, "公司信息不存在"),
+    COMPANY_MEMBER(12, "公司已经是会员")
     ;
 
     private Integer code;

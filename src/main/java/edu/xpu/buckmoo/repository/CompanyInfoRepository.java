@@ -9,7 +9,5 @@ import org.springframework.data.domain.Pageable;
  * 公司信息JPA接口
  */
 public interface CompanyInfoRepository extends JpaRepository<CompanyInfo, String> {
-    CompanyInfo findByLoginOpenid(String openId);
-
     Page<CompanyInfo> findAllByCompanyStatus(Integer status, Pageable pageable);
 }

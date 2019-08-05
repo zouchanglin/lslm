@@ -57,7 +57,7 @@ public class UserActivityController {
         for(ActivityInfo activity: underwayActivity){
             ActivityInfoVO vo = new ActivityInfoVO();
             BeanUtils.copyProperties(activity, vo);
-            CompanyInfo main = companyService.findOne(activity.getActivityMain());
+            CompanyInfo main = companyService.findById(activity.getActivityMain());
             if(main == null){
                 log.error("【活动展示】活动对应主办方Id不正确");
                 throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);

@@ -207,6 +207,8 @@ creatorPhone 联系方式(手机号码)
 
 ### 4、查看发布兼职 (分状态)
 
+此接口过时，不建议使用
+
 ```
 GET http://tim.natapp1.cc/buckmoo/user/part/created_list
 ```
@@ -309,6 +311,8 @@ pageindex Integer 分页索引
 ```
 
 ### 5、查看接手兼职 (分状态)
+
+此接口过时，不建议使用
 
 和`4、查看我发布的兼职信息`一模一样
 
@@ -610,28 +614,99 @@ openid : String
 
 # 二、活动发布方
 
-##
+## 账户相关
+
+### 1、活动发布方登录
+
+```
+POST http://tim.natapp1.cc/buckmoo/company/info/login
+```
+
+参数
+```
+companyId String 公司的Id
+password String 公司登录密码
+```
+
+返回值
+
+```json
+{
+	"code":0,
+	"msg":"登陆成功"
+}
+{
+	"code":1,
+	"msg":"用户名或者密码错误"
+}
+{
+	"code":2,
+	"msg":"密码错误超过3次，请10分钟后再试"
+}
+```
+
+### 2、活动发布方注册
+
+```
+POST http://tim.natapp1.cc/buckmoo/company/info/register
+```
+
+![](https://s2.ax1x.com/2019/08/05/e27KSA.png)
+
+返回值
+
+```json
+{
+	"code":0,
+	"data":{
+		"companyId":"91610115MA6UAC9Q21",
+		"companyLicense":"http://sws.png",
+		"companyMember":0, //会员等级
+		"companyName":"RNG", 
+		"companyPhone":"15291418231",
+		"companyRegTime":1564998571327, //注册的时间戳
+		"companyStatus":0, //未审核
+		"companyUpdateTime":1564998571327 //信息更新的时间戳
+	},
+	"msg":"成功"
+}
+
+{
+    "timestamp": "2019-08-05T09:57:03.748+0000",
+    "status": 500,
+    "error": "Internal Server Error",
+    "message": "公司信息格式错误",
+    "path": "/buckmoo/company/info/register"
+}
+```
+
+## 支付相关
+
+### 1、成为会员
+
+
+
+### 2、发布活动支付费用
+
+
+
+## 活动相关
+
+
+
+
 
 # 三、超级管理员
-### 1、登录验证
 
-TODO 需要改进
+### 1、登录验证
 
 ```
 POST http://tim.natapp1.cc/buckmoo/admin/login
 ```
 
-参数
+参数：使用短信认证
 
-```
 
-```
-
-返回值
-
-```
-
-```
 
 ### 2、兼职信息列表
 

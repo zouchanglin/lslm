@@ -52,7 +52,7 @@ public class AdminCompanyController {
 
     @RequestMapping("/delete")
     public ResultVO deleteCompany(@RequestParam("companyId") String companyId){
-        CompanyInfo one = companyService.findOne(companyId);
+        CompanyInfo one = companyService.findById(companyId);
         if(one == null) throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);
         companyService.delete(companyId);
         return ResultVOUtil.success();
@@ -67,7 +67,7 @@ public class AdminCompanyController {
     @RequestMapping("/update")
     public ResultVO updateCompany(@RequestParam("companyId") String companyId,
                                   CompanyForm companyForm){
-        CompanyInfo companyInfo = companyService.findOne(companyId);
+        CompanyInfo companyInfo = companyService.findById(companyId);
         BeanUtils.copyProperties(companyForm, companyInfo);
         //TODO 可能有BUG
         log.info("companyInfo={}", companyInfo);

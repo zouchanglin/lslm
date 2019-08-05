@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
-@RequestMapping("/user/pay")
+    @RequestMapping("/user/pay")
 public class UserPayController {
     private final PartInfoService partService;
 
