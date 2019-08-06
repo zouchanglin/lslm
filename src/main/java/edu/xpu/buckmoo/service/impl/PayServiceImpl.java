@@ -57,6 +57,7 @@ public class PayServiceImpl implements PayService{
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
         log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
 
+
         //先查找兼职信息
         PartInfo findRet = partInfoService.findOneById(payResponse.getOrderId());
         if(findRet == null) throw new BuckMooException(ResultEnum.PART_NOT_EXIT);
