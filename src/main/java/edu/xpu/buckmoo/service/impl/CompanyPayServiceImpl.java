@@ -6,20 +6,13 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.model.RefundRequest;
 import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
-import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.MemberOrder;
-import edu.xpu.buckmoo.enums.CompanyOrderEnum;
-import edu.xpu.buckmoo.enums.MemberLevelEnum;
-import edu.xpu.buckmoo.enums.ResultEnum;
-import edu.xpu.buckmoo.exception.BuckMooException;
-import edu.xpu.buckmoo.repository.CompanyInfoRepository;
-import edu.xpu.buckmoo.repository.MemberOrderRepository;
+import edu.xpu.buckmoo.enums.WeChatPayNotifyEnum;
 import edu.xpu.buckmoo.service.CompanyPayService;
+import edu.xpu.buckmoo.service.PayNotifyCallback;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 /**
  * @author tim
@@ -33,14 +26,12 @@ import java.util.Optional;
 public class CompanyPayServiceImpl implements CompanyPayService{
     private final BestPayServiceImpl bestPayService;
 
-    private final CompanyInfoRepository companyInfoRepository;
+    private final PayNotifyCallback payNotifyCallback;
 
-    private final MemberOrderRepository memberOrderRepository;
 
-    public CompanyPayServiceImpl(BestPayServiceImpl bestPayService, CompanyInfoRepository companyInfoRepository, MemberOrderRepository memberOrderRepository) {
+    public CompanyPayServiceImpl(BestPayServiceImpl bestPayService, PayNotifyCallback payNotifyCallback) {
         this.bestPayService = bestPayService;
-        this.companyInfoRepository = companyInfoRepository;
-        this.memberOrderRepository = memberOrderRepository;
+        this.payNotifyCallback = payNotifyCallback;
     }
 
     @Override
@@ -60,33 +51,7 @@ public class CompanyPayServiceImpl implements CompanyPayService{
 
     @Override
     public void payNotify(String notifyData) {
-        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
-        log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
-
-        String orderId = payResponse.getOrderId();
-        Optional<MemberOrder> findResult = memberOrderRepository.findById(orderId);
-        if(findResult.isPresent()){
-            MemberOrder memberOrder = findResult.get();
-            memberOrder.setPayStatus(CompanyOrderEnum.PAY_FINISH.getCode());
-            //修改订单的状态
-            MemberOrder saveMemberOrder = memberOrderRepository.save(memberOrder);
-            log.info("saveMemberOrder={}", saveMemberOrder);
-
-            String orderCompanyId = memberOrder.getOrderCompany();
-            //找到公司做VIP修改
-            Optional<CompanyInfo> orderCompanyOpt = companyInfoRepository.findById(orderCompanyId);
-            if(orderCompanyOpt.isPresent()){
-                CompanyInfo companyInfo = orderCompanyOpt.get();
-                companyInfo.setCompanyMember(MemberLevelEnum.ONE_LEVEL.getCode());
-                CompanyInfo saveResult = companyInfoRepository.save(companyInfo);
-                log.info("[修改公司会员等级] saveResult={}", saveResult);
-                assert saveResult != null;
-            }else{
-                throw new BuckMooException(ResultEnum.COMPANY_INFO_NOT_EXIT);
-            }
-        }else{
-            throw new BuckMooException(ResultEnum.COMPANY_INFO_NOT_EXIT);
-        }
+        payNotifyCallback.payNotify(notifyData, WeChatPayNotifyEnum.COMPANY_PAY.getCode());
     }
 
     @Override

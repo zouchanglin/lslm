@@ -7,17 +7,13 @@ import com.lly835.bestpay.model.RefundRequest;
 import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import edu.xpu.buckmoo.dataobject.PartInfo;
-import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
-import edu.xpu.buckmoo.enums.ResultEnum;
-import edu.xpu.buckmoo.exception.BuckMooException;
-import edu.xpu.buckmoo.service.PartInfoService;
+import edu.xpu.buckmoo.enums.WeChatPayNotifyEnum;
+import edu.xpu.buckmoo.service.PayNotifyCallback;
 import edu.xpu.buckmoo.service.UserPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
-import edu.xpu.buckmoo.utils.MathUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 
 /**
  * @author tim
@@ -30,11 +26,12 @@ import java.math.BigDecimal;
 @Slf4j
 public class UserPayServiceImpl implements UserPayService{
     private final BestPayServiceImpl bestPayService;
-    private final PartInfoService partInfoService;
 
-    public UserPayServiceImpl(BestPayServiceImpl bestPayService, PartInfoService partInfoService) {
+    private final PayNotifyCallback payNotifyCallback;
+
+    public UserPayServiceImpl(BestPayServiceImpl bestPayService, PayNotifyCallback payNotifyCallback) {
         this.bestPayService = bestPayService;
-        this.partInfoService = partInfoService;
+        this.payNotifyCallback = payNotifyCallback;
     }
 
     @Override
@@ -54,24 +51,7 @@ public class UserPayServiceImpl implements UserPayService{
 
     @Override
     public void payNotify(String notifyData) {
-        PayResponse payResponse = bestPayService.asyncNotify(notifyData);
-        log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
-
-        //先查找兼职信息
-        PartInfo findRet = partInfoService.findOneById(payResponse.getOrderId());
-        if(findRet == null) throw new BuckMooException(ResultEnum.PART_NOT_EXIT);
-
-        //判断兼职支付金额
-        if(!MathUtil.equals(payResponse.getOrderAmount(), findRet.getPartMoney().doubleValue())){
-            log.error("[微信支付异步通知] payResponse.getOrderAmount() = {}", payResponse);
-            throw new BuckMooException(ResultEnum.WECHAT_PAY_ERROR);
-        }
-
-        PartInfo partInfo = partInfoService.modifyPartStatus(payResponse.getOrderId(), PartTimeStatusEnum.NEW_PART.getCode());
-
-        //抽取5%佣金
-        partInfo.setPartMoneyShow(partInfo.getPartMoney().multiply(new BigDecimal(0.05)));
-        partInfoService.addOnePartTime(partInfo);
+        payNotifyCallback.payNotify(notifyData, WeChatPayNotifyEnum.USER_PAY.getCode());
     }
 
     @Override
