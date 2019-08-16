@@ -11,7 +11,7 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
  * @description
  * @date 2019-06-22 00:44
  */
-public interface PayService {
+public interface UserPayService {
     PayResponse partPay(PartInfo partInfo);
 
     void payNotify(String notifyData);

@@ -56,9 +56,9 @@ public class CompanyInfo {
     private Integer companyStatus = CompanyStatusEnum.NEW.getCode();
 
     /**
-     * 管理员密码
+     * 管理员openid
      */
-    private String loginPassword;
+    private String openid;
 
     /**
      * 会员等级

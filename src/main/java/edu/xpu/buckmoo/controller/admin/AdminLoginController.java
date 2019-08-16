@@ -25,7 +25,6 @@ public class AdminLoginController {
                              String phone, String password, HttpServletRequest request, HttpServletResponse response){
 
         if(error == null && phone.equals("15291418231") && password.equals("123456")){
-            //TODO 短信验证
 
         }
         return "";

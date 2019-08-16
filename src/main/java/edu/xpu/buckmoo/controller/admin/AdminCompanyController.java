@@ -69,7 +69,7 @@ public class AdminCompanyController {
                                   CompanyForm companyForm){
         CompanyInfo companyInfo = companyService.findById(companyId);
         BeanUtils.copyProperties(companyForm, companyInfo);
-        //TODO 可能有BUG
+
         log.info("companyInfo={}", companyInfo);
         CompanyInfo saveRet = companyService.save(companyInfo);
         return ResultVOUtil.success(saveRet);

@@ -5,7 +5,6 @@ import edu.xpu.buckmoo.service.UserInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**

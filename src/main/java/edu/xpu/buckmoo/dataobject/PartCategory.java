@@ -7,12 +7,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.Date;
 
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.1
  * @className CategoryInfo
  * @description 兼职分类描述信息
  * @date 2019-06-11 18:02
@@ -42,10 +41,10 @@ public class PartCategory {
     /**
      * 创建时间
      */
-    private Date createTime;
+    private Long createTime;
 
     /**
      * 修改时间
      */
-    private Date updateTime;
+    private Long updateTime;
 }

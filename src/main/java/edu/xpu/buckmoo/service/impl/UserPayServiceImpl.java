@@ -11,7 +11,7 @@ import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
 import edu.xpu.buckmoo.enums.ResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.PartInfoService;
-import edu.xpu.buckmoo.service.PayService;
+import edu.xpu.buckmoo.service.UserPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.MathUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -28,11 +28,11 @@ import java.math.BigDecimal;
  */
 @Service
 @Slf4j
-public class PayServiceImpl implements PayService{
+public class UserPayServiceImpl implements UserPayService{
     private final BestPayServiceImpl bestPayService;
     private final PartInfoService partInfoService;
 
-    public PayServiceImpl(BestPayServiceImpl bestPayService, PartInfoService partInfoService) {
+    public UserPayServiceImpl(BestPayServiceImpl bestPayService, PartInfoService partInfoService) {
         this.bestPayService = bestPayService;
         this.partInfoService = partInfoService;
     }
@@ -56,7 +56,6 @@ public class PayServiceImpl implements PayService{
     public void payNotify(String notifyData) {
         PayResponse payResponse = bestPayService.asyncNotify(notifyData);
         log.info("[微信支付异步通知] payResponse={}", JsonUtil.toJson(payResponse));
-
 
         //先查找兼职信息
         PartInfo findRet = partInfoService.findOneById(payResponse.getOrderId());

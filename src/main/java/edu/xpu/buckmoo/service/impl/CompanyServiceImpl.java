@@ -1,9 +1,5 @@
 package edu.xpu.buckmoo.service.impl;
 
-import com.lly835.bestpay.enums.BestPayTypeEnum;
-import com.lly835.bestpay.model.PayRequest;
-import com.lly835.bestpay.model.PayResponse;
-import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.MemberOrder;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
@@ -13,11 +9,9 @@ import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.repository.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.service.CompanyService;
-import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,17 +30,15 @@ import java.util.Optional;
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyInfoRepository companyRep;
 
-    @Autowired
-    private SystemConfigRepository systemConfigRep;
+    private final SystemConfigRepository systemConfigRep;
 
-    @Autowired
-    private BestPayServiceImpl bestPayService;
 
-    @Autowired
-    private MemberOrderRepository memberOrderRep;
+    private final MemberOrderRepository memberOrderRep;
 
-    public CompanyServiceImpl(CompanyInfoRepository companyRep) {
+    public CompanyServiceImpl(CompanyInfoRepository companyRep, SystemConfigRepository systemConfigRep, MemberOrderRepository memberOrderRep) {
         this.companyRep = companyRep;
+        this.systemConfigRep = systemConfigRep;
+        this.memberOrderRep = memberOrderRep;
     }
 
     @Override
@@ -109,9 +101,8 @@ public class CompanyServiceImpl implements CompanyService {
             if(!companyInfo.getCompanyMember().equals(0)){
                 throw new BuckMooException(ResultEnum.COMPANY_MEMBER);
             }
-            //TODO 设置openid（只能在手机操作，而且方便）
             MemberOrder memberOrder = new MemberOrder();
-            memberOrder.setOpenid("TODO.....");
+            memberOrder.setOpenid(companyInfo.getOpenid());
             memberOrder.setOrderId(KeyUtil.genUniqueKey());
             memberOrder.setOrderCompany(companyInfo.getCompanyId());
             memberOrder.setPayStatus(0);
@@ -130,17 +121,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public PayResponse memberPay(MemberOrder memberOrder) {
-        PayRequest payRequest = new PayRequest();
-        payRequest.setOpenid(memberOrder.getOpenid());
-        payRequest.setOrderId(memberOrder.getOrderId());
-        payRequest.setOrderAmount(memberOrder.getOrderMoney().doubleValue());
-        payRequest.setOrderName(memberOrder.getOrderCompany() + "升级为会员");
-        payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
-
-        log.info("payRequest={}", JsonUtil.toJson(payRequest));
-        PayResponse payResponse = bestPayService.pay(payRequest);
-        log.info("payResponse={}", JsonUtil.toJson(payResponse));
-        return payResponse;
+    public CompanyInfo findByOpenid(String openid) {
+        return companyRep.findAllByOpenid(openid).get(0);
     }
 }

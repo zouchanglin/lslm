@@ -6,7 +6,7 @@ import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.enums.ResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.PartInfoService;
-import edu.xpu.buckmoo.service.PayService;
+import edu.xpu.buckmoo.service.UserPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +24,13 @@ import java.util.Map;
  */
 @Controller
 @Slf4j
-    @RequestMapping("/user/pay")
+@RequestMapping("/user/pay")
 public class UserPayController {
     private final PartInfoService partService;
 
-    private final PayService payService;
+    private final UserPayService payService;
 
-    public UserPayController(PartInfoService partService, PayService payService) {
+    public UserPayController(PartInfoService partService, UserPayService payService) {
         this.partService = partService;
         this.payService = payService;
     }

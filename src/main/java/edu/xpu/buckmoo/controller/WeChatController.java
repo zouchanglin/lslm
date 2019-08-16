@@ -27,10 +27,10 @@ import java.net.URLEncoder;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.1
  * @className WeChatController
  * @description 用户基本信息获取控制器
- * @date 2019-06-21 15:31
+ * @date 2019-08-15 15:31
  */
 @Controller
 @RequestMapping("/wechat")

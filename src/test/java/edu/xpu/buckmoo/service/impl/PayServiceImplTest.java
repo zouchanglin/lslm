@@ -3,7 +3,7 @@ package edu.xpu.buckmoo.service.impl;
 import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.service.PartInfoService;
-import edu.xpu.buckmoo.service.PayService;
+import edu.xpu.buckmoo.service.UserPayService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 public class PayServiceImplTest {
     @Autowired
-    private PayService payService;
+    private UserPayService payService;
 
     @Autowired
     private PartInfoService partInfoService;
