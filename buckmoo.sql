@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 05/08/2019 21:03:48
+ Date: 16/08/2019 20:43:42
 */
 
 SET NAMES utf8mb4;
@@ -58,7 +58,7 @@ CREATE TABLE `company_info`  (
   `company_reg_time` bigint(20) DEFAULT 0 COMMENT '企业在此平台注册时间',
   `company_update_time` bigint(20) DEFAULT 0 COMMENT '企业信息最后修改更新时间',
   `company_status` int(5) DEFAULT 0 COMMENT '企业注册状态 0、未审核 1、通过 2、未通过（暂时设置了3种状态）',
-  `login_password` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '管理员密码',
+  `openid` varchar(35) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '管理员openid',
   `company_member` tinyint(11) DEFAULT 0,
   PRIMARY KEY (`company_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
@@ -68,8 +68,7 @@ CREATE TABLE `company_info`  (
 -- ----------------------------
 INSERT INTO `company_info` VALUES ('1560234861488151072', '比特科技', 'http://license.png', '13724344781', 20190611013421, 20190611143421, 0, '123456', 0);
 INSERT INTO `company_info` VALUES ('1560234861488151073', '骊山鹿鸣', 'http://license.png', '13724344782', 20190611013421, 20190620223616, 0, '123456', 0);
-INSERT INTO `company_info` VALUES ('1564903855687991507', 'companyName', 'CompanyLicense', 'CompanyPhone', 1564903855687, 1564903855687, 0, NULL, 0);
-INSERT INTO `company_info` VALUES ('91610115MA6UAC9Q21', 'RNG', 'http://sws.png', '15291418231', 1564998571327, 1564998571327, 0, NULL, 0);
+INSERT INTO `company_info` VALUES ('91610115MA6UAC9Q21', 'RNG', 'http://sws.png', '15291418231', 1564998571327, 1564998571327, 0, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 0);
 
 -- ----------------------------
 -- Table structure for company_order
@@ -102,7 +101,7 @@ CREATE TABLE `member_order`  (
 -- ----------------------------
 -- Records of member_order
 -- ----------------------------
-INSERT INTO `member_order` VALUES ('1565000420023199896', '1560234861488151073', 350.00, 0, NULL);
+INSERT INTO `member_order` VALUES ('1565957265771350479', '91610115MA6UAC9Q21', 0.02, 0, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk');
 
 -- ----------------------------
 -- Table structure for part_category
@@ -111,16 +110,18 @@ DROP TABLE IF EXISTS `part_category`;
 CREATE TABLE `part_category`  (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `category_type` int(11) DEFAULT NULL,
-  `create_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` timestamp(0) NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP(0),
+  `category_num` int(11) UNSIGNED DEFAULT NULL,
+  `create_time` bigint(20) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` bigint(20) NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`category_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of part_category
 -- ----------------------------
-INSERT INTO `part_category` VALUES (1, '代课', 1, '2019-06-11 21:54:35', '2019-06-11 21:56:30');
+INSERT INTO `part_category` VALUES (1, '代课', 0, 20190611215435, 20190611215630);
+INSERT INTO `part_category` VALUES (2, '测验', 0, 20190816193232, 20190816193829);
+INSERT INTO `part_category` VALUES (3, '传单', 0, 20190816193245, 20190816193831);
 
 -- ----------------------------
 -- Table structure for part_info
