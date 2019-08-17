@@ -20,7 +20,8 @@ public enum ErrorResultEnum implements CodeEnum{
     COMPANY_INFO_FORMAT_ERROR(10, "公司信息格式错误"),
     COMPANY_INFO_NOT_EXIT(11, "公司信息不存在"),
     COMPANY_MEMBER(12, "公司已经是会员"),
-    THIS_ORDER_NOT_EXITS(13, "此统一订单不存在")
+    THIS_ORDER_NOT_EXITS(13, "此统一订单不存在"),
+    COMPANY_STATUS_ERROR(14, "公司审核状态不正确")
     ;
 
     private Integer code;

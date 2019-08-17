@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 16/08/2019 20:43:42
+ Date: 17/08/2019 20:43:11
 */
 
 SET NAMES utf8mb4;
@@ -22,29 +22,42 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `activity_info`;
 CREATE TABLE `activity_info`  (
-  `activity_id` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '活动的主键',
-  `activity_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动名称',
-  `activity_main` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '主办方',
-  `activity_address` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动地点',
-  `activity_start` bigint(20) DEFAULT NULL COMMENT '活动开始时间',
-  `activity_end` bigint(20) DEFAULT NULL COMMENT '活动结束时间',
-  `activity_max` int(11) DEFAULT NULL COMMENT '活动最大参加人数',
+  `activity_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '活动信息主键(同时此字段也作为订单Id)',
+  `activity_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动名称',
+  `activity_openid` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动主办方openid',
   `activity_mode` tinyint(4) DEFAULT NULL COMMENT '活动模式：(0)学生社团活动  (1)企业组织的活动  (2) 其他',
-  `activity_generalize` int(11) DEFAULT NULL COMMENT '数字就代表人数，如果是100那就代表此活动100人左右的推广力度，学生社团活动可不选择',
-  `activity_link` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动链接：一个跳转链接，跳转至活动页面',
-  `activity_abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动简介，意义等等',
-  `activity_logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动的Logo图片',
+  `activity_generalize` int(11) DEFAULT NULL COMMENT '推广力度（即人数）',
+  `activity_link` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动链接：跳转至活动页面',
+  `activity_abstract` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动简介、意义',
+  `activity_logo` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '活动宣传图',
   `activity_audit` tinyint(4) DEFAULT NULL COMMENT '活动审核 （0）未审核 （1）通过（2）未通过',
-  `activity_update` bigint(20) DEFAULT NULL COMMENT '此信息最后修改时间',
-  `activity_create` bigint(20) DEFAULT NULL,
-  `activity_apply` int(11) DEFAULT 0 COMMENT '已经报名人数',
   PRIMARY KEY (`activity_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of activity_info
 -- ----------------------------
-INSERT INTO `activity_info` VALUES ('1564648889477254410', '钟南山一日游', '1564648889477763274', '终南山', 1564648889477, 1564648889477, 50, 1, 2000, 'http://lslm.jeck', '欣赏终南山美景，品尝终南山的美食！', 'http://lslm.png', 0, NULL, NULL, NULL);
+INSERT INTO `activity_info` VALUES ('1566019993033126194', '活动名称', '1566021126634135097', 0, 1000, 'http://xxx', '活动描述信息', 'http://a.png', 0);
+INSERT INTO `activity_info` VALUES ('68942316487236478', '终南山一日游', 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY', 0, 30, 'http://activirty/xxx/xx/..', '终南山一日游', 'http://a.png', 1);
+
+-- ----------------------------
+-- Table structure for collection_order
+-- ----------------------------
+DROP TABLE IF EXISTS `collection_order`;
+CREATE TABLE `collection_order`  (
+  `order_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '订单主键',
+  `order_type` tinyint(5) DEFAULT 0 COMMENT '订单的类型（用户支付、企业支付）',
+  `order_money` decimal(10, 2) DEFAULT NULL COMMENT '订单金额',
+  `order_openid` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '订单支付者openid',
+  `order_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '订单名称',
+  `order_pay_status` tinyint(5) DEFAULT NULL COMMENT '订单的支付状态',
+  PRIMARY KEY (`order_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of collection_order
+-- ----------------------------
+INSERT INTO `collection_order` VALUES ('1566045557401890780', 2, 0.01, NULL, '骊山鹿鸣教育科技有限公司升级为会员', 1);
 
 -- ----------------------------
 -- Table structure for company_info
@@ -55,33 +68,29 @@ CREATE TABLE `company_info`  (
   `company_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业名称',
   `company_license` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业营业执照图片路径',
   `company_phone` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业法人电话',
-  `company_reg_time` bigint(20) DEFAULT 0 COMMENT '企业在此平台注册时间',
-  `company_update_time` bigint(20) DEFAULT 0 COMMENT '企业信息最后修改更新时间',
   `company_status` int(5) DEFAULT 0 COMMENT '企业注册状态 0、未审核 1、通过 2、未通过（暂时设置了3种状态）',
-  `openid` varchar(35) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '管理员openid',
-  `company_member` tinyint(11) DEFAULT 0,
+  `openid` varchar(35) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业管理员openid',
+  `company_member` tinyint(11) DEFAULT 0 COMMENT '企业会员等级',
+  `member_overdue` bigint(20) DEFAULT NULL COMMENT '企业会员到期时间',
   PRIMARY KEY (`company_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of company_info
 -- ----------------------------
-INSERT INTO `company_info` VALUES ('1560234861488151072', '比特科技', 'http://license.png', '13724344781', 20190611013421, 20190611143421, 0, '123456', 0);
-INSERT INTO `company_info` VALUES ('1560234861488151073', '骊山鹿鸣', 'http://license.png', '13724344782', 20190611013421, 20190620223616, 0, '123456', 0);
-INSERT INTO `company_info` VALUES ('91610115MA6UAC9Q21', 'RNG', 'http://sws.png', '15291418231', 1564998571327, 1564998571327, 0, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 0);
+INSERT INTO `company_info` VALUES ('1566022871029249125', '骊山鹿鸣教育科技有限公司', 'https://s2.ax1x.com/2019/08/17/muRLwt.png', '15291418231', 1, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 1, NULL);
 
 -- ----------------------------
 -- Table structure for company_order
 -- ----------------------------
 DROP TABLE IF EXISTS `company_order`;
 CREATE TABLE `company_order`  (
-  `order_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
-  `order_status` tinyint(11) DEFAULT NULL,
-  `order_money` decimal(11, 2) DEFAULT NULL,
-  `order_activity` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `activity_status` tinyint(11) DEFAULT NULL,
-  `create_time` bigint(20) DEFAULT NULL,
-  `update_time` bigint(20) DEFAULT NULL,
+  `order_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '企业发布活动订单Id(同时也是订单的Id)',
+  `order_money` decimal(11, 2) DEFAULT NULL COMMENT '企业发布活动支付金额',
+  `order_activity` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '企业发布活动的Id',
+  `activity_status` tinyint(11) DEFAULT NULL COMMENT '企业发布活动的状态',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '信息生成时间',
+  `update_time` bigint(20) DEFAULT NULL COMMENT '信息更新时间',
   PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -90,18 +99,17 @@ CREATE TABLE `company_order`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `member_order`;
 CREATE TABLE `member_order`  (
-  `order_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '开通会员的订单Id',
+  `order_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '开通会员的公司订单Id',
   `order_company` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '开通会员的公司Id',
   `order_money` decimal(5, 2) DEFAULT NULL COMMENT '支付费用',
-  `pay_status` tinyint(11) DEFAULT NULL COMMENT '支付状态',
-  `openid` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
+  `pay_status` tinyint(3) DEFAULT NULL COMMENT '支付状态',
   PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of member_order
 -- ----------------------------
-INSERT INTO `member_order` VALUES ('1565957265771350479', '91610115MA6UAC9Q21', 0.02, 0, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk');
+INSERT INTO `member_order` VALUES ('1566045557401890780', '1566022871029249125', 0.01, 1);
 
 -- ----------------------------
 -- Table structure for part_category
@@ -110,49 +118,46 @@ DROP TABLE IF EXISTS `part_category`;
 CREATE TABLE `part_category`  (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `category_num` int(11) UNSIGNED DEFAULT NULL,
-  `create_time` bigint(20) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `update_time` bigint(20) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `create_time` bigint(20) NOT NULL,
+  `update_time` bigint(20) NOT NULL,
   PRIMARY KEY (`category_id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of part_category
 -- ----------------------------
-INSERT INTO `part_category` VALUES (1, '代课', 0, 20190611215435, 20190611215630);
-INSERT INTO `part_category` VALUES (2, '测验', 0, 20190816193232, 20190816193829);
-INSERT INTO `part_category` VALUES (3, '传单', 0, 20190816193245, 20190816193831);
+INSERT INTO `part_category` VALUES (1, '抄写', 1566023508294, 1566023508294);
+INSERT INTO `part_category` VALUES (2, '代课', 1566023543861, 1566023543861);
+INSERT INTO `part_category` VALUES (3, '发单', 1566023579624, 1566023579624);
+INSERT INTO `part_category` VALUES (4, '辅导', 1566023616102, 1566023616102);
 
 -- ----------------------------
 -- Table structure for part_info
 -- ----------------------------
 DROP TABLE IF EXISTS `part_info`;
 CREATE TABLE `part_info`  (
-  `part_id` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `part_id` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '兼职信息主键，同样也是支付订单的Id',
   `part_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职名称',
-  `part_category` int(11) DEFAULT NULL COMMENT '兼职分类',
+  `part_category` int(11) DEFAULT NULL COMMENT '兼职分类 Id',
   `part_address` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职地点',
   `part_overview` varchar(150) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职描述、概述',
   `part_start` bigint(20) DEFAULT NULL COMMENT '兼职开始时间',
   `part_end` bigint(20) DEFAULT NULL COMMENT '兼职结束时间',
-  `part_time` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '对兼职时间的一个补充',
-  `part_creator` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `part_time` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职备注信息（可以是任何信息的备注）',
   `part_money` decimal(10, 2) DEFAULT NULL COMMENT '发起方支付金额',
-  `part_money_show` decimal(10, 2) DEFAULT NULL,
-  `part_status` int(11) DEFAULT NULL COMMENT '此条兼职信息状态， 详情见代码',
-  `part_employ` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT '兼职接受者（谁去完成这个任务）',
-  `employ_sex` tinyint(11) DEFAULT NULL,
-  `part_remark` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `creator_phone` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `create_time` bigint(20) DEFAULT NULL,
-  `update_time` bigint(20) DEFAULT NULL,
+  `part_money_show` decimal(10, 2) DEFAULT NULL COMMENT '其他人看到的金额 ',
+  `part_status` int(11) DEFAULT NULL COMMENT '此条兼职信息状态 (详见代码枚举) ',
+  `employ_sex` tinyint(3) DEFAULT NULL COMMENT '性别要求 (详见代码枚举)',
+  `part_employ` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职(任务)接受者openid',
+  `employ_phone` varchar(15) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职(任务)接受者电话',
+  `part_creator` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '兼职发布者openid',
   PRIMARY KEY (`part_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of part_info
 -- ----------------------------
-INSERT INTO `part_info` VALUES ('1564658763535673415', '兼职名称_01', 0, '兼职地点_01', '兼职详细描述信息', 1564658763535, 1564658763535, '兼职时间补充', 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk2', 0.01, 0.00, 0, NULL, 3, NULL, NULL, NULL, NULL);
+INSERT INTO `part_info` VALUES ('1566039929001477652', '兼职名称', 2, '西安工程大学临潼区', '兼职描述', 1566039796582, NULL, '点名完毕就可以走了，立马确认！', 0.01, 0.00, 3, 2, NULL, NULL, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk');
 
 -- ----------------------------
 -- Table structure for system_config
@@ -161,41 +166,39 @@ DROP TABLE IF EXISTS `system_config`;
 CREATE TABLE `system_config`  (
   `params_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT ' 系统参数主键',
   `params_value` decimal(10, 2) NOT NULL COMMENT ' 值',
+  `params_des` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '注释',
   PRIMARY KEY (`params_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of system_config
 -- ----------------------------
-INSERT INTO `system_config` VALUES ('member_month_money', 0.01);
-INSERT INTO `system_config` VALUES ('member_year_money', 0.02);
-INSERT INTO `system_config` VALUES ('part_kickback', 0.10);
+INSERT INTO `system_config` VALUES ('member_month_money', 0.01, '月费企业会员');
+INSERT INTO `system_config` VALUES ('member_year_money', 0.01, '年费企业会员');
+INSERT INTO `system_config` VALUES ('other_param', 0.05, '其他参数');
+INSERT INTO `system_config` VALUES ('part_kickback', 0.01, '兼职发布的回扣');
 
 -- ----------------------------
 -- Table structure for user_info
 -- ----------------------------
 DROP TABLE IF EXISTS `user_info`;
 CREATE TABLE `user_info`  (
-  `open_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '微信的OpenId',
-  `user_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `user_icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `user_sex` int(11) DEFAULT NULL,
-  `user_city` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `user_phone` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '电话',
-  `user_grade` int(11) DEFAULT NULL COMMENT '积分',
-  `create_time` bigint(20) DEFAULT NULL,
-  `update_time` bigint(20) DEFAULT NULL,
-  `user_member` tinyint(11) DEFAULT NULL,
+  `open_id` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '微信openid',
+  `user_name` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户昵称',
+  `user_icon` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户头像',
+  `user_sex` tinyint(4) DEFAULT NULL COMMENT '用户性别(0未知、1男、2女)',
+  `user_city` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户所在地区',
+  `user_phone` varchar(25) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户电话',
+  `user_grade` int(11) DEFAULT NULL COMMENT '用户积分',
+  `create_time` bigint(20) DEFAULT NULL COMMENT '首次存储时间',
+  `update_time` bigint(20) DEFAULT NULL COMMENT '信息更新时间',
+  `user_member` tinyint(11) DEFAULT NULL COMMENT '用户会员等级',
   PRIMARY KEY (`open_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_info
 -- ----------------------------
-INSERT INTO `user_info` VALUES ('oxrwq039kPU4K-U1AyuqKru0sI7E', '子皿ξ曦', 'http://thirdwx.qlogo.cn/mmopen/vi_32/gFgXhVibyHlzMQFd3VNMYbDaylNxsOBFPeLWuus6f6bCTNMiahXhFwrlfTib2eaQ60TW1HvEhm7weH3DAysIWyT5g/132', 2, '中国渭南', NULL, 0, NULL, NULL, 0);
-INSERT INTO `user_info` VALUES ('oxrwq04NqJmF_OXFrZoz-DH11QJs', '淡蓝色15686152998', 'http://thirdwx.qlogo.cn/mmopen/vi_32/A3k6UTcTeCYfm937ibflqibFsycRicXjYYHS7eDB7ut0BeO4bWmSxfhALq2cXbxNibmvzyjZO5LjUBxkjHrdYibQGGw/132', 2, '法国', NULL, 0, NULL, NULL, 0);
-INSERT INTO `user_info` VALUES ('oxrwq0xrKKyqiAGE8O9TM3L1yaQY', 'ahojcn', 'http://thirdwx.qlogo.cn/mmopen/vi_32/hyCfOptGJaWH4dYwqJNlCSBnPmJqJHBJ32FtxIjia3yQonGLHjQu1BYq9EBQ2BjM5icSrjojSV3QakvkSt9YJUkA/132', 1, '中国', NULL, 0, NULL, NULL, 0);
-INSERT INTO `user_info` VALUES ('oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 'Tim', 'http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmOLibgHtYurJxvW0yicXLVcTCUiaDQDqibEyoIKwS7ZRdOsZL02RibF79vdNt6cFEYU1v53r1plygOAL60hw/132', 1, '泽西岛', NULL, 0, NULL, NULL, 0);
-INSERT INTO `user_info` VALUES ('oxrwq0_nsAuRAfEiI5JXnL_oMDzI', '之文康', 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJBzcWHFreCYwiaJicr8EZVU2eYEFu1C0Fr9Xic8RR28cNQHMbz4x2KqaadpIXW3SM9TttJaoXlNsRSQ/132', 0, '', NULL, 0, NULL, NULL, 0);
+INSERT INTO `user_info` VALUES ('oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 'Tim', 'http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmOLibgHtYurJxvW0yicXLVcTCUiaDQDqibEyoIKwS7ZRdOsZL02RibF79vdNt6cFEYU1v53r1plygOAL60hw/132', 1, '泽西岛', NULL, 0, NULL, 1566045540344, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;

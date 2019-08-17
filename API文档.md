@@ -4,6 +4,8 @@
 
 ### 1、查看兼职分类
 
+v1.1 更新说明：去掉了分类下兼职数量，即categoryNum字段
+
 ```
 GET http://tim.natapp1.cc/buckmoo/user/part/category_list
 ```
@@ -23,7 +25,6 @@ GET http://tim.natapp1.cc/buckmoo/user/part/category_list
 		{
 			"categoryId":1, //分类Id
 			"categoryName":"其他", //名称
-			"categoryNum":0, //此分类下的兼职数目
 			"createTime":1560308075000,
 			"updateTime":1563299669000
 		},
@@ -33,34 +34,6 @@ GET http://tim.natapp1.cc/buckmoo/user/part/category_list
 			"categoryNum":1,
 			"createTime":1563310081000,
 			"updateTime":1563310112000
-		},
-		{
-			"categoryId":3,
-			"categoryName":"传单",
-			"categoryNum":0,
-			"createTime":1563310103000,
-			"updateTime":1563310103000
-		},
-		{
-			"categoryId":4,
-			"categoryName":"配送",
-			"categoryNum":0,
-			"createTime":1563310126000,
-			"updateTime":1563310126000
-		},
-		{
-			"categoryId":5,
-			"categoryName":"抄写",
-			"categoryNum":0,
-			"createTime":1563310148000,
-			"updateTime":1563310148000
-		},
-		{
-			"categoryId":6,
-			"categoryName":"辅导",
-			"categoryNum":0,
-			"createTime":1563310162000,
-			"updateTime":1563310162000
 		}
 	],
 	"msg":"成功"
@@ -71,7 +44,9 @@ GET http://tim.natapp1.cc/buckmoo/user/part/category_list
 
 ### 2、分类兼职列表
 
-此列表是审核通过的兼职
+注意此列表是审核通过的兼职
+
+v1.1 更新说明：去掉了partRemark（兼职信息备注）、creatorPhone（兼职发布者电话）等字段
 
 请求地址
 ```
@@ -83,6 +58,7 @@ pageindex : Integer 分页索引（从0开始）
 category : Integer 分类Id
 ```
 返回值示例
+
 ```json
 {
 	"code":0,
@@ -90,39 +66,18 @@ category : Integer 分类Id
 		"pageCount":1,
 		"partInfoList":[
 			{
-				"createTime":1560307214000,  //创建时间
-				"creatorPhone":"13772812803", //联系方式
-				"employSex":3,	//1男、2女、3不限
-				"partAddress":"西安工程大学临潼校区A326", //地点
-				"partCategory":2, //分类Id
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY", //发布者openid
-				"partEnd":1563255614000, //结束时间
-				"partId":"1560260414182640052", //兼职Id
-				"partMoney":30, //兼职金额
-        "partMoneyShow", //抽成后兼职支付金额
-				"partName":"周四大学英语代课", //标题
-				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326", //描述
-				"partStart":1563457214000, //兼职开始时间
-				"partStatus":2, //兼职状态
-				"partTime":"只要点名了就可以走，记住时间是周四34节", //时间备注
-				"updateTime":1563394788000 //最后更新信息时间
-			},
-			{
-				"createTime":1560307214000,
-				"creatorPhone":"13772812803",
-				"employSex":3,
-				"partAddress":"西安工程大学临潼校区A326",
+				"employSex":2,
+				"partAddress":"西安工程大学临潼区",
 				"partCategory":2,
 				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEnd":1563255614000,
-				"partId":"1560260414182640053",
-				"partMoney":30,
-				"partName":"周四大学英语代课",
-				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
-				"partStart":1563457214000,
-				"partStatus":2,
-				"partTime":"只要点名了就可以走，记住时间是周四34节",
-				"updateTime":1563394789000
+				"partId":"1566039929001477652",
+				"partMoney":0.01,
+				"partMoneyShow":0.00,
+				"partName":"兼职名称",
+				"partOverview":"兼职描述",
+				"partStart":1566039796582,
+				"partStatus":3,
+				"partTime":"点名完毕就可以走了，立马确认！"
 			}
 		]
 	},
@@ -130,15 +85,17 @@ category : Integer 分类Id
 }
 ```
 
+
+
 兼职状态参考值:
 
 ```java
 @Getter
 public enum  PartTimeStatusEnum implements CodeEnum{
-    NO_PAY(0, "未付款 & 未审核"),
-    NEW_PART(1, "必须付款 & 未审核"),
-    NOT_PASS(2, "审核失败 & 已退款"),
-    PASS_PAY(3, "审核通过 & 已发布"),
+    NO_PAY(0, "未付款"),
+    NEW_PART(1, "未审核"),
+    NOT_PASS(2, "审核失败(已退款)"),
+    PASS_PAY(3, "已发布"),
     TAKE_ORDER(4, "已经接单"),
     FINISH_ORDER(5, "已经完成"),
     FINISH_CREATE(6, "发布方确认已完成"),
@@ -149,6 +106,10 @@ public enum  PartTimeStatusEnum implements CodeEnum{
 ```
 
 ### 3、发布兼职信息
+
+v1.1 更新，无需参数partRemark（兼职信息备注）、creatorPhone（兼职发布者电话）
+
+**另外，汇报一个来自前端的BUG，结束时间字段partEnd无法传到后台**
 
 ```
 POST http://tim.natapp1.cc/buckmoo/user/part/create
@@ -165,9 +126,7 @@ partStart 开始时间 Long
 partEnd 结束时间 Long
 partTime 时间的附加描述 String
 partMoney 支付金额 Double
-partRemark 备注信息 String
 employSex 接受条件 Integer 1男、2女、3男女不限
-creatorPhone 联系方式(手机号码)
 ```
 
 返回值
@@ -193,7 +152,7 @@ creatorPhone 联系方式(手机号码)
 		"partEnd":1563269870,
 		"partId":"1563348836534761769",
 		"partMoney":9900,
-    "partMoneyShow": 9890,
+    	"partMoneyShow": 9890,
 		"partName":"SpringBoot商城毕业设计",
 		"partOverview":"SpringBoot商城毕业设计，非常方便，待遇优厚！！",
 		"partRemark":"备注信息：无",
@@ -226,83 +185,27 @@ pageindex Integer 分页索引
 {
 	"code":0,
 	"data":{
-		"pageCount":2, //分页数量
+		"pageCount":1,
 		"partInfoList":[
 			{
-				"createTime":1563395610000,
-				"creatorPhone":"12321313123",
-				"employSex":3,
-				"partAddress":"不限",
-				"partCategory":1,
-				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEmploy":"",
-				"partEnd":1563270000,
-				"partId":"1563348810541158695",
-				"partMoney":9900,
-        "partMoneyShow": 9890,
-				"partName":"SpringBoot商城毕业设计",
-				"partOverview":"SpringBoot商城毕业设计，非常方便，待遇优厚！！",
-				"partRemark":"备注信息：无",
-				"partStart":1563270000,
-				"partStatus":2,
-				"partTime":"时间最多两个月，三个月也行",
-				"updateTime":1563400055000
-			},
-			{
-				"createTime":1563317467000,
-				"creatorPhone":"13772812803",
-				"employSex":1,
-				"partAddress":"不限",
-				"partCategory":5,
-				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEnd":1563270000,
-				"partId":"1563270667200359519",
-				"partMoney":75,
-        "partMoneyShow": 9890,
-				"partName":"抄写论文 -1000字50元",
-				"partOverview":"1000字50元，抄完即可通知抄写结束，非常方便",
-				"partRemark":"备注信息：无",
-				"partStart":1563270000,
-				"partStatus":2,
-				"partTime":"时间最多两天，抄3000字左右",
-				"updateTime":1563399913000
-			},
-			{
-				"createTime":1563311583000,
-				"creatorPhone":"13772812803",
-				"employSex":1,
-				"partAddress":"西安工程大学临潼校区",
-				"partCategory":3,
-				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEmploy":"",
-				"partEnd":1563264783000,
-				"partId":"1563264783008222064",
-				"partMoney":40,
-				"partName":"周三代课",
-				"partOverview":"这是详细描述信息",
-				"partStart":1563264783000,
-				"partStatus":2,
-				"partTime":"对兼职时间的一个补充",
-				"updateTime":1563400051000
-			},
-			{
-				"createTime":1560307214000,
-				"creatorPhone":"13772812803",
-				"employSex":3,
-				"partAddress":"西安工程大学临潼校区A326",
+				"employSex":2,
+				"employSexStr":"女",
+				"partAddress":"西安工程大学临潼区",
 				"partCategory":2,
+				"partCategoryStr":"代课",
 				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEmploy":"",
-				"partEnd":1563255614000,
-				"partId":"1560260414182640053",
-				"partMoney":30,
-        "partMoneyShow": 9890,
-				"partName":"周四大学英语代课",
-				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
-				"partStart":1563457214000,
-				"partStatus":2,
-				"partTime":"只要点名了就可以走，记住时间是周四34节",
-				"updateTime":1563400041000
+				"partCreatorStr":"Tim",
+				"partEmployPhone":"",
+				"partEmployStr":"暂时无人接单",
+				"partId":"1566039929001477652",
+				"partMoney":0.01,
+				"partMoneyShow":0.00,
+				"partName":"兼职名称",
+				"partOverview":"兼职描述",
+				"partStart":1566039796582,
+				"partStatus":3,
+				"partStatusStr":"已发布",
+				"partTime":"点名完毕就可以走了，立马确认！"
 			}
 		]
 	},
@@ -312,9 +215,7 @@ pageindex Integer 分页索引
 
 ### 5、查看接手兼职 (分状态)
 
-此接口过时，不建议使用
-
-和`4、查看我发布的兼职信息`一模一样
+此接口过时，不建议使用，和`4、查看我发布的兼职信息`一模一样
 
 ```
 http://tim.natapp1.cc/buckmoo/user/part/accepted_list?status=3&pageindex=0
@@ -327,61 +228,13 @@ status Integer 参考(2、分类兼职列表)中兼职信息状态
 pageindex Integer 分页索引
 ```
 
-返回值
-
-```json
-{
-	"code":0,
-	"data":{
-		"pageCount":1,
-		"partInfoList":[
-			{
-				"createTime":1560307214000,
-				"creatorPhone":"13772812803",
-				"employSex":2,
-				"partAddress":"西安工程大学临潼校区A326",
-				"partCategory":3,
-				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEmploy":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEnd":1563255614000,
-				"partId":"1560260414182640055",
-				"partMoney":30,
-        "partMoneyShow": 9890,
-				"partName":"周四大学英语代课",
-				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
-				"partStart":1563457214000,
-				"partStatus":3,
-				"partTime":"只要点名了就可以走，记住时间是周四34节",
-				"updateTime":1563400666000
-			},
-			{
-				"createTime":1560307214000,
-				"creatorPhone":"13772812803",
-				"employSex":2,
-				"partAddress":"西安工程大学临潼校区A326",
-				"partCategory":3,
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-				"partEmploy":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partEnd":1563255614000,
-				"partId":"1560260414182640054",
-				"partMoney":30,
-        "partMoneyShow": 9890,
-				"partName":"周四大学英语代课",
-				"partOverview":"周四早上34节大学英语代课，要求女生，临潼校区A326",
-				"partStart":1563457214000,
-				"partStatus":3,
-				"partTime":"只要点名了就可以走，记住时间是周四34节",
-				"updateTime":1563400656000
-			}
-		]
-	},
-	"msg":"成功"
-}
-```
+返回值 4、查看发布兼职 (分状态) 一样
 
 
 
 ### 6、查看发布兼职 (不分状态)
+
+v1.1更新：去除updateTime字段、partRemark字段
 
 ```
 GET http://tim.natapp1.cc/buckmoo/user/part/all_created
@@ -396,6 +249,8 @@ pageindex 分页参数
 返回值 `4、查看发布兼职 (分状态) 一样`
 
 ### 7、查看接手兼职  (不分状态)
+
+v1.1更新：去除updateTime字段、partRemark字段
 
 ```
 GET http://tim.natapp1.cc/buckmoo/user/part/all_accepted 
@@ -441,6 +296,8 @@ H5 支付页面
 
 
 ### 10、接手一个兼职
+
+v1.1更新：同样，去除updateTime字段、partRemark字段
 
 ```
 POST http://tim.natapp1.cc/buckmoo/user/part/accept
@@ -597,55 +454,20 @@ openid : String
 		"updateTime":1563307248000,	//最后更新时间
 		"userAddress":"泽西岛",	//地点
 		"userGrade":0, //用户积分
-		"userIcon":"http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmOLibgHtYurJxvW0yicXLVcTCUiaDQDqibEyoIKwS7ZRdOsZL02RibF79vdNt6cFEYU1v53r1plygOAL60hw/132", 	//用户头像
+		"userIcon":"http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmO32", 	//用户头像
 		"userMember":0,	//会员级别
 		"userName":"Tim",	//用户昵称
 		"userSex":1	//性别
 	},
 	"msg":"成功"
-}
+} 
 ```
-
-### 
-
-
-
-### 
 
 # 二、活动发布方
 
 ## 账户相关
 
-### 1、活动发布方登录
-
-```
-POST http://tim.natapp1.cc/buckmoo/company/info/login
-```
-
-参数
-```
-companyId String 公司的Id
-password String 公司登录密码
-```
-
-返回值
-
-```json
-{
-	"code":0,
-	"msg":"登陆成功"
-}
-{
-	"code":1,
-	"msg":"用户名或者密码错误"
-}
-{
-	"code":2,
-	"msg":"密码错误超过3次，请10分钟后再试"
-}
-```
-
-### 2、活动发布方注册
+### 1、活动发布方注册
 
 ```
 POST http://tim.natapp1.cc/buckmoo/company/info/register
@@ -683,6 +505,16 @@ POST http://tim.natapp1.cc/buckmoo/company/info/register
 ## 支付相关
 
 ### 1、成为会员
+
+```
+GET http://tim.natapp1.cc/buckmoo/company/pay/member
+```
+
+参数
+
+```
+returnUrl : String 支付完成后需要跳转的地址！
+```
 
 
 

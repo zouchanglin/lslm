@@ -79,7 +79,7 @@ public class CompanyServiceImpl implements CompanyService {
             //公司社会统一信用码不符合标准
             if(!VerifyUtil.verifyCompanyId(companyInfo.getCompanyId())){
                 log.error("[公司信息注册] CompanyId={}", companyInfo.getCompanyId());
-                throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_FORMAT_ERROR);
+                //throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_FORMAT_ERROR);
             }
 
             //联系方式不符合标准
@@ -101,7 +101,6 @@ public class CompanyServiceImpl implements CompanyService {
                 throw new BuckMooException(ErrorResultEnum.COMPANY_MEMBER);
             }
             MemberOrder memberOrder = new MemberOrder();
-            //memberOrder.setOpenid(companyInfo.getOpenid());
             memberOrder.setOrderId(KeyUtil.genUniqueKey());
             memberOrder.setOrderCompany(companyInfo.getCompanyId());
             memberOrder.setPayStatus(0);

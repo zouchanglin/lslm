@@ -48,7 +48,7 @@ public class UserPartController {
 
     /**
      * 兼职信息列表
-     * @version 1.0
+     * @version 1.1
      * @param pageindex 分页索引
      * @param category 类别Id
      */
@@ -159,8 +159,8 @@ public class UserPartController {
     public String allCreatedPart(@CookieValue(value = "openid", required = false) String openid,
                                   @RequestParam("pageindex") Integer pageindex){
         if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
-        Sort sort = new Sort(Sort.Direction.DESC, "createTime");
-        PageRequest pageRequest = PageRequest.of(pageindex, 4, sort);
+        //Sort sort = new Sort(Sort.Direction.DESC, "createTime");
+        PageRequest pageRequest = PageRequest.of(pageindex, 4);
         Page<PartInfo> partInfoPage = partInfoService.userAllCreate(openid, pageRequest);
 
         PartInfoVO partInfoVO = pageToPartInfoVO.partPageToPartInfoVO(partInfoPage);
@@ -178,8 +178,8 @@ public class UserPartController {
     public String allAcceptPart(@CookieValue(value = "openid", required = false) String openid,
                                  @RequestParam("pageindex") Integer pageindex){
         if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
-        Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
-        PageRequest pageRequest = PageRequest.of(pageindex, 4, sort);
+        //Sort sort = new Sort(Sort.Direction.DESC, "updateTime");
+        PageRequest pageRequest = PageRequest.of(pageindex, 4);
         Page<PartInfo> partInfoPage = partInfoService.userAllAccept(openid, pageRequest);
 
         PartInfoVO partInfoVO = pageToPartInfoVO.partPageToPartInfoVO(partInfoPage);

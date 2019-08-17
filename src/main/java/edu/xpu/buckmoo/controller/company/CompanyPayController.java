@@ -3,6 +3,9 @@ package edu.xpu.buckmoo.controller.company;
 import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
+import edu.xpu.buckmoo.enums.CompanyStatusEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
+import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.service.CompanyPayService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,6 +39,13 @@ public class CompanyPayController {
                          @RequestParam("returnUrl") String returnUrl,
                          Map<String, Object> map){
         CompanyInfo findResult = companyService.findByOpenid(openid);
+
+        if(findResult == null){
+            throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_NOT_EXIT);
+        }else if(!findResult.getCompanyStatus().equals(CompanyStatusEnum.PASS.getCode())){
+            throw new BuckMooException(ErrorResultEnum.COMPANY_STATUS_ERROR);
+        }
+
         MemberOrder memberOrder = companyService.becomeMemberPay(findResult.getCompanyId());
         PayResponse payResponse = companyPayService.memberPay(memberOrder);
 

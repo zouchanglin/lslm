@@ -26,9 +26,4 @@ public class CompanyForm {
      * 公司法人联系方式
      */
     private String companyPhone;
-
-    /**
-     * 管理员密码
-     */
-    private String password;
 }

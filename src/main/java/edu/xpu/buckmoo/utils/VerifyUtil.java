@@ -14,7 +14,7 @@ public class VerifyUtil {
         return companyId.matches(COMPANY_ID_VERIFY);
     }
 
-    public static boolean verifyPhoneNumber(String companyId){
-        return companyId.matches(PHONE_NUMBER);
+    public static boolean verifyPhoneNumber(String phonenumber){
+        return phonenumber.matches(PHONE_NUMBER);
     }
 }

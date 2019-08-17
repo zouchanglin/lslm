@@ -11,6 +11,7 @@ import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.CollectionOrderTypeEnum;
 import edu.xpu.buckmoo.enums.PayStatusEnum;
+import edu.xpu.buckmoo.repository.CollectionOrderRepository;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.service.CompanyPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
@@ -31,10 +32,12 @@ import java.util.Optional;
 public class CompanyPayServiceImpl implements CompanyPayService{
     private final BestPayServiceImpl bestPayService;
     private final CompanyInfoRepository companyInfoRepository;
+    private final CollectionOrderRepository collectionOrderRepository;
 
-    public CompanyPayServiceImpl(BestPayServiceImpl bestPayService, CompanyInfoRepository companyInfoRepository) {
+    public CompanyPayServiceImpl(BestPayServiceImpl bestPayService, CompanyInfoRepository companyInfoRepository, CollectionOrderRepository collectionOrderRepository) {
         this.bestPayService = bestPayService;
         this.companyInfoRepository = companyInfoRepository;
+        this.collectionOrderRepository = collectionOrderRepository;
     }
 
     @Override
@@ -55,15 +58,19 @@ public class CompanyPayServiceImpl implements CompanyPayService{
             //同时生成统一订单
             CollectionOrder collectionOrder = new CollectionOrder();
             collectionOrder.setOrderId(memberOrder.getOrderId());
+            collectionOrder.setOrderId(openid);
             collectionOrder.setOrderMoney(memberOrder.getOrderMoney());
             collectionOrder.setOrderPayStatus(PayStatusEnum.NOT_PAY.getCode());
             collectionOrder.setOrderType(CollectionOrderTypeEnum.COMPANY_MEMBER_PAY.getCode());
             collectionOrder.setOrderName(findResult.get().getCompanyName() + "升级为会员");
+
+            CollectionOrder saveResult = collectionOrderRepository.save(collectionOrder);
+            log.info("[CompanyPayServiceImpl] saveResult={}", saveResult);
         }
 
-        log.info("payRequest={}", JsonUtil.toJson(payRequest));
+        log.info("[CompanyPayServiceImpl] payRequest={}", JsonUtil.toJson(payRequest));
         PayResponse payResponse = bestPayService.pay(payRequest);
-        log.info("payResponse={}", JsonUtil.toJson(payResponse));
+        log.info("[CompanyPayServiceImpl] payResponse={}", JsonUtil.toJson(payResponse));
         return payResponse;
     }
 
@@ -74,9 +81,9 @@ public class CompanyPayServiceImpl implements CompanyPayService{
         refundRequest.setOrderAmount(memberOrder.getOrderMoney().doubleValue());
         refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
 
-        log.info("[微信退款] refundRequest={}", JsonUtil.toJson(refundRequest));
+        log.info("[CompanyPayServiceImpl] 微信退款 refundRequest={}", JsonUtil.toJson(refundRequest));
         RefundResponse refundResponse = bestPayService.refund(refundRequest);
-        log.info("[微信退款] refundResponse={}", JsonUtil.toJson(refundResponse));
+        log.info("[CompanyPayServiceImpl] 微信退款 refundResponse={}", JsonUtil.toJson(refundResponse));
         return refundResponse;
     }
 }
