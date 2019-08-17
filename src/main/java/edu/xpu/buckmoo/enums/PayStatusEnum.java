@@ -3,10 +3,10 @@ package edu.xpu.buckmoo.enums;
 import lombok.Getter;
 
 /**
- * 活动类型的枚举
+ * 支付状态的枚举
  */
 @Getter
-public enum CompanyOrderEnum implements CodeEnum {
+public enum PayStatusEnum implements CodeEnum {
     NOT_PAY(0, "未支付"),
     PAY_FINISH(1, "已经支付"),
     ORDER_FINISH(2, "已完结"),
@@ -17,7 +17,7 @@ public enum CompanyOrderEnum implements CodeEnum {
 
     private String message;
 
-    CompanyOrderEnum(Integer code, String message) {
+    PayStatusEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

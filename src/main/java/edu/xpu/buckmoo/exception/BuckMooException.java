@@ -4,7 +4,7 @@ import edu.xpu.buckmoo.enums.ResultEnum;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.1
  * @className BuckMooException
  * @description BuckMooException定义了项目中出现的异常
  * @date 2019-06-19 19:46

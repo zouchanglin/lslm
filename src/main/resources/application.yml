@@ -24,7 +24,7 @@ wechat:
   mchId: 1545797881
   mchKey: lhl123456anxlhl123456anxlhl12345
   mchPath: D:\develop\wechat_project\apiclient_cert.p12
-  notifyUrl: http://tim.natapp1.cc/buckmoo/user/pay/notify
+  notifyUrl: http://tim.natapp1.cc/buckmoo/allpay/notify
 
 projecturl:
   wechatMpAuthorize: http://tim.natapp1.cc

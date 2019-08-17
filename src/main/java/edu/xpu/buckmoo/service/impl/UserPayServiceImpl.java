@@ -6,7 +6,7 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.model.RefundRequest;
 import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.WeChatPayNotifyEnum;
 import edu.xpu.buckmoo.service.PayNotifyCallback;
 import edu.xpu.buckmoo.service.UserPayService;

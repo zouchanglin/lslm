@@ -11,7 +11,7 @@ import javax.persistence.Id;
 
 /**
  * @author tim
- * @version 1.1
+ * @version 1.2
  * @className CategoryInfo
  * @description 兼职分类描述信息
  * @date 2019-06-11 18:02
@@ -32,11 +32,6 @@ public class PartCategory {
      * 分类名称
      */
     private String categoryName;
-
-    /**
-     * 此分类的兼职信息数量
-     */
-    private Integer categoryNum;
 
     /**
      * 创建时间

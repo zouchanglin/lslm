@@ -51,11 +51,6 @@ public class PartTimeForm {
     private BigDecimal partMoney = new BigDecimal(0);
 
     /**
-     * 兼职的备注信息
-     */
-    private String partRemark;
-
-    /**
      * 任务接受者要求：男、女、男女不限
      */
     private Integer employSex = SexEnum.OTHER.getCode();

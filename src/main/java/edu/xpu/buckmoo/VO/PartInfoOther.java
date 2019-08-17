@@ -1,6 +1,6 @@
 package edu.xpu.buckmoo.VO;
 
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import lombok.Data;
 
 

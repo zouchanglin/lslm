@@ -1,25 +1,22 @@
-package edu.xpu.buckmoo.dataobject;
+package edu.xpu.buckmoo.dataobject.order;
 
-import edu.xpu.buckmoo.enums.CompanyOrderEnum;
+import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.math.BigDecimal;
-import java.util.Date;
 
+/**
+ * 公司发布活动的订单实体类
+ */
 @Data
 @Entity
 @DynamicUpdate
 public class CompanyOrder {
     @Id
     private String orderId;
-
-    /**
-     * 订单支付状态
-     */
-    private Integer orderStatus = CompanyOrderEnum.NOT_PAY.getCode();
 
     /**
      * 支付金额
@@ -34,7 +31,7 @@ public class CompanyOrder {
     /**
      * 要发布的活动对应状态
      */
-    private Integer activityStatus;
+    private Integer activityStatus = ActivityStatusEnum.NEW.getCode();
 
     /**
      * 信息创建时间

@@ -1,7 +1,7 @@
 package edu.xpu.buckmoo.service;
 
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -2,7 +2,7 @@ package edu.xpu.buckmoo.controller.company;
 
 import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.service.CompanyPayService;
 import lombok.extern.slf4j.Slf4j;

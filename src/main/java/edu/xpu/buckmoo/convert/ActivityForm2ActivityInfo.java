@@ -15,22 +15,6 @@ public class ActivityForm2ActivityInfo {
     public static void activityForm2ActivityInfo(ActivityInfo activityInfo, ActivityForm activityForm){
         String activityName = activityForm.getActivityName();
         if(activityName != null) activityInfo.setActivityName(activityName);
-
-        String activityMain = activityForm.getActivityMain();
-        if(activityMain != null) activityInfo.setActivityMain(activityMain);
-
-        String activityAddress = activityForm.getActivityAddress();
-        if(activityAddress != null) activityInfo.setActivityAddress(activityAddress);
-
-        Long activityStart = activityForm.getActivityStart();
-        if(activityStart != null) activityInfo.setActivityStart(activityStart);
-
-        Long activityEnd = activityForm.getActivityEnd();
-        if(activityEnd != null) activityInfo.setActivityEnd(activityEnd);
-
-        Integer activityMax = activityForm.getActivityMax();
-        if(activityMax != null) activityInfo.setActivityMax(activityMax);
-
         Integer activityMode = activityForm.getActivityMode();
         if(activityMode != null) activityInfo.setActivityMode(activityMode);
 

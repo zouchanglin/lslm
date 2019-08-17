@@ -3,18 +3,17 @@ package edu.xpu.buckmoo.service.impl;
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.*;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
-import edu.xpu.buckmoo.repository.MemberOrderRepository;
+import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.service.PayNotifyCallback;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.MathUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -23,17 +22,18 @@ import java.util.Optional;
 @Service
 @Slf4j
 public class PayNotifyCallbackImpl implements PayNotifyCallback {
-    @Autowired
-    private BestPayServiceImpl bestPayService;
 
-    @Autowired
-    private PartInfoService partInfoService;
+    private final BestPayServiceImpl bestPayService;
+    private final PartInfoService partInfoService;
+    private final CompanyInfoRepository companyInfoRepository;
+    private final MemberOrderRepository memberOrderRepository;
 
-    @Autowired
-    private CompanyInfoRepository companyInfoRepository;
-
-    @Autowired
-    private MemberOrderRepository memberOrderRepository;
+    public PayNotifyCallbackImpl(BestPayServiceImpl bestPayService, PartInfoService partInfoService, CompanyInfoRepository companyInfoRepository, MemberOrderRepository memberOrderRepository) {
+        this.bestPayService = bestPayService;
+        this.partInfoService = partInfoService;
+        this.companyInfoRepository = companyInfoRepository;
+        this.memberOrderRepository = memberOrderRepository;
+    }
 
     @Override
     public void payNotify(String notifyData, Integer mode) {
@@ -65,7 +65,7 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             Optional<MemberOrder> findResult = memberOrderRepository.findById(orderId);
             if(findResult.isPresent()){
                 MemberOrder memberOrder = findResult.get();
-                memberOrder.setPayStatus(CompanyOrderEnum.PAY_FINISH.getCode());
+                memberOrder.setPayStatus(PayStatusEnum.PAY_FINISH.getCode());
                 //修改订单的状态
                 MemberOrder saveMemberOrder = memberOrderRepository.save(memberOrder);
                 log.info("saveMemberOrder={}", saveMemberOrder);
@@ -85,8 +85,6 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             }else{
                 throw new BuckMooException(ResultEnum.COMPANY_INFO_NOT_EXIT);
             }
-        }else{
-
         }
     }
 }

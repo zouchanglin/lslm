@@ -1,9 +1,8 @@
-package edu.xpu.buckmoo.dataobject;
+package edu.xpu.buckmoo.dataobject.order;
 
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
 import edu.xpu.buckmoo.enums.SexEnum;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -11,14 +10,13 @@ import java.math.BigDecimal;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.2
  * @className PartInfo
  * @description 兼职信息实体类
- * @date 2019-06-11 18:03
+ * @date 2019-08-17 11:03
  */
 @Data
 @Entity
-@DynamicUpdate
 public class PartInfo {
     @Id
     private String partId;
@@ -54,14 +52,9 @@ public class PartInfo {
     private Long partEnd;
 
     /**
-     * 对兼职时间的一个补充
+     * 对兼职时间的一个补充(备注)
      */
     private String partTime;
-
-    /**
-     * 兼职发布者
-     */
-    private String partCreator;
 
     /**
      * 发起方支付金额
@@ -79,32 +72,22 @@ public class PartInfo {
     private Integer partStatus = PartTimeStatusEnum.NO_PAY.getCode();
 
     /**
-     * 兼职任务接受者UserId
-     */
-    private String partEmploy;
-
-    /**
      * 任务接受者要求：男、女、男女不限
      */
     private Integer employSex = SexEnum.OTHER.getCode();
 
     /**
-     * 兼职的备注信息
+     * 兼职任务接受者openid
      */
-    private String partRemark;
+    private String partEmploy;
 
     /**
-     * 兼职信息发布者的联系方式
+     * 兼职任务接受者Phone
      */
-    private String creatorPhone;
+    private String employPhone;
 
     /**
-     * 创建时间
+     * 兼职发布者openid
      */
-    private Long createTime;
-
-    /**
-     * 信息更新时间
-     */
-    private Long updateTime;
+    private String partCreator;
 }

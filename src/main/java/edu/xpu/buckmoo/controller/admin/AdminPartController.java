@@ -1,9 +1,10 @@
 package edu.xpu.buckmoo.controller.admin;
 
 import edu.xpu.buckmoo.VO.PartInfoVO;
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
-import edu.xpu.buckmoo.repository.PartInfoRepository;
+import edu.xpu.buckmoo.repository.order.PartInfoRepository;
+import edu.xpu.buckmoo.repository.order.PartInfoRepository;
 import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;

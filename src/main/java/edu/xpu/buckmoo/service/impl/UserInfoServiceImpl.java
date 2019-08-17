@@ -5,6 +5,8 @@ import edu.xpu.buckmoo.repository.UserInfoRepository;
 import edu.xpu.buckmoo.service.UserInfoService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author tim
  * @version 1.0
@@ -22,6 +24,12 @@ public class UserInfoServiceImpl implements UserInfoService {
 
     @Override
     public UserInfo saveUser(UserInfo userInfo) {
+        Optional<UserInfo> findResult = userRep.findById(userInfo.getOpenId());
+        if(!findResult.isPresent()){
+            //如果不存在
+            userInfo.setCreateTime(System.currentTimeMillis());
+        }
+        userInfo.setUpdateTime(System.currentTimeMillis());
         return userRep.save(userInfo);
     }
 

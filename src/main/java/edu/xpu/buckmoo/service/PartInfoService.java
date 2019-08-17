@@ -1,10 +1,9 @@
 package edu.xpu.buckmoo.service;
 
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import retrofit2.http.Part;
 
 /**
  * 此接口是兼职信息的操作接口
@@ -41,24 +40,6 @@ public interface PartInfoService {
      * @return 保存后的兼职信息
      */
     PartInfo addOnePartTime(PartInfo partInfo);
-
-    /**
-     * 根据用户发布的兼职状态分页查询
-     * @param openid 用户的openId
-     * @param pageRequest 分页参数
-     * @param status 兼职信息的状态
-     * @return 分页查询结果
-     */
-    Page<PartInfo> listByUserCreate(String openid, PageRequest pageRequest, Integer status);
-
-    /**
-     * 根据用户接受的兼职状态分页查询
-     * @param openid 用户的openId
-     * @param pageRequest 分页参数
-     * @param status 兼职信息的状态
-     * @return 分页查询结果
-     */
-    Page<PartInfo> listByUserAccept(String openid, PageRequest pageRequest, Integer status);
 
     /**
      * 修改兼职信息状态

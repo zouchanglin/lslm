@@ -1,6 +1,6 @@
-package edu.xpu.buckmoo.repository;
+package edu.xpu.buckmoo.repository.order;
 
-import edu.xpu.buckmoo.dataobject.CompanyOrder;
+import edu.xpu.buckmoo.dataobject.order.CompanyOrder;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

@@ -1,11 +1,9 @@
 package edu.xpu.buckmoo.convert;
 
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.form.PartTimeForm;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import org.springframework.beans.BeanUtils;
-
-import java.util.Date;
 
 /**
  * 兼职表单转为兼职信息对象

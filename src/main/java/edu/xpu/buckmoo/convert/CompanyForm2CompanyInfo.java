@@ -9,8 +9,8 @@ public class CompanyForm2CompanyInfo {
     public static CompanyInfo form2info(CompanyForm companyForm){
         CompanyInfo companyInfo = new CompanyInfo();
         BeanUtils.copyProperties(companyForm, companyInfo);
-        companyInfo.setCompanyRegTime(System.currentTimeMillis());
-        companyInfo.setCompanyUpdateTime(System.currentTimeMillis());
+        //companyInfo.setCompanyRegTime(System.currentTimeMillis());
+        //companyInfo.setCompanyUpdateTime(System.currentTimeMillis());
         companyInfo.setCompanyStatus(CompanyStatusEnum.NEW.getCode());
         companyInfo.setCompanyMember(0);
         return companyInfo;

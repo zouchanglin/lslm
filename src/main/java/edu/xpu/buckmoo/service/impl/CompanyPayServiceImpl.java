@@ -6,12 +6,13 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.model.RefundRequest;
 import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.WeChatPayNotifyEnum;
 import edu.xpu.buckmoo.service.CompanyPayService;
 import edu.xpu.buckmoo.service.PayNotifyCallback;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -24,20 +25,16 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class CompanyPayServiceImpl implements CompanyPayService{
-    private final BestPayServiceImpl bestPayService;
+    @Autowired
+    private BestPayServiceImpl bestPayService;
 
-    private final PayNotifyCallback payNotifyCallback;
-
-
-    public CompanyPayServiceImpl(BestPayServiceImpl bestPayService, PayNotifyCallback payNotifyCallback) {
-        this.bestPayService = bestPayService;
-        this.payNotifyCallback = payNotifyCallback;
-    }
+    @Autowired
+    private  PayNotifyCallback payNotifyCallback;
 
     @Override
     public PayResponse memberPay(MemberOrder memberOrder) {
         PayRequest payRequest = new PayRequest();
-        payRequest.setOpenid(memberOrder.getOpenid());
+        //payRequest.setOpenid(memberOrder.getOpenid());
         payRequest.setOrderId(memberOrder.getOrderId());
         payRequest.setOrderAmount(memberOrder.getOrderMoney().doubleValue());
         payRequest.setOrderName(memberOrder.getOrderCompany() + "升级为会员");

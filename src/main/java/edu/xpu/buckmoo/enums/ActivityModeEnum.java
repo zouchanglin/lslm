@@ -7,8 +7,8 @@ import lombok.Getter;
  */
 @Getter
 public enum ActivityModeEnum implements CodeEnum {
-    STUDENT(0, "学生社团活动"),
-    COMPANY(1, "企业组织活动"),
+    COMPANY(0, "企业组织活动"),
+    STUDENT(1, "学生社团活动"),
     OTHER(2, "其他类型")
     ;
 

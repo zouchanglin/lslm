@@ -35,7 +35,6 @@ public class WechatPayConfig {
         wxPayH5Config.setMchId(accountConfig.getMchId());
         wxPayH5Config.setMchKey(accountConfig.getMchKey());
         wxPayH5Config.setKeyPath(accountConfig.getMchPath());
-        //TODO 这里的异步通知路径需要修改
         wxPayH5Config.setNotifyUrl(accountConfig.getNotifyUrl());
         return wxPayH5Config;
     }

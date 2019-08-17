@@ -1,13 +1,14 @@
 package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.ResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
-import edu.xpu.buckmoo.repository.MemberOrderRepository;
+import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
+import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.VerifyUtil;
@@ -60,7 +61,6 @@ public class CompanyServiceImpl implements CompanyService {
         if(findResult.isPresent()){
             log.info("[公司信息更新] findResult={}", findResult);
             //更新时间的设置
-            companyInfo.setCompanyUpdateTime(System.currentTimeMillis());
             return companyRep.save(companyInfo);
         }else{
             //不存在公司信息就抛出异常
@@ -102,7 +102,7 @@ public class CompanyServiceImpl implements CompanyService {
                 throw new BuckMooException(ResultEnum.COMPANY_MEMBER);
             }
             MemberOrder memberOrder = new MemberOrder();
-            memberOrder.setOpenid(companyInfo.getOpenid());
+            //memberOrder.setOpenid(companyInfo.getOpenid());
             memberOrder.setOrderId(KeyUtil.genUniqueKey());
             memberOrder.setOrderCompany(companyInfo.getCompanyId());
             memberOrder.setPayStatus(0);
