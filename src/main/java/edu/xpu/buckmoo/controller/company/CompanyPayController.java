@@ -43,16 +43,4 @@ public class CompanyPayController {
         map.put("returnUrl", returnUrl);
         return "pay";
     }
-
-    /**
-     * 微信的回支付成功的回调接口
-     * @param notifyData 来自微信服务器的字段
-     * @return 成功的XML数据
-     */
-    @PostMapping("notify")
-    public String payNotify(@RequestBody String notifyData){
-        companyPayService.payNotify(notifyData);
-        //处理结果返回给微信
-        return "pay/success";
-    }
 }

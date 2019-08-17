@@ -34,11 +34,8 @@ import java.util.List;
 @RequestMapping("/user/part")
 public class UserPartController {
     private final PartInfoService partInfoService;
-
     private final PartCategoryService partCategoryService;
-
     private final PageToPartInfoVO pageToPartInfoVO;
-
     private final UserInfoService userInfoService;
 
     public UserPartController(PartCategoryService partCategoryService, PageToPartInfoVO pageToPartInfoVO,
@@ -89,9 +86,10 @@ public class UserPartController {
     public String createPartInfo(@CookieValue(value = "openid", required = false) String openid,
                                  PartTimeForm partTimeForm){
         PartInfo partInfo = PartTimeForm2Info.form2partInfo(partTimeForm);
-        log.info("partInfo = {}", partInfo);
-        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "😁请先登录"));
+        log.info("[UserPartController] partInfo = {}", partInfo);
+        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
         partInfo.setPartCreator(openid);
+        //在保存的时候生成统一订单
         PartInfo addRet = partInfoService.addOnePartTime(partInfo);
 
         if(addRet != null)

@@ -2,12 +2,8 @@ package edu.xpu.buckmoo.controller.user;
 
 import edu.xpu.buckmoo.VO.ActivityInfoVO;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
-import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
-import edu.xpu.buckmoo.enums.ResultEnum;
-import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.ActivityService;
-import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +31,8 @@ public class UserActivityController {
 
     private final ActivityService activityService;
 
-    private final CompanyService companyService;
-
-    public UserActivityController(ActivityService activityService, CompanyService companyService) {
+    public UserActivityController(ActivityService activityService) {
         this.activityService = activityService;
-        this.companyService = companyService;
     }
 
     /**

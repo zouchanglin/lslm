@@ -1,6 +1,6 @@
 package edu.xpu.buckmoo.form;
 
-import edu.xpu.buckmoo.enums.SexEnum;
+import edu.xpu.buckmoo.enums.UserSexEnum;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -53,7 +53,7 @@ public class PartTimeForm {
     /**
      * 任务接受者要求：男、女、男女不限
      */
-    private Integer employSex = SexEnum.OTHER.getCode();
+    private Integer employSex = UserSexEnum.OTHER.getCode();
 
     /**
      * 兼职信息发布者的联系方式

@@ -20,12 +20,6 @@ public interface CompanyPayService {
     PayResponse memberPay(MemberOrder memberOrder);
 
     /**
-     * 支付回调接口
-     * @param notifyData 微信返回的数据
-     */
-    void payNotify(String notifyData);
-
-    /**
      * 成为会员支付退款
      * @param memberOrder 订单详情
      * @return 退款订单详情

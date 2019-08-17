@@ -1,6 +1,6 @@
 package edu.xpu.buckmoo.exception;
 
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 
 /**
  * @author tim
@@ -13,7 +13,7 @@ public class BuckMooException extends RuntimeException{
 
     private Integer code;
 
-    public BuckMooException(ResultEnum resultEnum) {
+    public BuckMooException(ErrorResultEnum resultEnum) {
         super(resultEnum.getMessage());
         this.code = resultEnum.getCode();
     }

@@ -14,7 +14,5 @@ import edu.xpu.buckmoo.dataobject.order.PartInfo;
 public interface UserPayService {
     PayResponse partPay(PartInfo partInfo);
 
-    void payNotify(String notifyData);
-
     RefundResponse refund(PartInfo partInfo);
 }

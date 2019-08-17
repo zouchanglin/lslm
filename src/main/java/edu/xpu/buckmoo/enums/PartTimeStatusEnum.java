@@ -11,9 +11,9 @@ import lombok.Getter;
  */
 @Getter
 public enum  PartTimeStatusEnum implements CodeEnum{
-    NO_PAY(0, "初始化 & 未审核"),
-    NEW_PART(1, "已付款 & 未审核"),
-    NOT_PASS(2, "审核失败 & 已退款"),
+    NO_PAY(0, "初始化"),
+    NEW_PART(1, "未审核"),
+    NOT_PASS(2, "审核失败(已退款)"),
     PASS_PAY(3, "已发布"),
     TAKE_ORDER(4, "已接单"),
     FINISH_ORDER(5, "任务完成"),

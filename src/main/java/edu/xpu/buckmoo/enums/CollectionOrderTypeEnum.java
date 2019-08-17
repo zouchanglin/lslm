@@ -2,6 +2,9 @@ package edu.xpu.buckmoo.enums;
 
 import lombok.Getter;
 
+/**
+ * 支付类型的枚举，方便统一回调
+ */
 @Getter
 public enum CollectionOrderTypeEnum implements CodeEnum {
     USER_PART_PAY(0, "用户兼职支付"),

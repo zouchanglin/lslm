@@ -12,11 +12,9 @@ public class PartTimeForm2Info {
     public static PartInfo form2partInfo(PartTimeForm partTimeForm){
         PartInfo partInfo = new PartInfo();
         BeanUtils.copyProperties(partTimeForm, partInfo);
-
         partInfo.setPartStart(partTimeForm.getPartStart());
         partInfo.setPartEnd(partTimeForm.getPartEnd());
         partInfo.setPartId(KeyUtil.genUniqueKey());
-
         return partInfo;
     }
 }

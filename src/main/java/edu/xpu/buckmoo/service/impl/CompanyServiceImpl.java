@@ -3,12 +3,11 @@ package edu.xpu.buckmoo.service.impl;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
-import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.VerifyUtil;
@@ -64,29 +63,29 @@ public class CompanyServiceImpl implements CompanyService {
             return companyRep.save(companyInfo);
         }else{
             //不存在公司信息就抛出异常
-            throw new BuckMooException(ResultEnum.COMPANY_INFO_NOT_EXIT);
+            throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_NOT_EXIT);
         }
     }
 
     @Override
     public CompanyInfo register(CompanyInfo companyInfo) {
-        if(companyInfo.getCompanyId() == null) throw new BuckMooException(ResultEnum.PARAM_ERROR);
+        if(companyInfo.getCompanyId() == null) throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
         Optional<CompanyInfo> findResult = companyRep.findById(companyInfo.getCompanyId());
         log.info("[公司信息注册] findResult={}", findResult);
         if(findResult.isPresent()){
             log.error("[公司信息注册] companyInfo={}", companyInfo);
-            throw new BuckMooException(ResultEnum.ALREADY_EXISTED);
+            throw new BuckMooException(ErrorResultEnum.ALREADY_EXISTED);
         }else {
             //公司社会统一信用码不符合标准
             if(!VerifyUtil.verifyCompanyId(companyInfo.getCompanyId())){
                 log.error("[公司信息注册] CompanyId={}", companyInfo.getCompanyId());
-                throw new BuckMooException(ResultEnum.COMPANY_INFO_FORMAT_ERROR);
+                throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_FORMAT_ERROR);
             }
 
             //联系方式不符合标准
             if(!VerifyUtil.verifyPhoneNumber(companyInfo.getCompanyPhone())){
                 log.error("[公司信息注册] CompanyPhone={}", companyInfo.getCompanyPhone());
-                throw new BuckMooException(ResultEnum.COMPANY_INFO_FORMAT_ERROR);
+                throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_FORMAT_ERROR);
             }
             return companyRep.save(companyInfo);
         }
@@ -99,7 +98,7 @@ public class CompanyServiceImpl implements CompanyService {
             CompanyInfo companyInfo = findResult.get();
             //说明已经是会员
             if(!companyInfo.getCompanyMember().equals(0)){
-                throw new BuckMooException(ResultEnum.COMPANY_MEMBER);
+                throw new BuckMooException(ErrorResultEnum.COMPANY_MEMBER);
             }
             MemberOrder memberOrder = new MemberOrder();
             //memberOrder.setOpenid(companyInfo.getOpenid());
@@ -116,7 +115,7 @@ public class CompanyServiceImpl implements CompanyService {
             }
         }else{
             log.error("[公司升级为会员-支付] companyId={}", companyId);
-            throw new BuckMooException(ResultEnum.COMPANY_INFO_NOT_EXIT);
+            throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_NOT_EXIT);
         }
     }
 

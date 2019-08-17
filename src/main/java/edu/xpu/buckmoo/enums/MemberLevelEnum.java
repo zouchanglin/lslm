@@ -2,6 +2,9 @@ package edu.xpu.buckmoo.enums;
 
 import lombok.Getter;
 
+/**
+ * 会员等级的枚举
+ */
 @Getter
 public enum MemberLevelEnum implements CodeEnum{
     COMMON(0, "非会员"),

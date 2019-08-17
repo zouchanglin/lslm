@@ -2,7 +2,7 @@ package edu.xpu.buckmoo.controller;
 
 import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.config.ProjectUrlConfig;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import org.springframework.core.io.FileSystemResource;
@@ -41,7 +41,7 @@ public class FileController {
     public ResultVO fileUpload(MultipartFile file) {
         if (file.isEmpty()) {
             System.out.println("文件为空");
-            throw new BuckMooException(ResultEnum.NULL_FILE);
+            throw new BuckMooException(ErrorResultEnum.NULL_FILE);
         }
         String fileName = file.getOriginalFilename();  // 文件名
         assert fileName != null;

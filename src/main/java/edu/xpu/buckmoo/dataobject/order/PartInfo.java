@@ -1,7 +1,7 @@
 package edu.xpu.buckmoo.dataobject.order;
 
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
-import edu.xpu.buckmoo.enums.SexEnum;
+import edu.xpu.buckmoo.enums.UserSexEnum;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -74,7 +74,7 @@ public class PartInfo {
     /**
      * 任务接受者要求：男、女、男女不限
      */
-    private Integer employSex = SexEnum.OTHER.getCode();
+    private Integer employSex = UserSexEnum.OTHER.getCode();
 
     /**
      * 兼职任务接受者openid

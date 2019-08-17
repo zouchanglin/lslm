@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import edu.xpu.buckmoo.config.ProjectUrlConfig;
 import edu.xpu.buckmoo.convert.WxMpUser2UserInfo;
 import edu.xpu.buckmoo.dataobject.UserInfo;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
@@ -95,7 +95,7 @@ public class WeChatController {
                 log.info("saveOrUpdate = {}", saveOrUpdate);
             } catch (WxErrorException e) {
                 log.error("【微信网页授权】{}", e.toString());
-                throw new BuckMooException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
+                throw new BuckMooException(ErrorResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
             }
             String openId = wxMpOAuth2AccessToken.getOpenId();
             Cookie cookie = new Cookie("openid", openId);
@@ -140,7 +140,7 @@ public class WeChatController {
             log.info("wxMpOAuth2AccessToken={}", wxMpOAuth2AccessToken);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e.toString());
-            throw new BuckMooException(ResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
+            throw new BuckMooException(ErrorResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
         }
         return "redirect:" + returnUrl + "?openid=" + wxMpOAuth2AccessToken.getOpenId();
     }

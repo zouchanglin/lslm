@@ -4,7 +4,7 @@ import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.convert.ActivityForm2ActivityInfo;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.form.ActivityForm;
 import edu.xpu.buckmoo.service.ActivityService;
@@ -43,7 +43,7 @@ public class AdminActivityController {
     public ResultVO showActivityInfo(@RequestParam("type")Integer type){
         if(EnumUtil.getByCode(type, ActivityStatusEnum.class) == null){
             log.error("ActivityType={}", type);
-            throw new BuckMooException(ResultEnum.PARAM_ERROR);
+            throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
         }
 
         PageRequest pageRequest = PageRequest.of(0, 10);
@@ -55,7 +55,7 @@ public class AdminActivityController {
     @RequestMapping("/delete")
     public ResultVO deleteActivity(@RequestParam("activityId") String activityId){
         ActivityInfo one = activityService.findOne(activityId);
-        if(one == null) throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);
+        if(one == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
 
         activityService.delete(activityId);
         return ResultVOUtil.success();
@@ -72,7 +72,7 @@ public class AdminActivityController {
                                    @ModelAttribute ActivityForm activityForm){
         ActivityInfo findRet = activityService.findOne(activityId);
         if(findRet == null)
-            throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);
+            throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
         ActivityForm2ActivityInfo.activityForm2ActivityInfo(findRet, activityForm);
         log.info("【修改活动属性】activity={}", findRet);
         ActivityInfo save = activityService.save(findRet);
@@ -104,10 +104,10 @@ public class AdminActivityController {
     public ResultVO audit(@RequestParam("activityId") String activityId,
                         @RequestParam("activityAudit") Integer activityAudit){
         ActivityInfo findRet = activityService.findOne(activityId);
-        if(findRet == null) throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);
+        if(findRet == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
         if(EnumUtil.getByCode(activityAudit, ActivityStatusEnum.class) == null){
             log.error("ActivityType={}", activityAudit);
-            throw new BuckMooException(ResultEnum.PARAM_ERROR);
+            throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
         }
 
         findRet.setActivityAudit(activityAudit);

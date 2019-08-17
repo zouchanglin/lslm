@@ -1,8 +1,6 @@
 package edu.xpu.buckmoo.repository;
 
 import edu.xpu.buckmoo.dataobject.PartCategory;
-import edu.xpu.buckmoo.dataobject.order.PartInfo;
-import edu.xpu.buckmoo.repository.order.PartInfoRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;

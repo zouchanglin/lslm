@@ -3,7 +3,7 @@ package edu.xpu.buckmoo.controller.admin;
 import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.form.CompanyForm;
 import edu.xpu.buckmoo.service.CompanyService;
@@ -42,7 +42,7 @@ public class AdminCompanyController {
                                     @RequestParam(value = "pageindex", defaultValue = "0")Integer pageindex){
         if(EnumUtil.getByCode(status, CompanyStatusEnum.class) == null){
             log.error("CompanyStatus={}", status);
-            throw new BuckMooException(ResultEnum.PARAM_ERROR);
+            throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
         }
         PageRequest pageRequest = PageRequest.of(pageindex, 10);
         Page<CompanyInfo> companyAudit = companyService.findByCompanyAudit(status, pageRequest);
@@ -53,7 +53,7 @@ public class AdminCompanyController {
     @RequestMapping("/delete")
     public ResultVO deleteCompany(@RequestParam("companyId") String companyId){
         CompanyInfo one = companyService.findById(companyId);
-        if(one == null) throw new BuckMooException(ResultEnum.ACTIVITY_ERROR);
+        if(one == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
         companyService.delete(companyId);
         return ResultVOUtil.success();
     }

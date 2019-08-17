@@ -6,7 +6,7 @@ import lombok.Getter;
  * 返回值状态枚举
  */
 @Getter
-public enum ResultEnum implements CodeEnum{
+public enum ErrorResultEnum implements CodeEnum{
     SUCCESS(0, "成功"),
     PARAM_ERROR(1, "参数不正确"),
     ACTIVITY_ERROR(2, "活动信息不正确"),
@@ -19,14 +19,15 @@ public enum ResultEnum implements CodeEnum{
     ALREADY_EXISTED(9, "此信息已经存在"),
     COMPANY_INFO_FORMAT_ERROR(10, "公司信息格式错误"),
     COMPANY_INFO_NOT_EXIT(11, "公司信息不存在"),
-    COMPANY_MEMBER(12, "公司已经是会员")
+    COMPANY_MEMBER(12, "公司已经是会员"),
+    THIS_ORDER_NOT_EXITS(13, "此统一订单不存在")
     ;
 
     private Integer code;
 
     private String message;
 
-    ResultEnum(Integer code, String message) {
+    ErrorResultEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }

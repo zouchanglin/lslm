@@ -3,10 +3,10 @@ package edu.xpu.buckmoo.enums;
 import lombok.Getter;
 
 /**
- * 性别枚举
+ * 用户性别枚举
  */
 @Getter
-public enum SexEnum implements CodeEnum{
+public enum UserSexEnum implements CodeEnum{
     MAN(1, "男"),
     WOMAN(2, "女"),
     OTHER(3, "男女不限");
@@ -14,7 +14,7 @@ public enum SexEnum implements CodeEnum{
     private Integer code;
     private String message;
 
-    SexEnum(Integer code, String message) {
+    UserSexEnum(Integer code, String message) {
         this.code = code;
         this.message = message;
     }
