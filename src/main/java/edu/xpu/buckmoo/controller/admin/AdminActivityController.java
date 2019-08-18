@@ -1,7 +1,6 @@
 package edu.xpu.buckmoo.controller.admin;
 
 import edu.xpu.buckmoo.VO.ResultVO;
-import edu.xpu.buckmoo.convert.ActivityForm2ActivityInfo;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import edu.xpu.buckmoo.enums.ErrorResultEnum;

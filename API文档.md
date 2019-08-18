@@ -432,6 +432,9 @@ partId : String 兼职信息Id
 ## 账户相关
 
 ### 1、用户基本信息获取
+
+v1.1 更新：如果没有用户电话信息说明用户并未绑定手机号码，后面会提供接口绑定号码！
+
 ```
 GET http://tim.natapp1.cc/buckmoo/user/info/show
 ```
@@ -454,6 +457,7 @@ openid : String
 		"updateTime":1563307248000,	//最后更新时间
 		"userAddress":"泽西岛",	//地点
 		"userGrade":0, //用户积分
+        "userPhone":"127893712894"
 		"userIcon":"http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmO32", 	//用户头像
 		"userMember":0,	//会员级别
 		"userName":"Tim",	//用户昵称
@@ -467,7 +471,7 @@ openid : String
 
 ## 账户相关
 
-### 1、活动发布方注册
+### 1、企业注册
 
 ```
 POST http://tim.natapp1.cc/buckmoo/company/info/register
@@ -502,9 +506,64 @@ POST http://tim.natapp1.cc/buckmoo/company/info/register
 }
 ```
 
+### 2、企业信息获取
+
+```
+GET http://tim.natapp1.cc/buckmoo/company/info/show
+```
+
+参数
+
+```
+无，需要openid即可
+```
+
+返回值
+
+```json
+{
+	"code":0,
+	"data":{
+		"companyId":"1566022871029249125", //社会统一信用码
+		"companyLicense":"https://s2.ax1x.com/2019/08/17/muRLwt.png", //营业执照
+		"companyMember":1, //会员等级
+		"companyName":"骊山鹿鸣教育科技有限公司", //公司名称
+		"companyPhone":"15291418231", //联系人电话
+		"companyStatus":1, //公司状态
+		"openid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk" //公司管理员openid
+	},
+	"msg":"成功"
+}
+```
+
+枚举代码参考
+
+```java
+//公司信息状态
+@Getter
+public enum CompanyStatusEnum implements CodeEnum {
+    NEW(0, "未审核"),
+    PASS(1, "审核通过"),
+    NOT_PASS(2, "审核未通过"),
+    ;
+    ...
+}
+
+//会员等级
+@Getter
+public enum MemberLevelEnum implements CodeEnum{
+    COMMON(0, "非会员"),
+    ONE_LEVEL(1, "白银会员"),
+    TWO_LEVEL(2, "黄金会员"),
+    THREE_LEVEL(3, "钻石会员")
+    ;
+    ...
+}
+```
+
 ## 支付相关
 
-### 1、成为会员
+### 1、企业成为会员
 
 ```
 GET http://tim.natapp1.cc/buckmoo/company/pay/member
@@ -523,6 +582,12 @@ returnUrl : String 支付完成后需要跳转的地址！
 
 
 ## 活动相关
+
+### 1、发布活动
+
+```
+POST 
+```
 
 
 

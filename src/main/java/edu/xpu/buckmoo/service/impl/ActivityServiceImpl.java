@@ -50,4 +50,10 @@ public class ActivityServiceImpl implements ActivityService {
     public void delete(String activityId) {
         activityRep.deleteById(activityId);
     }
+
+    @Override
+    public ActivityInfo create(ActivityInfo activityInfo) {
+
+        return null;
+    }
 }

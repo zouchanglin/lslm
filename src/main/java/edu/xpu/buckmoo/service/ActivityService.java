@@ -37,4 +37,6 @@ public interface ActivityService {
     ActivityInfo save(ActivityInfo activityInfo);
 
     void delete(String activityId);
+
+    ActivityInfo create(ActivityInfo activityInfo);
 }

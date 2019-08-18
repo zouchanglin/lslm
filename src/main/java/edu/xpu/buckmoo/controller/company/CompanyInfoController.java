@@ -26,6 +26,15 @@ public class CompanyInfoController {
         this.companyService = companyService;
     }
 
+
+    @GetMapping("/show")
+    public String companyInfoShow(@CookieValue(value = "openid") String openid){
+        CompanyInfo byOpenid = companyService.findByOpenid(openid);
+        if(byOpenid == null){
+            return JsonUtil.toJson(ResultVOUtil.error(1, "未注册公司"));
+        }
+        return JsonUtil.toJson(ResultVOUtil.success(byOpenid));
+    }
     /**
      * 公司登陆
      * @return 设置Cookie并和登录状态
