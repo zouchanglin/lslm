@@ -4,7 +4,6 @@ import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.*;
-import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.service.CompanyPayService;
@@ -14,15 +13,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * @author tim
- * @version 1.1
+ * @version 1.2
  * @className PayController
  * @description
- * @date 2019-08-16 20:26
+ * @date 2019-08-19 20:26
  */
 @Controller
 @RequestMapping("/company/pay")
@@ -38,50 +36,81 @@ public class CompanyPayController {
         this.companyInfoRepository = companyInfoRepository;
     }
 
-    //成为会员
+    /**
+     * 成为会员需要支付的接口
+     * @param openid cookie存储的openid
+     * @param returnUrl 支付成功后返回的地址
+     * @param map 填充参数
+     * @return 微信H5支付页面
+     */
     @GetMapping("/member")
     public String member(@CookieValue("openid") String openid,
                          @RequestParam("returnUrl") String returnUrl,
                          Map<String, Object> map){
+
+        //先根据openid找企业信息
         CompanyInfo findResult = companyService.findByOpenid(openid);
 
+        //原来的抛出异常处理变为返回值
         if(findResult == null){
-            throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_NOT_EXIT);
+            //throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_NOT_EXIT);
+            //return JsonUtil.toJson(ResultVOUtil.error(1, "请先注册企业"));
+            map.put("error_code", 1);
+            map.put("error_msg", "请先注册企业");
+            return "error";
         }else if(!findResult.getCompanyStatus().equals(CompanyStatusEnum.PASS.getCode())){
-            throw new BuckMooException(ErrorResultEnum.COMPANY_STATUS_ERROR);
+            //throw new BuckMooException(ErrorResultEnum.COMPANY_STATUS_ERROR);
+            //return JsonUtil.toJson(ResultVOUtil.error(2, "请先等待公司信息审核通过才能成为会员"));
+            map.put("error_code", 2);
+            map.put("error_msg", "请先等待公司信息审核通过才能成为会员");
+            return "error";
         }
 
+        //生成企业升级为会员的订单
         MemberOrder memberOrder = companyService.becomeMemberPay(findResult.getCompanyId());
+        //生产预支付订单
         PayResponse payResponse = companyPayService.memberPay(memberOrder);
 
+        //填充支付相关参数
         map.put("payResponse", payResponse);
         map.put("returnUrl", returnUrl);
         return "pay";
     }
 
+    /**
+     * 支付发布活动需要的费用
+     * @param openid cookie存储的openid
+     * @param activityId 活动的Id
+     * @param returnUrl 支付成功后返回的地址
+     * @return 微信H5支付页面
+     */
     @GetMapping("/activity")
     public String activity(@CookieValue("openid") String openid,
                            String activityId,
                            @RequestParam("returnUrl") String returnUrl,
                            Map<String, Object> map){
         CompanyInfo companyInfoFind = companyInfoRepository.findOneByOpenid(openid);
+        //先判断企业信息是否存在
         if(companyInfoFind == null){
+            //不存在打印log
             log.error("[CompanyPayServiceImpl] 非企业用户，不可发布活动");
             return JsonUtil.toJson(ResultVOUtil.error(1, "非企业用户，不可发布活动"));
         }else{
-            CompanyInfo companyInfo = companyInfoFind;
-            if(!companyInfo.getCompanyStatus().equals(CompanyStatusEnum.PASS.getCode())){
+            //判断企业是否已经审核通过
+            if(!companyInfoFind.getCompanyStatus().equals(CompanyStatusEnum.PASS.getCode())){
                 log.error("[CompanyPayServiceImpl] 该企业尚未通过校验，不可发布活动");
                 return JsonUtil.toJson(ResultVOUtil.error(2, "该企业尚未通过校验，不可发布活动"));
             }else{
-                if(companyInfo.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
-                    PayResponse payResponse = companyPayService.activityPay(companyInfo, activityId);
+                //判断企业是否是会员
+                if(companyInfoFind.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
+                    //不是入住会员则需要支付
+                    PayResponse payResponse = companyPayService.activityPay(companyInfoFind, activityId);
                     map.put("payResponse", payResponse);
                     map.put("returnUrl", returnUrl);
                     return "pay";
                 }
             }
         }
-        throw new RuntimeException("参数不合法");
+        throw new RuntimeException("[CompanyPayController] 参数不合法");
     }
 }

@@ -36,15 +36,16 @@ import java.net.URLEncoder;
 @RequestMapping("/wechat")
 @Slf4j
 public class WeChatController {
+
     private final WxMpService wxMpService;
-
     private final WxMpService wxOpenService;
-
     private final UserInfoService userInfoService;
-
     private final ProjectUrlConfig projectUrlConfig;
 
-    public WeChatController(WxMpService wxMpService, WxMpService wxOpenService, UserInfoService userInfoService, ProjectUrlConfig projectUrlConfig) {
+    public WeChatController(WxMpService wxMpService,
+                            WxMpService wxOpenService,
+                            UserInfoService userInfoService,
+                            ProjectUrlConfig projectUrlConfig) {
         this.wxMpService = wxMpService;
         this.wxOpenService = wxOpenService;
         this.userInfoService = userInfoService;

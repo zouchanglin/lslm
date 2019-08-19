@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * @author tim
- * @version 1.1
+ * @version 1.2
  * @className CompanyInfoController
  * @description 公司信息的控制器（登录、注册、信息更新）
  * @date 2019-06-20 21:33

@@ -24,10 +24,10 @@ import java.util.Optional;
 
 /**
  * @author tim
- * @version 1.1
+ * @version 1.2
  * @className PayServiceImpl
- * @description
- * @date 2019-06-22 00:45
+ * @description 公司支付的相关服务
+ * @date 2019-08-21 02:45
  */
 @Service
 @Slf4j
@@ -54,10 +54,12 @@ public class CompanyPayServiceImpl implements CompanyPayService{
     public PayResponse memberPay(MemberOrder memberOrder) {
         PayRequest payRequest = new PayRequest();
 
+        //先查找企业信息是否存在
         String orderCompany = memberOrder.getOrderCompany();
         Optional<CompanyInfo> findResult = companyInfoRepository.findById(orderCompany);
         String openid;
         if(findResult.isPresent()){
+            //企业信息存在
             openid = findResult.get().getOpenid();
             payRequest.setOpenid(openid);
             payRequest.setOrderId(memberOrder.getOrderId());

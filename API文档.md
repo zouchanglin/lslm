@@ -164,74 +164,6 @@ employSex 接受条件 Integer 1男、2女、3男女不限
 }
 ```
 
-### 4、查看发布兼职 (分状态)
-
-此接口过时，不建议使用
-
-```
-GET http://tim.natapp1.cc/buckmoo/user/part/created_list
-```
-
-参数
-
-```
-status Integer 参考(2、分类兼职列表)中兼职信息状态
-pageindex Integer 分页索引
-```
-
-返回值
-
-```json
-{
-	"code":0,
-	"data":{
-		"pageCount":1,
-		"partInfoList":[
-			{
-				"employSex":2,
-				"employSexStr":"女",
-				"partAddress":"西安工程大学临潼区",
-				"partCategory":2,
-				"partCategoryStr":"代课",
-				"partCreator":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
-				"partCreatorStr":"Tim",
-				"partEmployPhone":"",
-				"partEmployStr":"暂时无人接单",
-				"partId":"1566039929001477652",
-				"partMoney":0.01,
-				"partMoneyShow":0.00,
-				"partName":"兼职名称",
-				"partOverview":"兼职描述",
-				"partStart":1566039796582,
-				"partStatus":3,
-				"partStatusStr":"已发布",
-				"partTime":"点名完毕就可以走了，立马确认！"
-			}
-		]
-	},
-	"msg":"成功"
-}
-```
-
-### 5、查看接手兼职 (分状态)
-
-此接口过时，不建议使用，和`4、查看我发布的兼职信息`一模一样
-
-```
-http://tim.natapp1.cc/buckmoo/user/part/accepted_list?status=3&pageindex=0
-```
-
-参数
-
-```
-status Integer 参考(2、分类兼职列表)中兼职信息状态
-pageindex Integer 分页索引
-```
-
-返回值 4、查看发布兼职 (分状态) 一样
-
-
-
 ### 6、查看发布兼职 (不分状态)
 
 v1.1更新：去除updateTime字段、partRemark字段
@@ -291,7 +223,7 @@ H5 支付页面
 
 用户主动退款（尚未设置接口）
 
-审核未通过退款（后台）
+审核未通过退款（后台设定接口）
 
 
 
@@ -643,19 +575,89 @@ GET http://tim.natapp1.cc/buckmoo/company/pay/member
 returnUrl : String 支付完成后需要跳转的地址！
 ```
 
+返回值
 
+微信H5支付页面
 
 ### 2、发布活动支付费用
 
+会员不需要，但是非会员发布活动需要支付费用
 
+```
+http://tim.natapp1.cc/buckmoo/company/pay/activity
+```
+
+参数
+
+```
+activityId:String 支付活动的Id
+returnUrl:String 支付成功后的返回地址
+```
+
+返回值
+
+微信H5支付页面
 
 ## 活动相关
 
 ### 1、发布活动
 
 ```
-POST 
+POST http://tim.natapp1.cc/buckmoo/company/activity/create
 ```
+
+参数
+
+```
+activityName： String活动名称
+activityMode： Integer活动模式（见参考枚举）
+activityGeneralize： Integer活动推广力度
+activityLink：活动链接
+activityAbstract：活动说明与简介
+activityLogo：活动Logo
+```
+
+返回值
+
+```json
+{
+	"code":0,
+	"data":{
+		"activityAbstract":"高校总决赛",
+		"activityAudit":0,
+		"activityGeneralize":2000,
+		"activityId":"1566212848123840773",
+		"activityLink":"http://lol.game.pc...",
+		"activityLogo":"http://lol.png",
+		"activityMode":1,
+		"activityName":"周五LOL（艾欧尼亚钻石段来）",
+		"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk"
+	},
+	"msg":"成功"
+}
+
+{
+	"code":1,
+	"msg":"请先登录"
+}
+
+{
+	"code":2,
+	"msg":"尚未注册公司"
+}
+```
+
+活动模式(类型)的枚举参考
+
+```java
+public enum ActivityModeEnum implements CodeEnum {
+    COMPANY(0, "企业组织活动"),
+    STUDENT(1, "学生社团活动"),
+    OTHER(2, "其他类型")
+}
+```
+
+
 
 
 

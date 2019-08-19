@@ -11,7 +11,6 @@ import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -42,22 +41,27 @@ public class ComActivityController {
     @PostMapping("/create")
     public String createActivity(@CookieValue(value = "openid", required = false) String openid,
                                  @ModelAttribute ActivityForm activityForm){
-        if(openid == null || "".equals(openid)){
+        //先判断openid
+        if(openid == null || "".equals(openid))
             return JsonUtil.toJson(ResultVOUtil.error(1, "请先登录"));
-        }
+        //通过openid查找企业信息
         CompanyInfo findResult = companyService.findByOpenid(openid);
-        if(findResult == null){
+
+        //未找到企业信息进行错误码返回
+        if(findResult == null)
             return JsonUtil.toJson(ResultVOUtil.error(2, "尚未注册公司"));
-        }
 
         //构建活动信息实体
         ActivityInfo activityInfo = new ActivityInfo();
+        //表单信息到实体对象
         BeanUtils.copyProperties(activityForm, activityInfo);
         activityInfo.setActivityId(KeyUtil.genUniqueKey());
         activityInfo.setActivityOpenid(openid);
         activityInfo.setActivityAudit(ActivityStatusEnum.NEW.getCode());
+
+        //创建相关订单，并返回保存后的活动信息
         ActivityInfo createResult = activityService.create(activityInfo);
 
-        return  JsonUtil.toJson(ResultVOUtil.success(createResult));
+        return JsonUtil.toJson(ResultVOUtil.success(createResult));
     }
 }

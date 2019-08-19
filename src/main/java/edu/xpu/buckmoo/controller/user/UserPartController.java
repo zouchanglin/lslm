@@ -17,7 +17,6 @@ import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -88,6 +87,8 @@ public class UserPartController {
         PartInfo partInfo = PartTimeForm2Info.form2partInfo(partTimeForm);
         log.info("[UserPartController] partInfo = {}", partInfo);
         if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(2, "请先登录"));
+
+
         partInfo.setPartCreator(openid);
         //在保存的时候生成统一订单
         PartInfo addRet = partInfoService.addOnePartTime(partInfo);
@@ -184,39 +185,5 @@ public class UserPartController {
 
         PartInfoVO partInfoVO = pageToPartInfoVO.partPageToPartInfoVO(partInfoPage);
         return JsonUtil.toJson(ResultVOUtil.success(partInfoVO));
-    }
-
-    /**
-     * 查看用户发布的兼职列表（分状态查看）
-     * @version 1.0
-     * @param openid 用户openid
-     * @param status 兼职信息的状态
-     * @param pageindex 分页参数
-     * @return 用户发布的兼职列表
-     * @deprecated Use {@link #allCreatedPart(String, Integer)} instead
-     */
-    @GetMapping("/created_list")
-    @Deprecated
-    public String createdPartList(@CookieValue(value = "openid", required = false) String openid,
-                                  @RequestParam("status") Integer status,
-                                  @RequestParam("pageindex") Integer pageindex){
-        return null;
-    }
-
-    /**
-     * 查看用户接手的兼职列表（分状态查看）
-     * @version 1.0
-     * @param openid 用户openid
-     * @param status 兼职信息的状态
-     * @param pageindex 分页参数
-     * @return 用户接手的兼职列表
-     * @deprecated Use {@link #allAcceptPart(String, Integer)} instead
-     */
-    @GetMapping("/accepted_list")
-    @Deprecated
-    public String acceptPartList(@CookieValue(value = "openid", required = false) String openid,
-                                 @RequestParam("status") Integer status,
-                                 @RequestParam("pageindex") Integer pageindex){
-        return null;
     }
 }
