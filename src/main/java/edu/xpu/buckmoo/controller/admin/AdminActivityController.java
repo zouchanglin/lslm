@@ -72,7 +72,7 @@ public class AdminActivityController {
         ActivityInfo findRet = activityService.findOne(activityId);
         if(findRet == null)
             throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
-        ActivityForm2ActivityInfo.activityForm2ActivityInfo(findRet, activityForm);
+        //ActivityForm2ActivityInfo.activityForm2ActivityInfo(findRet, activityForm);
         log.info("【修改活动属性】activity={}", findRet);
         ActivityInfo save = activityService.save(findRet);
         return ResultVOUtil.success(save);
@@ -86,7 +86,7 @@ public class AdminActivityController {
     @RequestMapping("/add")
     public ResultVO addActivity(@ModelAttribute ActivityForm activityForm){
         ActivityInfo activityInfo = new ActivityInfo();
-        ActivityForm2ActivityInfo.activityForm2ActivityInfo(activityInfo, activityForm);
+        //ActivityForm2ActivityInfo.activityForm2ActivityInfo(activityInfo, activityForm);
         log.info("【修改活动属性】activity={}", activityInfo);
         activityInfo.setActivityId(KeyUtil.genUniqueKey());
         ActivityInfo save = activityService.save(activityInfo);

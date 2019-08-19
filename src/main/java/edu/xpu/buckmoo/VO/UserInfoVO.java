@@ -1,23 +1,11 @@
-package edu.xpu.buckmoo.dataobject;
+package edu.xpu.buckmoo.VO;
 
-import edu.xpu.buckmoo.enums.MemberLevelEnum;
+
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
 import javax.persistence.Id;
-
-/**
- * @author tim
- * @version 1.2
- * @className UserInfo
- * @description 用户信息实体类
- * @date 2019-06-10 23:23
- */
 @Data
-@Entity
-@DynamicUpdate
-public class UserInfo {
+public class UserInfoVO {
     /**
      * 微信的openId
      */
@@ -33,6 +21,11 @@ public class UserInfo {
      * 用户头像
      */
     private String userIcon;
+
+    /**
+     * 用户性别
+     */
+    private String userSexStr;
 
     /**
      * 用户性别
@@ -67,11 +60,12 @@ public class UserInfo {
     /**
      * 会员等级
      */
-    private Integer userMember = MemberLevelEnum.COMMON.getCode();
+    private String userMemberStr;
 
+    private Integer userMember;
 
     /**
-     * 企业Id，为空或者为""都是普通用户
+     * 如果是管理员：企业Id
      */
     private String companyId;
 }

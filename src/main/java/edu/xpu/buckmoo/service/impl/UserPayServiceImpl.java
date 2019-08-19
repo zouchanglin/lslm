@@ -38,9 +38,9 @@ public class UserPayServiceImpl implements UserPayService{
         payRequest.setOrderName(partInfo.getPartName());
         payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
 
-        log.info("payRequest={}", JsonUtil.toJson(payRequest));
+        log.info("[UserPayServiceImpl] payRequest={}", JsonUtil.toJson(payRequest));
         PayResponse payResponse = bestPayService.pay(payRequest);
-        log.info("payResponse={}", JsonUtil.toJson(payResponse));
+        log.info("[UserPayServiceImpl] payResponse={}", JsonUtil.toJson(payResponse));
         return payResponse;
     }
 
@@ -51,9 +51,9 @@ public class UserPayServiceImpl implements UserPayService{
         refundRequest.setOrderAmount(partInfo.getPartMoney().doubleValue());
         refundRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
 
-        log.info("[微信退款] refundRequest={}", JsonUtil.toJson(refundRequest));
+        log.info("[UserPayServiceImpl] 微信退款 refundRequest={}", JsonUtil.toJson(refundRequest));
         RefundResponse refundResponse = bestPayService.refund(refundRequest);
-        log.info("[微信退款] refundResponse={}", JsonUtil.toJson(refundResponse));
+        log.info("[UserPayServiceImpl] 微信退款 refundResponse={}", JsonUtil.toJson(refundResponse));
         return refundResponse;
     }
 }

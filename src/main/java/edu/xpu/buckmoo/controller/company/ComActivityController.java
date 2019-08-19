@@ -25,14 +25,22 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/company/activity")
 @Slf4j
 public class ComActivityController {
-    @Autowired
-    private CompanyService companyService;
+    private final CompanyService companyService;
+    private final ActivityService activityService;
 
-    @Autowired
-    private ActivityService activityService;
+    public ComActivityController(CompanyService companyService, ActivityService activityService) {
+        this.companyService = companyService;
+        this.activityService = activityService;
+    }
 
+    /**
+     * 企业用户创建活动
+     * @param openid 企业用户Id
+     * @param activityForm 活动表单
+     * @return 保存的活动信息
+     */
     @PostMapping("/create")
-    public String createActivity(@CookieValue("openid") String openid,
+    public String createActivity(@CookieValue(value = "openid", required = false) String openid,
                                  @ModelAttribute ActivityForm activityForm){
         if(openid == null || "".equals(openid)){
             return JsonUtil.toJson(ResultVOUtil.error(1, "请先登录"));
@@ -48,8 +56,8 @@ public class ComActivityController {
         activityInfo.setActivityId(KeyUtil.genUniqueKey());
         activityInfo.setActivityOpenid(openid);
         activityInfo.setActivityAudit(ActivityStatusEnum.NEW.getCode());
-
         ActivityInfo createResult = activityService.create(activityInfo);
-        return  null;
+
+        return  JsonUtil.toJson(ResultVOUtil.success(createResult));
     }
 }

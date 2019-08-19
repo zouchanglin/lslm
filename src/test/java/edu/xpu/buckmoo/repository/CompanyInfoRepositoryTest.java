@@ -36,4 +36,11 @@ public class CompanyInfoRepositoryTest {
         assertNotNull(save);
         log.info("[CompanyInfoRepositoryTest] save={}", save);
     }
+
+
+    @Test
+    public void findOne(){
+        CompanyInfo oneByOpenid = companyInfoRepository.findOneByOpenid("oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk");
+        System.out.println(oneByOpenid);
+    }
 }

@@ -440,7 +440,7 @@ GET http://tim.natapp1.cc/buckmoo/user/info/show
 ```
 参数
 ```
-openid : String
+无
 ```
 返回值
 ```json
@@ -466,6 +466,74 @@ openid : String
 	"msg":"成功"
 } 
 ```
+
+会员等级参考
+
+```java
+COMMON(0, "非会员"),
+ONE_LEVEL(1, "白银会员"),
+TWO_LEVEL(2, "黄金会员"),
+THREE_LEVEL(3, "钻石会员")
+```
+
+
+
+### 2、获取验证码
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/info/verifykey
+```
+
+参数
+
+```
+phone:String 用户输入的手机号码
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"msg":"成功"
+}
+{
+	"code":1,
+	"msg":"请填写正确格式的手机号"
+}
+{
+	"code":2,
+	"msg":"请填写手机号"
+}
+```
+
+### 3、提交获取手机号码的表单
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/info/bindphone
+```
+
+参数
+
+```
+phone:String 用户输入的手机号码
+verifykey: String 用户输入的验证码
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"msg":"成功"
+}
+{
+	"code":1,
+	"msg":"验证码错误"
+}
+```
+
+
 
 # 二、活动发布方
 

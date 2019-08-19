@@ -120,6 +120,6 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public CompanyInfo findByOpenid(String openid) {
-        return companyRep.findAllByOpenid(openid).get(0);
+        return companyRep.findOneByOpenid(openid);
     }
 }
