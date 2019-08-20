@@ -659,7 +659,13 @@ public enum ActivityModeEnum implements CodeEnum {
 
 
 
+### 2、删除活动
 
+### 3、修改活动
+
+### 4、活动列表
+
+展示自己发布的活动，审核通过的，未通过的
 
 
 

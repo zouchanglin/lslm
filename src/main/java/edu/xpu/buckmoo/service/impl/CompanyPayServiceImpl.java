@@ -4,12 +4,14 @@ import com.lly835.bestpay.enums.BestPayTypeEnum;
 import com.lly835.bestpay.model.PayRequest;
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
+import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.dataobject.CollectionOrder;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.CompanyOrder;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.*;
+import edu.xpu.buckmoo.repository.ActivityInfoRepository;
 import edu.xpu.buckmoo.repository.CollectionOrderRepository;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
@@ -20,6 +22,7 @@ import edu.xpu.buckmoo.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -37,17 +40,21 @@ public class CompanyPayServiceImpl implements CompanyPayService{
     private final CompanyInfoRepository companyInfoRepository;
     private final CollectionOrderRepository collectionOrderRepository;
     private final CompanyOrderRepository companyOrderRepository;
+    private final ActivityInfoRepository activityInfoRepository;
+
 
     public CompanyPayServiceImpl(BestPayServiceImpl bestPayService,
                                  CompanyInfoRepository companyInfoRepository,
                                  CollectionOrderRepository collectionOrderRepository,
                                  SystemConfigRepository systemConfigRepository,
-                                 CompanyOrderRepository companyOrderRepository) {
+                                 CompanyOrderRepository companyOrderRepository,
+                                 ActivityInfoRepository activityInfoRepository) {
         this.bestPayService = bestPayService;
         this.companyInfoRepository = companyInfoRepository;
         this.collectionOrderRepository = collectionOrderRepository;
         this.systemConfigRepository = systemConfigRepository;
         this.companyOrderRepository = companyOrderRepository;
+        this.activityInfoRepository = activityInfoRepository;
     }
 
     @Override
@@ -88,14 +95,31 @@ public class CompanyPayServiceImpl implements CompanyPayService{
 
     @Override
     public PayResponse activityPay(CompanyInfo companyInfo, String activityId) {
-        //非会员发布活动
+        //会员、非会员发布活动
         //生成统一订单
         CollectionOrder collectionOrder = new CollectionOrder();
         Optional<SystemConfig> oneActivityMoney = systemConfigRepository.findById("one_activity_money");
-        if(oneActivityMoney.isPresent()){
+        Optional<SystemConfig> activity_generalize = systemConfigRepository.findById("activity_generalize");
+        if(oneActivityMoney.isPresent() && activity_generalize.isPresent()){
+            //计算出本次推广力度需要多少钱
+            BigDecimal paramsValue = activity_generalize.get().getParamsValue();
+            Optional<ActivityInfo> activityInfoOptional = activityInfoRepository.findById(activityId);
+            if(!activityInfoOptional.isPresent()) throw new RuntimeException("活动信息不存在");
+            Integer activityGeneralize = activityInfoOptional.get().getActivityGeneralize();
+            BigDecimal activityGeneralizeMoney  = paramsValue.multiply(new BigDecimal(activityGeneralize));
+
             String key = KeyUtil.genUniqueKey();
             collectionOrder.setOrderId(key);
-            collectionOrder.setOrderMoney(oneActivityMoney.get().getParamsValue());
+
+            //判断是否是会员
+            if (MemberLevelEnum.COMMON.getCode().equals(companyInfo.getCompanyMember())) {
+                //不是会员 金额应该是发布活动金额 + 推广活动的金额
+                collectionOrder.setOrderMoney(oneActivityMoney.get().getParamsValue().add(activityGeneralizeMoney));
+            }else{
+                //会员 金额应该是推广活动的金额
+                collectionOrder.setOrderMoney(activityGeneralizeMoney);
+            }
+
             collectionOrder.setOrderType(CollectionOrderTypeEnum.COMPANY_ACTIVITY_PAY.getCode());
             collectionOrder.setOrderPayStatus(PayStatusEnum.NOT_PAY.getCode());
             collectionOrder.setOrderName(companyInfo.getCompanyName() + "(非会员)发布活动");

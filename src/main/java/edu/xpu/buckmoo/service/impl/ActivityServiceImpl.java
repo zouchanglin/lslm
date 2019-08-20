@@ -2,11 +2,13 @@ package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
+import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.CompanyOrder;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.repository.ActivityInfoRepository;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
+import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.repository.order.CompanyOrderRepository;
 import edu.xpu.buckmoo.service.ActivityService;
 import edu.xpu.buckmoo.utils.KeyUtil;
@@ -33,12 +35,17 @@ public class ActivityServiceImpl implements ActivityService {
     private final ActivityInfoRepository activityInfoRepository;
     private final CompanyInfoRepository companyInfoRepository;
     private final CompanyOrderRepository companyOrderRepository;
+    private final SystemConfigRepository systemConfigRepository;
 
     @Autowired
-    public ActivityServiceImpl(ActivityInfoRepository activityRep, CompanyInfoRepository companyInfoRepository, CompanyOrderRepository companyOrderRepository) {
+    public ActivityServiceImpl(ActivityInfoRepository activityRep,
+                               CompanyInfoRepository companyInfoRepository,
+                               CompanyOrderRepository companyOrderRepository,
+                               SystemConfigRepository systemConfigRepository) {
         this.activityInfoRepository = activityRep;
         this.companyInfoRepository = companyInfoRepository;
         this.companyOrderRepository = companyOrderRepository;
+        this.systemConfigRepository = systemConfigRepository;
     }
 
     @Override
@@ -74,18 +81,24 @@ public class ActivityServiceImpl implements ActivityService {
             log.error("[ActivityServiceImpl] 此ActivityInfo无对应企业信息");
             throw new RuntimeException("ActivityInfo无对应企业信息");
         }
-        if(!companyInfo.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
-            //此活动信息为会员企业创建
-            CompanyOrder companyOrder = new CompanyOrder();
-            companyOrder.setOrderActivity(activityInfo.getActivityId());
-            companyOrder.setOrderMoney(new BigDecimal(0));
-            companyOrder.setActivityStatus(ActivityStatusEnum.NEW.getCode());
-            companyOrder.setOrderId(KeyUtil.genUniqueKey());
-            companyOrder.setCreateTime(System.currentTimeMillis());
-            companyOrder.setUpdateTime(System.currentTimeMillis());
-
-            companyOrderRepository.save(companyOrder);
-        }
+//        if(!companyInfo.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
+//            //推广费用
+//            SystemConfig activityGeneralize = systemConfigRepository.findOneByParamsId("activity_generalize");
+//            if(activityGeneralize == null) throw new RuntimeException("系统参数丢失");
+//            BigDecimal activityGeneralizeMoney = activityGeneralize.getParamsValue().multiply(new BigDecimal(activityInfo.getActivityGeneralize()));
+//
+//
+//            //此活动信息为会员企业创建
+//            CompanyOrder companyOrder = new CompanyOrder();
+//            companyOrder.setOrderActivity(activityInfo.getActivityId());
+//            companyOrder.setOrderMoney(activityGeneralizeMoney);
+//            companyOrder.setActivityStatus(ActivityStatusEnum.NEW.getCode());
+//            companyOrder.setOrderId(KeyUtil.genUniqueKey());
+//            companyOrder.setCreateTime(System.currentTimeMillis());
+//            companyOrder.setUpdateTime(System.currentTimeMillis());
+//
+//            companyOrderRepository.save(companyOrder);
+//        }
         return activityInfoRepository.save(activityInfo);
     }
 }

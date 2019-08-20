@@ -19,7 +19,7 @@ import java.util.Map;
  * @author tim
  * @version 1.2
  * @className PayController
- * @description
+ * @description 企业支付的控制器
  * @date 2019-08-19 20:26
  */
 @Controller
@@ -102,15 +102,14 @@ public class CompanyPayController {
                 return JsonUtil.toJson(ResultVOUtil.error(2, "该企业尚未通过校验，不可发布活动"));
             }else{
                 //判断企业是否是会员
-                if(companyInfoFind.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
-                    //不是入住会员则需要支付
-                    PayResponse payResponse = companyPayService.activityPay(companyInfoFind, activityId);
-                    map.put("payResponse", payResponse);
-                    map.put("returnUrl", returnUrl);
-                    return "pay";
-                }
+                //if(companyInfoFind.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
+                //不是入住会员则需要支付
+                PayResponse payResponse = companyPayService.activityPay(companyInfoFind, activityId);
+                map.put("payResponse", payResponse);
+                map.put("returnUrl", returnUrl);
+                return "pay";
+                //}
             }
         }
-        throw new RuntimeException("[CompanyPayController] 参数不合法");
     }
 }
