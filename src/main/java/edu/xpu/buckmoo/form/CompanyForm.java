@@ -22,8 +22,4 @@ public class CompanyForm {
      */
     private String companyLicense;
 
-    /**
-     * 公司法人联系方式
-     */
-    private String companyPhone;
 }

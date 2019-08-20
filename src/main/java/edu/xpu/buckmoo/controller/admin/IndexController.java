@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Slf4j
 @RequestMapping("/")
 public class IndexController {
-    @GetMapping(value = {"/", "/index", "/index.html"})
+    @GetMapping(value = {"", "/", "/index", "/index.html"})
     public String index(){
         return "index";
     }

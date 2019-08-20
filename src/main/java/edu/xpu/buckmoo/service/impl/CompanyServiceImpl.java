@@ -76,17 +76,6 @@ public class CompanyServiceImpl implements CompanyService {
             log.error("[公司信息注册] companyInfo={}", companyInfo);
             throw new BuckMooException(ErrorResultEnum.ALREADY_EXISTED);
         }else {
-            //公司社会统一信用码不符合标准
-            if(!VerifyUtil.verifyCompanyId(companyInfo.getCompanyId())){
-                log.error("[公司信息注册] CompanyId={}", companyInfo.getCompanyId());
-                //throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_FORMAT_ERROR);
-            }
-
-            //联系方式不符合标准
-            if(!VerifyUtil.verifyPhoneNumber(companyInfo.getCompanyPhone())){
-                log.error("[公司信息注册] CompanyPhone={}", companyInfo.getCompanyPhone());
-                throw new BuckMooException(ErrorResultEnum.COMPANY_INFO_FORMAT_ERROR);
-            }
             return companyRep.save(companyInfo);
         }
     }

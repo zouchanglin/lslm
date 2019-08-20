@@ -473,37 +473,46 @@ verifykey: String 用户输入的验证码
 
 ### 1、企业注册
 
+v1.2更新：取消输入手机号
+
 ```
 POST http://tim.natapp1.cc/buckmoo/company/info/register
 ```
 
-![](https://s2.ax1x.com/2019/08/05/e27KSA.png)
+参数
+
+```
+companyId : String 社会统一信用吗
+companyName 企业名称
+companyLicense 营业执照照片路径
+```
+
+
 
 返回值
 
 ```json
+
+{
+	"code":1,
+	"msg":"请先绑定手机"
+}
+
 {
 	"code":0,
 	"data":{
-		"companyId":"91610115MA6UAC9Q21",
-		"companyLicense":"http://sws.png",
-		"companyMember":0, //会员等级
-		"companyName":"RNG", 
+		"companyId":"916101215MA6UAC9Q21",
+		"companyLicense":"http://a.png",
+		"companyMember":0,
+		"companyName":"IG",
 		"companyPhone":"15291418231",
-		"companyRegTime":1564998571327, //注册的时间戳
-		"companyStatus":0, //未审核
-		"companyUpdateTime":1564998571327 //信息更新的时间戳
+		"companyStatus":0,
+		"openid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk"
 	},
 	"msg":"成功"
 }
 
-{
-    "timestamp": "2019-08-05T09:57:03.748+0000",
-    "status": 500,
-    "error": "Internal Server Error",
-    "message": "公司信息格式错误",
-    "path": "/buckmoo/company/info/register"
-}
+
 ```
 
 ### 2、企业信息获取

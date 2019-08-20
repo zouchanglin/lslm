@@ -17,7 +17,7 @@ public enum ErrorResultEnum implements CodeEnum{
     ENUM_NOT_EXITS(7, "枚举不存在"),
     PART_STATUS_ERROR(8, "兼职状态不正确"),
     ALREADY_EXISTED(9, "此信息已经存在"),
-    COMPANY_INFO_FORMAT_ERROR(10, "公司信息格式错误"),
+    COMPANY_INFO_FORMAT_ERROR(10, "社会统一信用码格式错误"),
     COMPANY_INFO_NOT_EXIT(11, "公司信息不存在"),
     COMPANY_MEMBER(12, "公司已经是会员"),
     THIS_ORDER_NOT_EXITS(13, "此统一订单不存在"),
