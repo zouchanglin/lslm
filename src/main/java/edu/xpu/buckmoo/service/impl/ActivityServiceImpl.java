@@ -2,23 +2,16 @@ package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.config.SystemConfig;
-import edu.xpu.buckmoo.dataobject.order.CompanyOrder;
-import edu.xpu.buckmoo.enums.ActivityStatusEnum;
-import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.repository.ActivityInfoRepository;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
-import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
-import edu.xpu.buckmoo.repository.order.CompanyOrderRepository;
 import edu.xpu.buckmoo.service.ActivityService;
-import edu.xpu.buckmoo.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -34,18 +27,12 @@ public class ActivityServiceImpl implements ActivityService {
 
     private final ActivityInfoRepository activityInfoRepository;
     private final CompanyInfoRepository companyInfoRepository;
-    private final CompanyOrderRepository companyOrderRepository;
-    private final SystemConfigRepository systemConfigRepository;
 
     @Autowired
     public ActivityServiceImpl(ActivityInfoRepository activityRep,
-                               CompanyInfoRepository companyInfoRepository,
-                               CompanyOrderRepository companyOrderRepository,
-                               SystemConfigRepository systemConfigRepository) {
+                               CompanyInfoRepository companyInfoRepository){
         this.activityInfoRepository = activityRep;
         this.companyInfoRepository = companyInfoRepository;
-        this.companyOrderRepository = companyOrderRepository;
-        this.systemConfigRepository = systemConfigRepository;
     }
 
     @Override
@@ -81,6 +68,7 @@ public class ActivityServiceImpl implements ActivityService {
             log.error("[ActivityServiceImpl] 此ActivityInfo无对应企业信息");
             throw new RuntimeException("ActivityInfo无对应企业信息");
         }
+//        //逻辑不应该在此处（因为会员同样需要支付）
 //        if(!companyInfo.getCompanyMember().equals(MemberLevelEnum.COMMON.getCode())){
 //            //推广费用
 //            SystemConfig activityGeneralize = systemConfigRepository.findOneByParamsId("activity_generalize");
@@ -100,5 +88,13 @@ public class ActivityServiceImpl implements ActivityService {
 //            companyOrderRepository.save(companyOrder);
 //        }
         return activityInfoRepository.save(activityInfo);
+    }
+
+
+    @Override
+    public Page<ActivityInfo> myAllActivity(String openid, PageRequest pageRequest) {
+        Page<ActivityInfo> activityInfoPage = activityInfoRepository.findAllByActivityOpenid(openid, pageRequest);
+        log.info("[ActivityServiceImpl] activityInfoPage={}", activityInfoPage);
+        return activityInfoPage;
     }
 }

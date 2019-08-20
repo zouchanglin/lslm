@@ -581,7 +581,7 @@ returnUrl : String 支付完成后需要跳转的地址！
 
 ### 2、发布活动支付费用
 
-会员不需要，但是非会员发布活动需要支付费用
+会员需要支付推广费用，但是非会员发布活动需要支付费用
 
 ```
 http://tim.natapp1.cc/buckmoo/company/pay/activity
@@ -667,17 +667,77 @@ public enum ActivityModeEnum implements CodeEnum {
 
 展示自己发布的活动，审核通过的，未通过的
 
+```
+GET http://tim.natapp1.cc/buckmoo/company/activity/show
+```
+
+参数
+
+```
+pageindex: 分页索引，不传默认是0
+```
+
+返回值
+
+```json
+{
+	"code":0,
+	"data":{
+		"count":3, //数据条数
+		"list":[
+			{
+				"activityAbstract":"高校总决赛", //活动简介、描述
+				"activityAudit":0, //审核状态
+				"activityAuditStr":"未审核", //审核状态文字描述
+				"activityGeneralize":2000, //推广人数
+				"activityId":"1566214172673771593", //活动的Id
+				"activityLink":"http://lol.game.pc...", //活动链接
+				"activityLogo":"http://lol.png", //活动宣传图册
+				"activityMode":1, //活动模式
+				"activityModeStr":"学生社团活动", //活动模式文字说明
+				"activityName":"周一LOL（艾欧尼亚钻石段来）", //活动名称
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk", //发布企业的管理员openid
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司" //公司名称
+			},
+			{
+				"activityAbstract":"高校总决赛",
+				"activityAudit":0,
+				"activityAuditStr":"未审核",
+				"activityGeneralize":2000,
+				"activityId":"1566214957280388602",
+				"activityLink":"http://lol.game.pc...",
+				"activityLogo":"http://lol.png",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"周二LOL（会员）",
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+			},
+			{
+				"activityAbstract":"高校总决赛",
+				"activityAudit":0,
+				"activityAuditStr":"未审核",
+				"activityGeneralize":30,
+				"activityId":"1566217507597277422",
+				"activityLink":"http://lol.game.pc...",
+				"activityLogo":"http://lol.png",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"周二LOL（测试推广支付）",
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+			}
+		]
+	},
+	"msg":"成功"
+}
+```
+
 
 
 # 三、超级管理员
 
-### 1、登录验证
 
-```
-POST http://tim.natapp1.cc/buckmoo/admin/login
-```
-
-参数：使用短信认证
 
 
 
@@ -904,4 +964,24 @@ partId : String 兼职信息Id
 ### 6、查看所有活动
 
 ### 7、审核活动
+
+## 四、文件上传
+
+```
+POST http://tim.natapp1.cc/buckmoo/file/fileUpload
+```
+
+参数
+
+![](https://s2.ax1x.com/2019/08/20/mG6faj.png)
+
+返回值
+
+```json
+{
+    "code": 0,
+    "msg": "成功",
+    "data": "http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=2d23a14c-fe3c-46e3-83d2-18cf47007848.png"
+}
+```
 

@@ -1,6 +1,7 @@
 package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.UserInfo;
+import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.repository.UserInfoRepository;
 import edu.xpu.buckmoo.service.UserInfoService;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,18 @@ public class UserInfoServiceImpl implements UserInfoService {
         if(!findResult.isPresent()){
             //如果不存在
             userInfo.setCreateTime(System.currentTimeMillis());
+            userInfo.setUserGrade(0);
+            userInfo.setUserMember(MemberLevelEnum.COMMON.getCode());
+            userInfo.setCompanyId("");
+            userInfo.setUserPhone("");
+        }else{
+            //排除其他信息，先弄过来
+            UserInfo info = findResult.get();
+            userInfo.setCreateTime(info.getCreateTime());
+            userInfo.setUserPhone(info.getUserPhone());
+            userInfo.setCompanyId(info.getCompanyId());
+            userInfo.setUserMember(info.getUserMember());
+            userInfo.setUserGrade(info.getUserGrade());
         }
         userInfo.setUpdateTime(System.currentTimeMillis());
         return userRep.save(userInfo);

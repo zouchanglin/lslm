@@ -1,5 +1,8 @@
 package edu.xpu.buckmoo.controller.company;
 
+import edu.xpu.buckmoo.VO.ActivityInfoVO;
+import edu.xpu.buckmoo.VO.ActivityVOStruct;
+import edu.xpu.buckmoo.convert.ActivityInfo2VO;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
@@ -11,7 +14,12 @@ import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author tim
@@ -26,10 +34,38 @@ import org.springframework.web.bind.annotation.*;
 public class ComActivityController {
     private final CompanyService companyService;
     private final ActivityService activityService;
+    private final ActivityInfo2VO activityInfo2VO;
 
-    public ComActivityController(CompanyService companyService, ActivityService activityService) {
+    public ComActivityController(CompanyService companyService, ActivityService activityService, ActivityInfo2VO activityInfo2VO) {
         this.companyService = companyService;
         this.activityService = activityService;
+        this.activityInfo2VO = activityInfo2VO;
+    }
+
+    @GetMapping("/show")
+    public String activityShow(@CookieValue(value = "openid", required = false) String openid,
+                               @RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex){
+        //先判断openid
+        if(openid == null || "".equals(openid))
+            return JsonUtil.toJson(ResultVOUtil.error(1, "请先登录"));
+        //通过openid查找企业信息
+        CompanyInfo findResult = companyService.findByOpenid(openid);
+
+        //未找到企业信息进行错误码返回
+        if(findResult == null) return JsonUtil.toJson(ResultVOUtil.error(2, "尚未注册公司"));
+
+        PageRequest pageRequest = PageRequest.of(pageindex, 5);
+        Page<ActivityInfo> activityInfoPage = activityService.myAllActivity(openid, pageRequest);
+        List<ActivityInfo> content = activityInfoPage.getContent();
+        List<ActivityInfoVO> list = new ArrayList<>();
+        for(ActivityInfo activityInfo: content){
+            list.add(activityInfo2VO.activityToVO(activityInfo));
+        }
+
+        ActivityVOStruct activityVOList = new ActivityVOStruct();
+        activityVOList.setCount(content.size());
+        activityVOList.setList(list);
+        return JsonUtil.toJson(ResultVOUtil.success(activityVOList));
     }
 
     /**
