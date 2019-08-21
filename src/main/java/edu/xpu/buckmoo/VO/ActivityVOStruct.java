@@ -8,4 +8,6 @@ import java.util.List;
 public class ActivityVOStruct {
     private List<ActivityInfoVO> list;
     private Integer count;
+    private Integer pageCount;
+    private Integer currentPage;
 }

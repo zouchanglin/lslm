@@ -20,9 +20,9 @@ import java.util.Optional;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.2
  * @className CompanyServiceImpl
- * @description
+ * @description 企业信息服务实现
  * @date 2019-06-20 22:19
  */
 @Service

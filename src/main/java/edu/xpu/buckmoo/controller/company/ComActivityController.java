@@ -65,6 +65,8 @@ public class ComActivityController {
         ActivityVOStruct activityVOList = new ActivityVOStruct();
         activityVOList.setCount(content.size());
         activityVOList.setList(list);
+        activityVOList.setPageCount(activityInfoPage.getTotalPages());
+        activityVOList.setCurrentPage(pageindex);
         return JsonUtil.toJson(ResultVOUtil.success(activityVOList));
     }
 

@@ -1,19 +1,20 @@
 package edu.xpu.buckmoo.controller.admin;
 
-import edu.xpu.buckmoo.VO.ResultVO;
+import edu.xpu.buckmoo.VO.CompanyInfoVO;
+import edu.xpu.buckmoo.convert.CompanyInfo2VO;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.enums.CompanyStatusEnum;
-import edu.xpu.buckmoo.enums.ErrorResultEnum;
-import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.form.CompanyForm;
 import edu.xpu.buckmoo.service.CompanyService;
-import edu.xpu.buckmoo.utils.EnumUtil;
-import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author tim
@@ -22,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
  * @description 公司管理模块
  * @date 2019-06-19 19:08
  */
-@RestController
+@Controller
 @RequestMapping("/admin/company")
 @Slf4j
 public class AdminCompanyController {
@@ -32,46 +33,39 @@ public class AdminCompanyController {
         this.companyService = companyService;
     }
 
-    /**
-     * 管理员查看活动
-     * @param status 活动类型
-     * @return 符合条件的活动列表
-     */
-    @GetMapping("/show")
-    public ResultVO showCompanyInfo(@RequestParam(value = "status", defaultValue = "0")Integer status,
-                                    @RequestParam(value = "pageindex", defaultValue = "0")Integer pageindex){
-        if(EnumUtil.getByCode(status, CompanyStatusEnum.class) == null){
-            log.error("CompanyStatus={}", status);
-            throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
+    @GetMapping("/show_pass")
+    public String showCompanyInfo(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex,
+                                  Map<String, Object> map){
+        Page<CompanyInfo> companyNew = companyService.findByCompanyAudit(1, PageRequest.of(pageindex, 10));
+        log.info("[AdminCompanyController] companyNew={}", companyNew);
+        List<CompanyInfoVO> list_pass = new ArrayList<>();
+        for(CompanyInfo companyInfo: companyNew.getContent()){
+            list_pass.add(CompanyInfo2VO.companyInfoToVO(companyInfo));
         }
-        PageRequest pageRequest = PageRequest.of(pageindex, 10);
-        Page<CompanyInfo> companyAudit = companyService.findByCompanyAudit(status, pageRequest);
-
-        return ResultVOUtil.success(companyAudit.getContent());
+        log.info("[AdminCompanyController] list_pass={}", list_pass);
+        map.put("list_pass", list_pass);
+        return "company/show_pass";
     }
 
-    @RequestMapping("/delete")
-    public ResultVO deleteCompany(@RequestParam("companyId") String companyId){
-        CompanyInfo one = companyService.findById(companyId);
-        if(one == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
-        companyService.delete(companyId);
-        return ResultVOUtil.success();
+    @GetMapping("/show_detail")
+    public String showCompanyInfoDetails(String companyId, Map<String, Object> map){
+        CompanyInfoVO companyInfoVO = CompanyInfo2VO.companyInfoToVO(companyService.findById(companyId));
+        log.info("[AdminCompanyController] companyInfoVO={}", companyInfoVO);
+        map.put("companyInfoVO", companyInfoVO);
+        return "company/show_detail";
     }
 
-    /**
-     * 更新企业信息
-     * @param companyId 企业信息Id
-     * @param companyForm 企业信息新表单
-     * @return 更新的企业信息结果
-     */
-    @RequestMapping("/update")
-    public ResultVO updateCompany(@RequestParam("companyId") String companyId,
-                                  CompanyForm companyForm){
-        CompanyInfo companyInfo = companyService.findById(companyId);
-        BeanUtils.copyProperties(companyForm, companyInfo);
-
-        log.info("companyInfo={}", companyInfo);
-        CompanyInfo saveRet = companyService.save(companyInfo);
-        return ResultVOUtil.success(saveRet);
+    @PostMapping("/update_info")
+    public String updateCompanyInfo(CompanyInfo companyInfo, RedirectAttributes model){
+        log.error("updateCompanyInfo companyInfo={}", companyInfo);
+        CompanyInfo findResult = companyService.findById(companyInfo.getCompanyId());
+        if(findResult != null){
+            companyInfo.setOpenid(findResult.getOpenid());
+            companyInfo.setCompanyStatus(findResult.getCompanyStatus());
+            companyService.save(companyInfo);
+        }
+        model.addAttribute("companyId", companyInfo.getCompanyId());
+        log.error("updateCompanyInfo companyId={}", companyInfo.getCompanyId());
+        return "redirect:show_detail";
     }
 }

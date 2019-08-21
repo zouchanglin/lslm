@@ -21,5 +21,4 @@ public class CompanyForm {
      * 公司营业执照
      */
     private String companyLicense;
-
 }

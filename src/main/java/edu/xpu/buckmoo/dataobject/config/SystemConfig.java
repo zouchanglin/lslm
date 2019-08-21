@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 /*
  * 系统参数配置
  */
-public class SystemConfig {
+public class SystemConfig{
     @Id
     private String paramsId;
 

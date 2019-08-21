@@ -1,28 +1,15 @@
-package edu.xpu.buckmoo.dataobject;
+package edu.xpu.buckmoo.VO;
 
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import lombok.Data;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
-/**
- * @author tim
- * @version 1.2
- * @className CompanyInfo
- * @description 公司信息实体类
- * @date 2019-08-17 10:23
- */
 @Data
-@Entity
-@DynamicUpdate
-public class CompanyInfo {
+public class CompanyInfoVO {
     /**
      * 社会统一信用码
      */
-    @Id
     private String companyId;
 
     /**
@@ -46,6 +33,11 @@ public class CompanyInfo {
     private Integer companyStatus = CompanyStatusEnum.NEW.getCode();
 
     /**
+     * 审核情况
+     */
+    private String companyStatusStr;
+
+    /**
      * 管理员openid
      */
     private String openid;
@@ -53,10 +45,18 @@ public class CompanyInfo {
     /**
      * 会员等级
      */
-    private Integer companyMember;
+    private Integer companyMember = MemberLevelEnum.COMMON.getCode();
+    /**
+     * 会员等级
+     */
+    private String companyMemberStr;
 
     /**
      * 公司会员到期时间
      */
     private Long memberOverdue;
+    /**
+     * 会员到期时间
+     */
+    private String memberOverdueStr;
 }

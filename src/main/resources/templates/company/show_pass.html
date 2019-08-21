@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../static/favicon.ico">
+    <title>后台管理</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" href="../../static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap/css/dash-board.css}" href="../../static/bootstrap/css/dash-board.css" rel="stylesheet"/>
+    <script th:src="@{/bootstrap/script/jquery-3.4.1.min.js}" src="../../static/bootstrap/script/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}" src="../../static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">骊山鹿鸣教育科技后台管理</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">仪表盘</a></li>
+                <li><a href="#">选项设置</a></li>
+                <li><a href="#">系统配置</a></li>
+                <li><a href="#">帮助信息</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <label>
+                    <input type="text" class="form-control" placeholder="搜索...">
+                </label>
+            </form>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="#">系统概览 <span class="sr-only">(current)</span></a></li>
+            </ul>
+
+            <ul class="nav nav-sidebar">
+                <li class="active"><a href="/admin/company/show_pass">企业管理</a></li>
+                <li><a href="/admin/company/show">申请入驻</a></li>
+                <li><a href="/admin/company/show">企业会员</a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">用户管理</a></li>
+                <li><a href="">兼职申请</a></li>
+                <li><a href="">兼职订单</a></li>
+                <li><a href=""></a></li>
+                <li><a href=""></a></li>
+            </ul>
+            <ul class="nav nav-sidebar">
+                <li><a href="">Nav item again</a></li>
+                <li><a href="">One more nav</a></li>
+                <li><a href="">Another nav item</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h2 class="sub-header">企业管理</h2>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>企业名称</th>
+                        <th>社会统一信用码</th>
+                        <th>联系方式</th>
+                        <th>会员等级</th>
+                        <th>会员到期时间</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="companyInfoVO: ${list_pass}">
+                        <td>
+                            <a th:href="'/admin/company/show_detail?companyId=' + ${companyInfoVO.getCompanyId()}" th:text="${companyInfoVO.getCompanyName()}" id="companyName">Name</a>
+                        </td>
+                        <td th:text="${companyInfoVO.getCompanyId()}" id="companyId">Lorem</td>
+                        <td th:text="${companyInfoVO.getCompanyPhone()}" id="companyPhone">ipsum</td>
+                        <td th:text="${companyInfoVO.getCompanyMemberStr()}" id="companyMemberStr">dolor</td>
+                        <td th:text="${companyInfoVO.getMemberOverdueStr()}" id="companyOverdueStr">dolor</td>
+                        <td>管理</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

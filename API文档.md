@@ -674,6 +674,8 @@ public enum ActivityModeEnum implements CodeEnum {
 
 ### 4、活动列表
 
+v1.2更新：更加pageCount、currentPage两个字段
+
 展示自己发布的活动，审核通过的，未通过的
 
 ```
@@ -693,6 +695,8 @@ pageindex: 分页索引，不传默认是0
 	"code":0,
 	"data":{
 		"count":3, //数据条数
+        "pageCount":1, //总页数
+        "currentPage": 0 //当前页数
 		"list":[
 			{
 				"activityAbstract":"高校总决赛", //活动简介、描述
