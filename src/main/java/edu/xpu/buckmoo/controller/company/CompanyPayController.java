@@ -4,6 +4,7 @@ import com.lly835.bestpay.model.PayResponse;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.*;
+import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.service.CompanyPayService;
@@ -46,7 +47,14 @@ public class CompanyPayController {
     @GetMapping("/member")
     public String member(@CookieValue("openid") String openid,
                          @RequestParam("returnUrl") String returnUrl,
+                         @RequestParam(value = "memberLevel", defaultValue = "1") Integer memberLevel,
                          Map<String, Object> map){
+
+        if(openid == null){
+            map.put("error_code", 3);
+            map.put("error_msg", "请先登录在使用");
+            return "error";
+        }
 
         //先根据openid找企业信息
         CompanyInfo findResult = companyService.findByOpenid(openid);
@@ -67,14 +75,21 @@ public class CompanyPayController {
         }
 
         //生成企业升级为会员的订单
-        MemberOrder memberOrder = companyService.becomeMemberPay(findResult.getCompanyId());
-        //生产预支付订单
-        PayResponse payResponse = companyPayService.memberPay(memberOrder);
+        try{
+            MemberOrder memberOrder = companyService.becomeMemberPay(findResult.getCompanyId(), memberLevel);
+            //生产预支付订单
+            PayResponse payResponse = companyPayService.memberPay(memberOrder);
 
-        //填充支付相关参数
-        map.put("payResponse", payResponse);
-        map.put("returnUrl", returnUrl);
-        return "pay";
+            //填充支付相关参数
+            map.put("payResponse", payResponse);
+            map.put("returnUrl", returnUrl);
+            return "pay";
+        }catch (BuckMooException e){
+            e.printStackTrace();
+            map.put("error_code", -1);
+            map.put("error_msg", "公司已经是会员");
+            return "error";
+        }
     }
 
     /**

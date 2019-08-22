@@ -2,6 +2,7 @@ package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.CollectionOrder;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
+import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.CompanyOrder;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.dataobject.order.PartInfo;
@@ -9,6 +10,7 @@ import edu.xpu.buckmoo.enums.*;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CollectionOrderRepository;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
+import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.repository.order.CompanyOrderRepository;
 import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.order.PartInfoRepository;
@@ -34,19 +36,22 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
     private final CompanyOrderRepository companyOrderRepository;
     private final CompanyInfoRepository companyInfoRepository;
     private final CollectionOrderRepository collectionOrderRepository;
+    private final SystemConfigRepository systemConfigRepository;
 
     public PayNotifyCallbackImpl(PartInfoService partInfoService,
                                  PartInfoRepository partInfoRepository,
                                  MemberOrderRepository memberOrderRepository,
                                  CompanyOrderRepository companyOrderRepository,
                                  CompanyInfoRepository companyInfoRepository,
-                                 CollectionOrderRepository collectionOrderRepository) {
+                                 CollectionOrderRepository collectionOrderRepository,
+                                 SystemConfigRepository systemConfigRepository) {
         this.partInfoService = partInfoService;
         this.partInfoRepository = partInfoRepository;
         this.memberOrderRepository = memberOrderRepository;
         this.companyOrderRepository = companyOrderRepository;
         this.companyInfoRepository = companyInfoRepository;
         this.collectionOrderRepository = collectionOrderRepository;
+        this.systemConfigRepository = systemConfigRepository;
     }
 
     @Override
@@ -100,7 +105,17 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             Optional<CompanyInfo> orderCompanyOpt = companyInfoRepository.findById(orderCompanyId);
             if(orderCompanyOpt.isPresent()){
                 CompanyInfo companyInfo = orderCompanyOpt.get();
-                companyInfo.setCompanyMember(MemberLevelEnum.ONE_LEVEL.getCode());
+
+                //根据订单修改状态
+                Integer memberLevel = memberOrderReally.getMemberLevel();
+                companyInfo.setCompanyMember(memberLevel);
+                if(memberLevel.equals(MemberLevelEnum.ONE_LEVEL.getCode())){
+                    companyInfo.setMemberOverdue(System.currentTimeMillis() + (30L * 24L * 3600L * 1000L));
+                }else if(memberLevel.equals(MemberLevelEnum.TWO_LEVEL.getCode())){
+                    companyInfo.setMemberOverdue(System.currentTimeMillis() + (365L * 24L * 3600L * 1000L));
+                }else if(memberLevel.equals(MemberLevelEnum.THREE_LEVEL.getCode())){
+                    companyInfo.setMemberOverdue(System.currentTimeMillis() + (100L * 365L * 24L * 3600L * 1000L));
+                }
                 //判断是哪种会员
                 CompanyInfo saveResult = companyInfoRepository.save(companyInfo);
                 if(saveResult == null) log.error("saveResult = {}", companyInfo);
@@ -115,8 +130,8 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             PartInfo updateResult = partInfoService.addOnePartTime(partInfo);
             log.info("[PayNotifyCallbackImpl] updateResult={}", updateResult);
         }
-        //修改统一订单表
 
+        //修改统一订单表
         Optional<CollectionOrder> findResult = collectionOrderRepository.findById(orderId);
         if(findResult.isPresent()){
             CollectionOrder collectionOrder = findResult.get();

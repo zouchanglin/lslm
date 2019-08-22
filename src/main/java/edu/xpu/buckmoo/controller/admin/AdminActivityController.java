@@ -51,14 +51,14 @@ public class AdminActivityController {
     }
 
 
-    @RequestMapping("/delete")
-    public ResultVO deleteActivity(@RequestParam("activityId") String activityId){
-        ActivityInfo one = activityService.findOne(activityId);
-        if(one == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
-
-        activityService.delete(activityId);
-        return ResultVOUtil.success();
-    }
+//    @RequestMapping("/delete")
+//    public ResultVO deleteActivity(@RequestParam("activityId") String activityId){
+//        ActivityInfo one = activityService.findOne(activityId);
+//        if(one == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
+//
+//        activityService.delete(activityId);
+//        return ResultVOUtil.success();
+//    }
 
     /**
      * 更新活动信息

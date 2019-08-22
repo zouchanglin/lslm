@@ -46,9 +46,9 @@
             </ul>
 
             <ul class="nav nav-sidebar">
-                <li class="active"><a href="/buckmoo/admin/company/show_pass">企业管理</a></li>
-                <li><a href="/buckmoo/admin/company/show_audit">申请入驻</a></li>
-                <li><a href="/admin/company/show">企业会员</a></li>
+                <li><a href="/buckmoo/admin/company/show_pass">企业管理</a></li>
+                <li class="active"><a href="/buckmoo/admin/company/show_audit">申请入驻</a></li>
+                <li><a href="/buckmoo/admin/company/show">企业会员</a></li>
             </ul>
             <ul class="nav nav-sidebar">
                 <li><a href="">用户管理</a></li>
@@ -68,7 +68,7 @@
                 <div class="col-md-12 column">
                     <ul class="breadcrumb">
                         <li>你现在所在的位置 >>
-                            <a href="/buckmoo/admin/company/show_pass">企业管理</a>
+                            <a href="/buckmoo/admin/company/show_audit">申请入驻</a>
                         </li>
                     </ul>
                 </div>
@@ -80,25 +80,27 @@
                         <th>企业名称</th>
                         <th>社会统一信用码</th>
                         <th>联系方式</th>
-                        <th>会员等级</th>
-                        <th>会员到期时间</th>
-                        <th></th>
+                        <th>认证状态</th>
+                        <th>认证操作</th>
+                        <th style="width: 20%">备注信息</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr th:each="companyInfoVO: ${list_pass}">
+                    <tr th:each="companyInfoVO: ${list_audit}">
                         <td>
-                            <a th:href="'/buckmoo/admin/company/show_detail?companyId=' + ${companyInfoVO.getCompanyId()}" th:text="${companyInfoVO.getCompanyName()}" id="companyName">Name</a>
+                            <a th:href="${companyInfoVO.getCompanyLicense()}" th:text="${companyInfoVO.getCompanyName()}" id="companyName">Name</a>
                         </td>
                         <td th:text="${companyInfoVO.getCompanyId()}" id="companyId">Lorem</td>
                         <td th:text="${companyInfoVO.getCompanyPhone()}" id="companyPhone">ipsum</td>
-                        <td th:text="${companyInfoVO.getCompanyMemberStr()}" id="companyMemberStr">dolor</td>
-                        <td th:text="${companyInfoVO.getMemberOverdueStr()}" id="companyOverdueStr">dolor</td>
+                        <td th:text="${companyInfoVO.getCompanyStatusStr()}" id="companyMemberStr">dolor</td>
                         <td>
-                            <form th:action="@{'/admin/company/delete'}" method="get">
-                                <input name="companyId" th:value="${companyInfoVO.getCompanyId()}" hidden="hidden">
-                                <input class="btn btn-sm btn-danger" type="submit" value="删除"/>
-                            </form>
+                            <button th:onclick="pass([[${companyInfoVO.companyId}]]);" class="btn btn-sm btn-success">通过</button>
+                            <button th:onclick="not_pass([[${companyInfoVO.companyId}]]);" class="btn btn-sm btn-danger">否决</button>
+                        </td>
+                        <td>
+                            <label>
+                                <input class="form-control" placeholder="否决的备注信息..." type="text" id="remake_info">
+                            </label>
                         </td>
                     </tr>
                     </tbody>
@@ -112,25 +114,25 @@
                                 <div class="col-md-12 column">
                                     <ul class="pagination">
                                         <li>
-                                            <a th:href="${page_index <= 0}? '#': '/buckmoo/admin/company/show_pass?pageindex='+${page_index-1}">Prev</a>
+                                            <a th:href="${page_index <= 0}? '#': '/buckmoo/admin/company/show_audit?pageindex='+${page_index-1}">Prev</a>
                                         </li>
                                         <li th:class="${page_index == 0}?'active':null">
-                                            <a href="/buckmoo/admin/company/show_pass?pageindex=0">1</a>
+                                            <a href="/buckmoo/admin/company/show_audit?pageindex=0">1</a>
                                         </li>
                                         <li th:class="${page_index == 1}?'active':null">
-                                            <a href="/buckmoo/admin/company/show_pass?pageindex=1">2</a>
+                                            <a href="/buckmoo/admin/company/show_audit?pageindex=1">2</a>
                                         </li>
                                         <li th:class="${page_index == 2}?'active':null">
-                                            <a href="/buckmoo/admin/company/show_pass?pageindex=2">3</a>
+                                            <a href="/buckmoo/admin/company/show_audit?pageindex=2">3</a>
                                         </li>
                                         <li th:class="${page_index == 3}?'active':null">
-                                            <a href="/buckmoo/admin/company/show_pass?pageindex=3">4</a>
+                                            <a href="/buckmoo/admin/company/show_audit?pageindex=3">4</a>
                                         </li>
                                         <li th:class="${page_index == 4}?'active':null">
-                                            <a href="/buckmoo/admin/company/show_pass?pageindex=5">5</a>
+                                            <a href="/buckmoo/admin/company/show_audit?pageindex=5">5</a>
                                         </li>
                                         <li>
-                                            <a th:href="@{'/admin/company/show_pass?pageindex='+ ${page_index+1}}">Next</a>
+                                            <a th:href="@{'/admin/company/show_audit?pageindex='+ ${page_index+1}}">Next</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -142,5 +144,17 @@
         </div>
     </div>
 </div>
+
+<script>
+    function pass(companyId) {
+        //var remake_info = document.getElementById("remake_info").value();
+        alert(companyId);
+    }
+
+    function not_pass(companyId) {
+        //var remake_info = document.getElementById("remake_info").value();
+        alert(companyId);
+    }
+</script>
 </body>
 </html>

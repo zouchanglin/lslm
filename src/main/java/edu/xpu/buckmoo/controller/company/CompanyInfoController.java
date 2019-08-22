@@ -1,6 +1,7 @@
 package edu.xpu.buckmoo.controller.company;
 
 import edu.xpu.buckmoo.convert.CompanyForm2CompanyInfo;
+import edu.xpu.buckmoo.convert.CompanyInfo2VO;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.exception.BuckMooException;
@@ -40,7 +41,7 @@ public class CompanyInfoController {
         if(byOpenid == null){
             return JsonUtil.toJson(ResultVOUtil.error(1, "未注册公司"));
         }
-        return JsonUtil.toJson(ResultVOUtil.success(byOpenid));
+        return JsonUtil.toJson(ResultVOUtil.success(CompanyInfo2VO.companyInfoToVO(byOpenid)));
     }
     /**
      * 公司登陆

@@ -517,6 +517,8 @@ companyLicense 营业执照照片路径
 
 ### 2、企业信息获取
 
+v1.2 更新： 增加字段描述信息
+
 ```
 GET http://tim.natapp1.cc/buckmoo/company/info/show
 ```
@@ -533,13 +535,17 @@ GET http://tim.natapp1.cc/buckmoo/company/info/show
 {
 	"code":0,
 	"data":{
-		"companyId":"1566022871029249125", //社会统一信用码
-		"companyLicense":"https://s2.ax1x.com/2019/08/17/muRLwt.png", //营业执照
-		"companyMember":1, //会员等级
-		"companyName":"骊山鹿鸣教育科技有限公司", //公司名称
-		"companyPhone":"15291418231", //联系人电话
-		"companyStatus":1, //公司状态
-		"openid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk" //公司管理员openid
+		"companyId":"1566022871029249125",
+		"companyLicense":"https://s2.ax1x.com/2019/08/21/mNZj2V.jpg",
+		"companyMember":1,
+		"companyMemberStr":"白银会员",
+		"companyName":"骊山鹿鸣教育科技有限公司",
+		"companyPhone":"15291418231",
+		"companyStatus":1,
+		"companyStatusStr":"审核通过",
+		"memberOverdue":1599609600000,
+		"memberOverdueStr":"2020-09-09",
+		"openid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk"
 	},
 	"msg":"成功"
 }
@@ -582,6 +588,7 @@ GET http://tim.natapp1.cc/buckmoo/company/pay/member
 
 ```
 returnUrl : String 支付完成后需要跳转的地址！
+memberLevel： Integer 要要成为的会员等级（1、白银会员 2、黄金会员 3、钻石会员）
 ```
 
 返回值
@@ -670,7 +677,95 @@ public enum ActivityModeEnum implements CodeEnum {
 
 ### 2、删除活动
 
+```
+GET http://tim.natapp1.cc/buckmoo/company/activity/delete
+```
+
+参数
+
+```
+activityId : String活动Id
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"msg":"成功"
+}
+{
+	"code":1,
+	"msg":"请先登录"
+}
+{
+	"code":2,
+	"msg":"参数不完整"
+}
+{
+	"code":3,
+	"msg":"权限错误"
+}
+```
+
+
+
 ### 3、修改活动
+
+```
+POST http://tim.natapp1.cc/buckmoo/company/activity/update
+```
+
+参数
+
+```
+activityId : 活动Id
+
+activityName： String活动名称
+activityMode： Integer活动模式（见参考枚举）
+activityGeneralize： Integer活动推广力度
+activityLink：活动链接
+activityAbstract：活动说明与简介
+activityLogo：活动Logo
+
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":{
+		"activityAbstract":"AAAAAAA",
+		"activityAudit":0,
+		"activityGeneralize":10,
+		"activityId":"1566214957280388602",
+		"activityLink":"AAAAAAA",
+		"activityLogo":"AAAAAAAAAAA",
+		"activityMode":1,
+		"activityName":"AAAAAAA",
+		"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk"
+	},
+	"msg":"成功"
+}
+
+{
+	"code":1,
+	"msg":"请先登录"
+}
+{
+	"code":2,
+	"msg":"参数不完整"
+}
+{
+	"code":3,
+	"msg":"权限错误"
+}
+
+
+```
+
+
 
 ### 4、活动列表
 

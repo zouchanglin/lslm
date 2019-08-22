@@ -46,7 +46,7 @@ public interface ActivityService {
      * 删除一个活动信息
      * @param activityId 活动信息ID
      */
-    void delete(String activityId);
+    Boolean delete(String openid, String activityId);
 
     /**
      * 创建一个活动信息

@@ -68,8 +68,8 @@
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <ul class="breadcrumb">
-                        <li>
-                            <a href="#">企业管理</a>
+                        <li>你现在所在的位置 >>
+                            <a href="/buckmoo/admin/company/show_pass">企业管理</a>
                         </li>
                         <li>
                             <a href="#">企业详情</a>
@@ -90,7 +90,11 @@
                         </div>
                         <div class="form-group">
                             <label for="companyId">社会统一信用码</label>
-                            <input type="text" th:value="${companyInfoVO.getCompanyId()}" class="form-control" name="companyId" id="companyId" />
+                            <input type="text" th:value="${companyInfoVO.getCompanyId()}" class="form-control" name="companyId" id="companyId" readonly="readonly"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="companyLicense">营业执照</label>
+                            <input type="text" th:value="${companyInfoVO.getCompanyLicense()}" class="form-control" name="companyLicense" id="companyLicense" readonly="readonly"/>
                         </div>
                         <div class="form-group">
                             <label for="companyPhone">企业联系人</label>
@@ -110,23 +114,24 @@
                             <label>
                                 <input id="memberOverdue" name="memberOverdue" th:value="${companyInfoVO.getMemberOverdue()}" hidden="hidden">
                             </label>
-                            <input type="date" class="form-control" name="memberOverdue" id="memberOverdueDate" />
+                            <input type="date" class="form-control" id="memberOverdueDate" />
                         </div>
-                        <div class="form-group">
-                            <label for="exampleInputFile">File input</label>
-                            <input type="file" id="exampleInputFile" />
-                            <p class="help-block">
-                                Example block-level help text here.
-                            </p>
-                        </div>
-                        <div class="checkbox">
-                            <label><input type="checkbox" />Check me out</label>
-                        </div> <button type="submit" onclick="submit" class="btn btn-default">Submit</button>
+<!--                        <div class="form-group">-->
+<!--                            <label for="exampleInputFile">File input</label>-->
+<!--                            <input type="file" id="exampleInputFile" />-->
+<!--                            <p class="help-block">-->
+<!--                                Example block-level help text here.-->
+<!--                            </p>-->
+<!--                        </div>-->
+<!--                        <div class="checkbox">-->
+<!--                            <label><input type="checkbox" />Check me out</label>-->
+<!--                        </div> -->
+                        <button class="btn btn-success" type="submit" onclick="changeData()">确认修改</button>
                     </form>
                 </div>
                 <div class="col-md-6 column">
                     <div class="row clearfix">
-                        <img alt="" style="padding: 10px; width: 100%" src="https://s2.ax1x.com/2019/08/21/mNZj2V.jpg"/>
+                        <img alt="" style="padding: 10px; width: 100%"  th:src="${companyInfoVO.getCompanyLicense()}" />
                     </div>
                 </div>
             </div>
@@ -136,16 +141,17 @@
 
 <script>
 
+    //把long转为日期类型
     var long_input = document.getElementById('memberOverdue');
     console.log(long_input.value);
     document.getElementById('memberOverdueDate').valueAsDate = new Date(parseInt(long_input.value));
     console.log('finish');
-    
-    function submit() {
-        alert("x")
+
+    //日期类型转long类型
+    function changeData() {
         var long_input = document.getElementById('memberOverdue');
-        long_input.value = new Date(parseInt(document.getElementById('memberOverdueDate').value)).getTime();
-        console.log('long_input.value');
+        long_input.value = new Date(document.getElementById('memberOverdueDate').value).getTime();
+        //alert(long_input.value);
     }
 </script>
 </body>

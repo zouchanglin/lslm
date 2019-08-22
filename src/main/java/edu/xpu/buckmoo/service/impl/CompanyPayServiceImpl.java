@@ -77,7 +77,7 @@ public class CompanyPayServiceImpl implements CompanyPayService{
             //同时生成统一订单
             CollectionOrder collectionOrder = new CollectionOrder();
             collectionOrder.setOrderId(memberOrder.getOrderId());
-            collectionOrder.setOrderId(openid);
+            collectionOrder.setOrderOpenid(openid);
             collectionOrder.setOrderMoney(memberOrder.getOrderMoney());
             collectionOrder.setOrderPayStatus(PayStatusEnum.NOT_PAY.getCode());
             collectionOrder.setOrderType(CollectionOrderTypeEnum.COMPANY_MEMBER_PAY.getCode());

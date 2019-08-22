@@ -4,6 +4,7 @@ import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.ErrorResultEnum;
+import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
@@ -81,7 +82,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public MemberOrder becomeMemberPay(String companyId) {
+    public MemberOrder becomeMemberPay(String companyId, Integer memberLevel) {
         Optional<CompanyInfo> findResult = companyRep.findById(companyId);
         if(findResult.isPresent()){
             CompanyInfo companyInfo = findResult.get();
@@ -93,10 +94,25 @@ public class CompanyServiceImpl implements CompanyService {
             memberOrder.setOrderId(KeyUtil.genUniqueKey());
             memberOrder.setOrderCompany(companyInfo.getCompanyId());
             memberOrder.setPayStatus(0);
-            //年费会员
-            Optional<SystemConfig> member_year_money = systemConfigRep.findById("member_year_money");
-            if(member_year_money.isPresent()){
-                memberOrder.setOrderMoney(member_year_money.get().getParamsValue());
+
+            Optional<SystemConfig> member_money = null;
+            if(memberLevel.equals(MemberLevelEnum.ONE_LEVEL.getCode())){
+                //月费会员
+                member_money = systemConfigRep.findById("member_month_money");
+                memberOrder.setMemberLevel(MemberLevelEnum.ONE_LEVEL.getCode());
+            }else if(memberLevel.equals(MemberLevelEnum.TWO_LEVEL.getCode())){
+                //年费会员
+                member_money = systemConfigRep.findById("member_year_money");
+                memberOrder.setMemberLevel(MemberLevelEnum.TWO_LEVEL.getCode());
+            }else if(memberLevel.equals(MemberLevelEnum.THREE_LEVEL.getCode())){
+                //永久会员
+                member_money = systemConfigRep.findById("member_forever_money");
+                memberOrder.setMemberLevel(MemberLevelEnum.THREE_LEVEL.getCode());
+            }
+
+
+            if(member_money.isPresent()){
+                memberOrder.setOrderMoney(member_money.get().getParamsValue());
                 return memberOrderRep.save(memberOrder);
             }else{
                 throw new RuntimeException("数据库配置条目丢失");

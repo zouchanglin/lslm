@@ -55,5 +55,5 @@ public interface CompanyService {
      * @param companyId 公司的id
      * @return 成为会员的订单
      */
-    MemberOrder becomeMemberPay(String companyId);
+    MemberOrder becomeMemberPay(String companyId, Integer memberLevel);
 }

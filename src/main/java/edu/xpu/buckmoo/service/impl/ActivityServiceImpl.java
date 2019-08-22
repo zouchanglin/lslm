@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author tim
@@ -56,8 +57,16 @@ public class ActivityServiceImpl implements ActivityService {
     }
 
     @Override
-    public void delete(String activityId) {
-        activityInfoRepository.deleteById(activityId);
+    public Boolean delete(String openid, String activityId) {
+        Optional<ActivityInfo> findResult = activityInfoRepository.findById(activityId);
+        if(findResult.isPresent()){
+            ActivityInfo activityInfo = findResult.get();
+            if(activityInfo.getActivityOpenid().equals(openid)){
+                activityInfoRepository.deleteById(activityId);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

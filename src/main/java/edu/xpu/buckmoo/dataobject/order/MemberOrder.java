@@ -32,4 +32,9 @@ public class MemberOrder {
      * 支付状态
      */
     private Integer payStatus;
+
+    /**
+     * 支付的等级
+     */
+    private Integer memberLevel;
 }
