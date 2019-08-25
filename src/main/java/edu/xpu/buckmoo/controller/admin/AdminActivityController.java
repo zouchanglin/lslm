@@ -1,6 +1,5 @@
 package edu.xpu.buckmoo.controller.admin;
 
-import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import edu.xpu.buckmoo.enums.ErrorResultEnum;
@@ -8,7 +7,7 @@ import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.form.ActivityForm;
 import edu.xpu.buckmoo.service.ActivityService;
 import edu.xpu.buckmoo.utils.EnumUtil;
-import edu.xpu.buckmoo.utils.KeyUtil;
+import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -39,15 +38,15 @@ public class AdminActivityController {
      * @return 符合条件的活动列表
      */
     @GetMapping("/show")
-    public ResultVO showActivityInfo(@RequestParam("type")Integer type){
+    public String showActivityInfo(@RequestParam("type")Integer type){
         if(EnumUtil.getByCode(type, ActivityStatusEnum.class) == null){
             log.error("ActivityType={}", type);
-            throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
+            return JsonUtil.toJson(ResultVOUtil.error(1, "状态错误"));
         }
 
         PageRequest pageRequest = PageRequest.of(0, 10);
         List<ActivityInfo> activityListByStatus = activityService.findByActivityAudit(type, pageRequest).getContent();
-        return ResultVOUtil.success(activityListByStatus);
+        return JsonUtil.toJson(ResultVOUtil.success(activityListByStatus));
     }
 
 
@@ -67,30 +66,16 @@ public class AdminActivityController {
      * @return 更新的活动信息结果
      */
     @RequestMapping("/update")
-    public ResultVO updateActivity(@RequestParam("activityId") String activityId,
+    public String updateActivity(@RequestParam("activityId") String activityId,
                                    @ModelAttribute ActivityForm activityForm){
         ActivityInfo findRet = activityService.findOne(activityId);
-        if(findRet == null)
-            throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
+        if(findRet == null) {
+            return JsonUtil.toJson(ResultVOUtil.error(1, "ActivityId错误"));
+        }
         //ActivityForm2ActivityInfo.activityForm2ActivityInfo(findRet, activityForm);
         log.info("【修改活动属性】activity={}", findRet);
         ActivityInfo save = activityService.save(findRet);
-        return ResultVOUtil.success(save);
-    }
-
-    /**
-     * 新建活动信息
-     * @param activityForm 活动信息表单
-     * @return 添加结果（如果成功则返回信息）
-     */
-    @RequestMapping("/add")
-    public ResultVO addActivity(@ModelAttribute ActivityForm activityForm){
-        ActivityInfo activityInfo = new ActivityInfo();
-        //ActivityForm2ActivityInfo.activityForm2ActivityInfo(activityInfo, activityForm);
-        log.info("【修改活动属性】activity={}", activityInfo);
-        activityInfo.setActivityId(KeyUtil.genUniqueKey());
-        ActivityInfo save = activityService.save(activityInfo);
-        return ResultVOUtil.success(save);
+        return JsonUtil.toJson(ResultVOUtil.success(save));
     }
 
     /**
@@ -100,18 +85,18 @@ public class AdminActivityController {
      * @return 审核结果
      */
     @RequestMapping("/audit")
-    public ResultVO audit(@RequestParam("activityId") String activityId,
+    public String audit(@RequestParam("activityId") String activityId,
                         @RequestParam("activityAudit") Integer activityAudit){
         ActivityInfo findRet = activityService.findOne(activityId);
         if(findRet == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
         if(EnumUtil.getByCode(activityAudit, ActivityStatusEnum.class) == null){
             log.error("ActivityType={}", activityAudit);
-            throw new BuckMooException(ErrorResultEnum.PARAM_ERROR);
+            return JsonUtil.toJson(ResultVOUtil.error(1, "参数错误"));
         }
 
         findRet.setActivityAudit(activityAudit);
         ActivityInfo saveAudit = activityService.save(findRet);
         assert saveAudit != null;
-        return ResultVOUtil.success();
+        return JsonUtil.toJson(ResultVOUtil.success());
     }
 }

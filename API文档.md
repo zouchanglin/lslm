@@ -845,21 +845,18 @@ pageindex: 分页索引，不传默认是0
 
 # 三、超级管理员
 
+### 1、查看企业会员
 
-
-
-
-### 2、兼职信息列表
+分状态查看，0为未审核、1是审核通过、2是审核未通过
 
 ```
-GET http://tim.natapp1.cc/buckmoo/admin/part/list
+GET http://tim.natapp1.cc/buckmoo/admin/company/show
 ```
 
 参数
 
 ```
-status : Integer 状态
-pageindex : Integer 分页索引
+status : Integer  企业的审核状态
 ```
 
 返回值
@@ -868,154 +865,51 @@ pageindex : Integer 分页索引
 {
 	"code":0,
 	"data":{
-		"pageCount":1,
-		"partInfoList":[
+		"listPass":[
 			{
-				"createTime":1563395610000,
-				"creatorPhone":"12321313123",
-				"employSex":3,
-				"employSexStr":"男女不限",
-				"partAddress":"西安芷阳新苑19栋1单元301",
-				"partCategory":1,
-				"partCategoryStr":"其他",
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-				"partCreatorStr":"ahojcn",
-				"partEmploy":"",
-				"partEmployPhone":"",
-				"partEmployStr":"暂时无人接单",
-				"partEnd":1547864070000,
-				"partId":"1963348810541158926",
-				"partMoney":0.02,
-				"partMoneyShow":0.00,
-				"partName":"写代码2",
-				"partOverview":"周六家教-辅导数学，周六整天，孩子数学差，需要辅导可长期联系",
-				"partRemark":"备注信息：无",
-				"partStart":1547864070000,
-				"partStatus":3,
-				"partStatusStr":"已发布",
-				"partTime":"时间最多两个月，三个月也行",
-				"updateTime":1563919892000
+				"companyId":"1566022871029249125",
+				"companyLicense":"http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=f9664dc7-4351-4940-9e2a-62061549d538.jpeg",
+				"companyMember":1,
+				"companyMemberStr":"白银会员",
+				"companyName":"骊山鹿鸣教育科技有限公司",
+				"companyPhone":"15291418231",
+				"companyStatus":1,
+				"companyStatusStr":"审核通过",
+				"memberOverdue":1569160800507,
+				"memberOverdueStr":"2019-09-22",
+				"openid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk"
 			},
 			{
-				"createTime":1563395610000,
-				"creatorPhone":"12321313123",
-				"employSex":3,
-				"employSexStr":"男女不限",
-				"partAddress":"西安芷阳新苑19栋1单元301",
-				"partCategory":1,
-				"partCategoryStr":"其他",
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-				"partCreatorStr":"ahojcn",
-				"partEmploy":"",
-				"partEmployPhone":"",
-				"partEmployStr":"暂时无人接单",
-				"partEnd":1547864070000,
-				"partId":"1963348810541158927",
-				"partMoney":0.02,
-				"partMoneyShow":0.00,
-				"partName":"写代码",
-				"partOverview":"周六家教-辅导数学，周六整天，孩子数学差，需要辅导可长期联系",
-				"partRemark":"备注信息：无",
-				"partStart":1547864070000,
-				"partStatus":3,
-				"partStatusStr":"已发布",
-				"partTime":"时间最多两个月，三个月也行",
-				"updateTime":1563919890000
-			},
-			{
-				"createTime":1563395610000,
-				"creatorPhone":"12321313123",
-				"employSex":3,
-				"employSexStr":"男女不限",
-				"partAddress":"西安芷阳新苑19栋1单元301",
-				"partCategory":1,
-				"partCategoryStr":"其他",
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-				"partCreatorStr":"ahojcn",
-				"partEmploy":"",
-				"partEmployPhone":"",
-				"partEmployStr":"暂时无人接单",
-				"partEnd":1547864070000,
-				"partId":"1963348810541158928",
-				"partMoney":0.02,
-				"partMoneyShow":0.00,
-				"partName":"周六家教-辅导数学-测试",
-				"partOverview":"周六家教-辅导数学，周六整天，孩子数学差，需要辅导可长期联系",
-				"partRemark":"备注信息：无",
-				"partStart":1547864070000,
-				"partStatus":3,
-				"partStatusStr":"已发布",
-				"partTime":"时间最多两个月，三个月也行",
-				"updateTime":1563919889000
-			},
-			{
-				"createTime":1563395610000,
-				"creatorPhone":"12321313123",
-				"employSex":3,
-				"employSexStr":"男女不限",
-				"partAddress":"西安芷阳新苑19栋1单元301",
-				"partCategory":6,
-				"partCategoryStr":"辅导",
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-				"partCreatorStr":"ahojcn",
-				"partEmploy":"",
-				"partEmployPhone":"",
-				"partEmployStr":"暂时无人接单",
-				"partEnd":1547864070000,
-				"partId":"1963348810541158979",
-				"partMoney":0.02,
-				"partMoneyShow":0.00,
-				"partName":"写代码2",
-				"partOverview":"周六家教-辅导数学，周六整天，孩子数学差，需要辅导可长期联系",
-				"partRemark":"备注信息：无",
-				"partStart":1547864070000,
-				"partStatus":3,
-				"partStatusStr":"已发布",
-				"partTime":"时间最多两个月，三个月也行",
-				"updateTime":1563913279000
-			},
-			{
-				"createTime":1563395610000,
-				"creatorPhone":"12321313123",
-				"employSex":3,
-				"employSexStr":"男女不限",
-				"partAddress":"西安芷阳新苑19栋1单元301",
-				"partCategory":6,
-				"partCategoryStr":"辅导",
-				"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-				"partCreatorStr":"ahojcn",
-				"partEmploy":"",
-				"partEmployPhone":"",
-				"partEmployStr":"暂时无人接单",
-				"partEnd":1547864070000,
-				"partId":"1963348810541158989",
-				"partMoney":0.02,
-				"partMoneyShow":0.00,
-				"partName":"写代码",
-				"partOverview":"周六家教-辅导数学，周六整天，孩子数学差，需要辅导可长期联系",
-				"partRemark":"备注信息：无",
-				"partStart":1547864070000,
-				"partStatus":3,
-				"partStatusStr":"已发布",
-				"partTime":"时间最多两个月，三个月也行",
-				"updateTime":1563914801000
+				"companyId":"8566022871029249123",
+				"companyLicense":"https://s2.ax1x.com/2019/08/21/mNZj2V.jpg",
+				"companyMember":1,
+				"companyMemberStr":"白银会员",
+				"companyName":"北京创新乐知网络技术有限公司",
+				"companyPhone":"15229720759",
+				"companyStatus":1,
+				"companyStatusStr":"审核通过",
+				"memberOverdue":1569160587790,
+				"memberOverdueStr":"2019-09-22",
+				"openid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY"
 			}
-		]
+		],
+		"pageCount":1,
+		"pageIndex":0
 	},
 	"msg":"成功"
 }
 ```
 
-### 3、审核通过兼职
+### 2、根据Id查看企业信息
 
-```json
-GET http://tim.natapp1.cc/buckmoo/admin/part/audit_success
+```
+GET http://tim.natapp1.cc/buckmoo/admin/company/show_detail
 ```
 
 参数
 
 ```
-partId : String 兼职信息Id
+companyId : String 企业ID（统一信用码）
 ```
 
 返回值
@@ -1024,54 +918,91 @@ partId : String 兼职信息Id
 {
 	"code":0,
 	"data":{
-		"createTime":1563914200000,
-		"creatorPhone":"1522972059",
-		"employSex":1,
-		"partAddress":"我",
-		"partCategory":1,
-		"partCreator":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
-		"partEnd":1563867365000,
-		"partId":"1563867400640589379",
-		"partMoney":0.01,
-		"partMoneyShow":0.00,
-		"partName":"我",
-		"partOverview":"我",
-		"partRemark":"我",
-		"partStart":1563867365000,
-		"partStatus":3,
-		"partTime":"我",
-		"updateTime":1563914209000
+		"companyId":"8566022871029249125",
+		"companyLicense":"https://s2.ax1x.com/2019/08/21/mNZj2V.jpg",
+		"companyMember":0,
+		"companyMemberStr":"非会员",
+		"companyName":"北京创新乐知网络技术有限公司B",
+		"companyPhone":"15229720759",
+		"companyStatus":0,
+		"companyStatusStr":"未审核",
+		"memberOverdue":0,
+		"memberOverdueStr":"未注册会员",
+		"openid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY2"
 	},
 	"msg":"成功"
 }
 ```
 
-### 4、审核未通过兼职
+
+
+### 3、删除某个企业
 
 ```
-GET http://tim.natapp1.cc/buckmoo/admin/part/audit_failed
+GET http://tim.natapp1.cc/buckmoo/admin/company/delete
 ```
 
 参数
 
 ```
-partId : String 兼职信息Id
+companyId : String 企业ID（统一信用码）
 ```
 
 返回值
 
 ```json
 {
-	"code":1,
-	"msg":"审核未通过，已退款"
+	"code":0,
+	"msg":"成功"
 }
 ```
 
-### 5、查看所有会员
+### 4、修改企业信息
 
-### 6、查看所有活动
+```
+POST http://tim.natapp1.cc/buckmoo/admin/company/update_info
+```
 
-### 7、审核活动
+参数
+
+```
+companyId : String 企业ID（统一信用码）
+companyName ： 企业名称
+companyLicense ： 营业执照路径
+companyPhone ： 电话
+companyMember ： 会员等级
+memberOverdue ： 会员到期时间
+```
+
+返回值
+
+返回修改成功后的信息
+
+```json
+{
+	"code":0,
+	"data":{
+		"companyId":"8566022871029249126",
+		"companyLicense":"a",
+		"companyMember":1,
+		"companyMemberStr":"白银会员",
+		"companyName":"a",
+		"companyPhone":"a",
+		"companyStatus":0,
+		"companyStatusStr":"未审核",
+		"memberOverdue":21312312432,
+		"memberOverdueStr":"1970-09-05",
+		"openid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY2"
+	},
+	"msg":"成功"
+}
+```
+
+### 5、分状态查看活动
+
+
+
+
 
 ## 四、文件上传
 

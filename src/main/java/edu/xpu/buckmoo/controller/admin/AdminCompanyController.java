@@ -1,27 +1,27 @@
 package edu.xpu.buckmoo.controller.admin;
 
 import edu.xpu.buckmoo.VO.CompanyInfoVO;
+import edu.xpu.buckmoo.VO.CompanyInfoVOStruct;
 import edu.xpu.buckmoo.convert.CompanyInfo2VO;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.service.CompanyService;
+import edu.xpu.buckmoo.utils.JsonUtil;
+import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.2
  * @className ActivityController
  * @description 公司管理模块
- * @date 2019-06-19 19:08
+ * @date 2019-08-25 19:08
  */
-@Controller
+@RestController
 @RequestMapping("/admin/company")
 @Slf4j
 public class AdminCompanyController {
@@ -31,57 +31,43 @@ public class AdminCompanyController {
         this.companyService = companyService;
     }
 
+    /**
+     * 查看正在审核的企业信息
+     * @param pageindex 分页参数
+     */
+    @GetMapping("/show")
+    public String showCompanyAuditing(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex, Integer status){
 
-    @GetMapping("/show_audit")
-    public String showCompanyAuditing(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex,
-                                  Map<String, Object> map){
-        Page<CompanyInfo> companyNew = companyService.findByCompanyAudit(0, PageRequest.of(pageindex, 10));
+        if(status == null){
+            return JsonUtil.toJson(ResultVOUtil.error(1, "缺少参数：status"));
+        }
+
+        Page<CompanyInfo> companyNew = companyService.findByCompanyAudit(status, PageRequest.of(pageindex, 10));
         log.info("[AdminCompanyController] companyNew={}", companyNew);
+
         List<CompanyInfoVO> list_pass = new ArrayList<>();
         for(CompanyInfo companyInfo: companyNew.getContent()){
             list_pass.add(CompanyInfo2VO.companyInfoToVO(companyInfo));
         }
         log.info("[AdminCompanyController] list_pass={}", list_pass);
-        map.put("list_audit", list_pass);
-        map.put("page_index", pageindex);
-        map.put("page_count", companyNew.getTotalPages());
-        return "company/show_audit";
+        CompanyInfoVOStruct companyInfoVOStruct = new CompanyInfoVOStruct();
+        companyInfoVOStruct.setListPass(list_pass);
+        companyInfoVOStruct.setPageCount(companyNew.getTotalPages());
+        companyInfoVOStruct.setPageIndex(pageindex);
+        return JsonUtil.toJson(ResultVOUtil.success(companyInfoVOStruct));
     }
-
-
-
 
     @GetMapping("/delete")
     private String deleteCompany(String companyId){
         companyService.delete(companyId);
-        return "redirect:show_pass";
+        return JsonUtil.toJson(ResultVOUtil.success());
     }
-
-
-    @GetMapping("/show_pass")
-    public String showCompanyInfo(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex,
-                                  Map<String, Object> map){
-        Page<CompanyInfo> companyNew = companyService.findByCompanyAudit(1, PageRequest.of(pageindex, 10));
-        log.info("[AdminCompanyController] companyNew={}", companyNew);
-        List<CompanyInfoVO> list_pass = new ArrayList<>();
-        for(CompanyInfo companyInfo: companyNew.getContent()){
-            list_pass.add(CompanyInfo2VO.companyInfoToVO(companyInfo));
-        }
-        log.info("[AdminCompanyController] list_pass={}", list_pass);
-        map.put("list_pass", list_pass);
-        map.put("page_index", pageindex);
-        map.put("page_count", companyNew.getTotalPages());
-        return "company/show_pass";
-    }
-
-
 
     @GetMapping("/show_detail")
     public String showCompanyInfoDetails(String companyId, Map<String, Object> map){
         CompanyInfoVO companyInfoVO = CompanyInfo2VO.companyInfoToVO(companyService.findById(companyId));
         log.info("[AdminCompanyController] companyInfoVO={}", companyInfoVO);
-        map.put("companyInfoVO", companyInfoVO);
-        return "company/show_detail";
+        return JsonUtil.toJson(ResultVOUtil.success(companyInfoVO));
     }
 
     @PostMapping("/update_info")
@@ -91,8 +77,9 @@ public class AdminCompanyController {
         if(findResult != null){
             companyInfo.setOpenid(findResult.getOpenid());
             companyInfo.setCompanyStatus(findResult.getCompanyStatus());
-            companyService.save(companyInfo);
+            CompanyInfo saveResult = companyService.save(companyInfo);
+            return JsonUtil.toJson(ResultVOUtil.success(CompanyInfo2VO.companyInfoToVO(saveResult)));
         }
-        return "redirect:show_pass";
+        return JsonUtil.toJson(ResultVOUtil.error(1, "companyId错误，无此信息"));
     }
 }
