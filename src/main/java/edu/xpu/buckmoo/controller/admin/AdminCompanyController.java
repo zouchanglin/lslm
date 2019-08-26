@@ -57,6 +57,26 @@ public class AdminCompanyController {
         return JsonUtil.toJson(ResultVOUtil.success(companyInfoVOStruct));
     }
 
+
+    @GetMapping("/show_all")
+    public String showAllCompany(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex){
+
+        Page<CompanyInfo> companyNew = companyService.findAll(PageRequest.of(pageindex, 10));
+
+        log.info("[AdminCompanyController] companyNew={}", companyNew);
+
+        List<CompanyInfoVO> list_pass = new ArrayList<>();
+        for(CompanyInfo companyInfo: companyNew.getContent()){
+            list_pass.add(CompanyInfo2VO.companyInfoToVO(companyInfo));
+        }
+        log.info("[AdminCompanyController] list_pass={}", list_pass);
+        CompanyInfoVOStruct companyInfoVOStruct = new CompanyInfoVOStruct();
+        companyInfoVOStruct.setListPass(list_pass);
+        companyInfoVOStruct.setPageCount(companyNew.getTotalPages());
+        companyInfoVOStruct.setPageIndex(pageindex);
+        return JsonUtil.toJson(ResultVOUtil.success(companyInfoVOStruct));
+    }
+
     @GetMapping("/delete")
     private String deleteCompany(String companyId){
         companyService.delete(companyId);

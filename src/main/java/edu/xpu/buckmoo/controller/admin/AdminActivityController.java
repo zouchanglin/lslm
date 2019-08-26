@@ -49,6 +49,23 @@ public class AdminActivityController {
         return JsonUtil.toJson(ResultVOUtil.success(activityListByStatus));
     }
 
+    /**
+     * 管理员查看活动
+     * @param type 活动类型
+     * @return 符合条件的活动列表
+     */
+    @GetMapping("/show_all")
+    public String showAllActivityInfo(@RequestParam("type")Integer type){
+        if(EnumUtil.getByCode(type, ActivityStatusEnum.class) == null){
+            log.error("ActivityType={}", type);
+            return JsonUtil.toJson(ResultVOUtil.error(1, "状态错误"));
+        }
+
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        List<ActivityInfo> activityListByStatus = activityService.findByActivityAudit(type, pageRequest).getContent();
+        return JsonUtil.toJson(ResultVOUtil.success(activityListByStatus));
+    }
+
 
 //    @RequestMapping("/delete")
 //    public ResultVO deleteActivity(@RequestParam("activityId") String activityId){

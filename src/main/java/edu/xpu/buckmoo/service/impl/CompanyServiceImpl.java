@@ -14,6 +14,7 @@ import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -126,5 +127,10 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public CompanyInfo findByOpenid(String openid) {
         return companyRep.findOneByOpenid(openid);
+    }
+
+    @Override
+    public Page<CompanyInfo> findAll(PageRequest of) {
+        return companyRep.findAll(of);
     }
 }

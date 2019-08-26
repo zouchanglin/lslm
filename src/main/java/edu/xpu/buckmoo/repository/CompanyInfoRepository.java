@@ -14,4 +14,7 @@ public interface CompanyInfoRepository extends JpaRepository<CompanyInfo, String
     Page<CompanyInfo> findAllByCompanyStatus(Integer status, Pageable pageable);
 
     CompanyInfo findOneByOpenid(String openid);
+
+    @Override
+    Page<CompanyInfo> findAll(Pageable pageable);
 }

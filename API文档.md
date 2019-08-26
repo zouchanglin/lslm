@@ -857,6 +857,7 @@ GET http://tim.natapp1.cc/buckmoo/admin/company/show
 
 ```
 status : Integer  企业的审核状态
+pageindex： integer 分页参数（第几页）
 ```
 
 返回值
@@ -900,7 +901,27 @@ status : Integer  企业的审核状态
 }
 ```
 
-### 2、根据Id查看企业信息
+
+
+### 2、查看所有企业信息
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/company/show_all
+```
+
+参数
+
+```
+pageindex : 分页参数（第几页）
+```
+
+返回值
+
+和1、查看企业会员一样
+
+
+
+### 3、根据Id查看企业信息
 
 ```
 GET http://tim.natapp1.cc/buckmoo/admin/company/show_detail
@@ -936,7 +957,7 @@ companyId : String 企业ID（统一信用码）
 
 
 
-### 3、删除某个企业
+### 4、删除某个企业
 
 ```
 GET http://tim.natapp1.cc/buckmoo/admin/company/delete
@@ -957,7 +978,7 @@ companyId : String 企业ID（统一信用码）
 }
 ```
 
-### 4、修改企业信息
+### 5、修改企业信息
 
 ```
 POST http://tim.natapp1.cc/buckmoo/admin/company/update_info
@@ -998,7 +1019,7 @@ memberOverdue ： 会员到期时间
 }
 ```
 
-### 5、分状态查看活动
+### 6、分状态查看活动
 
 
 
