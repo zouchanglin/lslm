@@ -1,5 +1,98 @@
 # 一、普通用户
 ## 活动相关
+
+### 1、品牌活动
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/activity/list
+```
+
+参数
+
+```
+pageIndex : 分页参数（第几页）
+pageSize ： 分页参数（一页多少条）
+```
+
+返回值
+
+```json
+{
+	"code":0,
+	"data":{
+		"currentPage":0,
+		"list":[
+			{
+				"activityAbstract":"AAAAAAA",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":10,
+				"activityId":"1566214957280388602",
+				"activityLink":"AAAAAAA",
+				"activityLogo":"AAAAAAAAAAA",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"AAAAAAA",
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+			},
+			{
+				"activityAbstract":"高校总决赛",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":30,
+				"activityId":"1566217507597277422",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+				"activityLogo":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"周二LOL（测试推广支付）",
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+			},
+			{
+				"activityAbstract":"终南山一日游",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":3012,
+				"activityId":"68942316487236470",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mNICmd.png",
+				"activityLogo":"http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=8b8357a7-c50c-4d07-84af-3d3219f9d432.jpg",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"终南山9日游",
+				"activityOpenid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
+				"activityOpenidStr":"北京创新乐知网络技术有限公司"
+			},
+			{
+				"activityAbstract":"终南山一日游",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":30,
+				"activityId":"68942316487236471",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mNICmd.png",
+				"activityLogo":"http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=b08d0cba-9aef-43cf-afbc-8fe016944054.jpeg",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"终南山8日游",
+				"activityOpenid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
+				"activityOpenidStr":"北京创新乐知网络技术有限公司"
+			}
+		],
+		"pageCount":2
+	},
+	"msg":"成功"
+}
+```
+
+
+
+```
+
+```
+
+
+
 ## 兼职相关
 
 ### 1、查看兼职分类
@@ -1022,6 +1115,40 @@ memberOverdue ： 会员到期时间
 ### 6、分状态查看活动
 
 
+
+### 7、统计用户数量
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/count/peopleCount	
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":6,
+	"msg":"成功"
+}
+```
+
+
+
+### 8、统计企业数量
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/count/companyCount
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":3,
+	"msg":"成功"
+}
+```
 
 
 

@@ -59,4 +59,6 @@ public interface CompanyService {
     MemberOrder becomeMemberPay(String companyId, Integer memberLevel);
 
     Page<CompanyInfo> findAll(PageRequest of);
+
+    Integer companyCount();
 }

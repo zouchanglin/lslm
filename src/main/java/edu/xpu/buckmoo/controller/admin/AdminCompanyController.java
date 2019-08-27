@@ -5,9 +5,11 @@ import edu.xpu.buckmoo.VO.CompanyInfoVOStruct;
 import edu.xpu.buckmoo.convert.CompanyInfo2VO;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.service.CompanyService;
+import edu.xpu.buckmoo.service.UserInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +28,9 @@ import java.util.*;
 @Slf4j
 public class AdminCompanyController {
     private final CompanyService companyService;
+
+    @Autowired
+    private UserInfoService userInfoService;
 
     public AdminCompanyController(CompanyService companyService) {
         this.companyService = companyService;
@@ -102,4 +107,6 @@ public class AdminCompanyController {
         }
         return JsonUtil.toJson(ResultVOUtil.error(1, "companyId错误，无此信息"));
     }
+
+
 }

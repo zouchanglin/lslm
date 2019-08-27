@@ -133,4 +133,9 @@ public class CompanyServiceImpl implements CompanyService {
     public Page<CompanyInfo> findAll(PageRequest of) {
         return companyRep.findAll(of);
     }
+
+    @Override
+    public Integer companyCount() {
+        return companyRep.findAll().size();
+    }
 }

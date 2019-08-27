@@ -50,4 +50,9 @@ public class UserInfoServiceImpl implements UserInfoService {
     public UserInfo findById(String openId) {
         return userRep.findById(openId).orElse(null);
     }
+
+    @Override
+    public Integer userCount() {
+        return userRep.findAll().size();
+    }
 }
