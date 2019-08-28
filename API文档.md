@@ -1112,11 +1112,7 @@ memberOverdue ： 会员到期时间
 }
 ```
 
-### 6、分状态查看活动
-
-
-
-### 7、统计用户数量
+### 6、统计用户数量
 
 ```
 GET http://tim.natapp1.cc/buckmoo/admin/count/peopleCount	
@@ -1134,7 +1130,7 @@ GET http://tim.natapp1.cc/buckmoo/admin/count/peopleCount
 
 
 
-### 8、统计企业数量
+### 7、统计企业数量
 
 ```
 GET http://tim.natapp1.cc/buckmoo/admin/count/companyCount
@@ -1147,6 +1143,334 @@ GET http://tim.natapp1.cc/buckmoo/admin/count/companyCount
 	"code":0,
 	"data":3,
 	"msg":"成功"
+}
+```
+
+
+
+### 8、分页查看活动
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/activity/show
+```
+
+参数
+
+```
+pageIndex : Integer 分页参数，默认0
+pageSize：Integer 分页参数，默认5
+```
+
+返回值
+
+```json
+{
+	"code":0,
+	"data":{
+		"count":5,
+		"currentPage":0,
+		"list":[
+			{
+				"activityAbstract":"AAAAAAA",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":10,
+				"activityId":"1566214957280388602",
+				"activityLink":"AAAAAAA",
+				"activityLogo":"AAAAAAAAAAA",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"AAAAAAA",
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+			},
+			{
+				"activityAbstract":"高校总决赛",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":30,
+				"activityId":"1566217507597277422",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+				"activityLogo":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"周二LOL（测试推广支付）",
+				"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+				"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+			},
+			{
+				"activityAbstract":"终南山一日游",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":3012,
+				"activityId":"68942316487236470",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mNICmd.png",
+				"activityLogo":"http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=8b8357a7-c50c-4d07-84af-3d3219f9d432.jpg",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"终南山9日游",
+				"activityOpenid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
+				"activityOpenidStr":"北京创新乐知网络技术有限公司"
+			},
+			{
+				"activityAbstract":"终南山一日游",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":30,
+				"activityId":"68942316487236471",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mNICmd.png",
+				"activityLogo":"http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=b08d0cba-9aef-43cf-afbc-8fe016944054.jpeg",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"终南山8日游",
+				"activityOpenid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
+				"activityOpenidStr":"北京创新乐知网络技术有限公司"
+			},
+			{
+				"activityAbstract":"终南山一日游",
+				"activityAudit":1,
+				"activityAuditStr":"审核通过",
+				"activityGeneralize":30,
+				"activityId":"68942316487236472",
+				"activityLink":"https://s2.ax1x.com/2019/08/21/mNICmd.png",
+				"activityLogo":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+				"activityMode":1,
+				"activityModeStr":"学生社团活动",
+				"activityName":"终南山7日游",
+				"activityOpenid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY",
+				"activityOpenidStr":"北京创新乐知网络技术有限公司"
+			}
+		],
+		"pageCount":2
+	},
+	"msg":"成功"
+}
+```
+
+### 9、审核活动
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/activity/audit
+```
+
+参数
+
+```
+activityId : String 活动Id
+activityAudit ： Integer 要修改为的状态（0、未审核 1、审核通过 2、审核未通过）
+```
+
+返回值
+
+返回审核(修改)后的信息
+
+```json
+{
+	"code":0,
+	"data":{
+		"activityAbstract":"高校总决赛",
+		"activityAudit":1,
+		"activityAuditStr":"审核通过",
+		"activityGeneralize":30,
+		"activityId":"1566217507597277422",
+		"activityLink":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+		"activityLogo":"https://s2.ax1x.com/2019/08/21/mN5xSO.png",
+		"activityMode":1,
+		"activityModeStr":"学生社团活动",
+		"activityName":"周二LOL（测试推广支付）",
+		"activityOpenid":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+		"activityOpenidStr":"骊山鹿鸣教育科技有限公司"
+	},
+	"msg":"成功"
+}
+```
+
+
+
+### 10、查看反馈
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/problem/show
+```
+
+参数
+
+```
+pageIndex : Integer 分页参数，默认0
+pageSize ： Integer 分页大小，默认5
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":{
+		"list":[
+			{
+				"problemContent":"内容",
+				"problemDealwith":0,
+				"problemId":"1566994174734782817"
+				"contactWay":"126336871@163.com",
+			},
+			{
+				"contactWay":"126336871@QQ.com",
+				"problemContent":"你好",
+				"problemDealwith":0,
+				"problemId":"1566995385924727024"
+			}
+		],
+		"pageCount":1,
+		"pageIndex":0
+	},
+	"msg":"成功"
+}
+```
+
+### 11、标记反馈为已读
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/problem/dealWith
+```
+
+参数
+
+```
+problemId : String 问题的ID
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":{
+		"contactWay":"126336871@QQ.com",
+		"problemContent":"你好",
+		"problemDealwith":1,
+		"problemId":"1566995385924727024"
+	},
+	"msg":"成功"
+}
+
+{
+	"code":1,
+	"msg":"未能找到此条信息"
+}
+```
+
+
+
+
+
+### 12、查看系统配置参数
+
+ps: 什么是系统参数？比如，成为月费会员多少钱？成为永久会员多少钱？发布兼职的回扣是百分之几？等等参数都是系统配置参数
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/system/show
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":[
+		{
+			"paramsDes":"推广一个人多少钱",
+			"paramsId":"activity_generalize",
+			"paramsValue":0.01
+		},
+		{
+			"paramsDes":"永久企业会员",
+			"paramsId":"member_forever_money",
+			"paramsValue":0.05
+		},
+		{
+			"paramsDes":"月费企业会员",
+			"paramsId":"member_month_money",
+			"paramsValue":0.01
+		},
+		{
+			"paramsDes":"年费企业会员",
+			"paramsId":"member_year_money",
+			"paramsValue":0.02
+		},
+		{
+			"paramsDes":"非会员布活动费用",
+			"paramsId":"one_activity_money",
+			"paramsValue":0.01
+		},
+		{
+			"paramsDes":"其他参数（测试）",
+			"paramsId":"other_param",
+			"paramsValue":0.05
+		},
+		{
+			"paramsDes":"兼职发布的回扣",
+			"paramsId":"part_kickback",
+			"paramsValue":0.01
+		}
+	],
+	"msg":"成功"
+}
+```
+
+### 13、修改系统配置参数
+
+````
+POST http://tim.natapp1.cc/buckmoo/admin/system/update
+````
+
+返回值
+
+```
+{
+	"code":0,
+	"data":{
+		"paramsDes":"推广一个人多少钱",
+		"paramsId":"activity_generalize",
+		"paramsValue":0.02
+	},
+	"msg":"成功"
+}
+
+{
+	"code":1,
+	"msg":"无此配置项"
+}
+```
+
+### 14、管理员登录
+
+参数中需要验证码，这个验证码来自管理员的APP。如果这些接口要测试必须要有Session，所以提供了一个30秒过期的验证码请求接口，这个接口是`http://tim.natapp1.cc/buckmoo/admin/login/getCode` 通过访问此接口获取验证码，从而进行管理员登陆的调试以及其他的管理员接口的调试，其它接口在调试前必须先通过管理员登陆接口获取Session！！！
+
+```
+POST http://tim.natapp1.cc/buckmoo/admin/login/verify
+```
+
+参数
+
+```
+code : String 验证码
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"msg":"成功"
+}
+
+{
+	"code":1,
+	"msg":"验证码错误"
+}
+{
+	"code":2,
+	"msg":"登录错误三次,请致电运维"
 }
 ```
 
@@ -1169,6 +1493,34 @@ POST http://tim.natapp1.cc/buckmoo/file/fileUpload
     "code": 0,
     "msg": "成功",
     "data": "http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=2d23a14c-fe3c-46e3-83d2-18cf47007848.png"
+}
+```
+
+## 五、问题反馈
+
+```
+POST http://tim.natapp1.cc/buckmoo/problem/feedback
+```
+
+参数
+
+```
+content : String 反馈内容
+contact : String 联系方式
+```
+
+返回值
+
+```
+{
+	"code":0,
+	"data":{
+		"contactWay":"126336871@QQ.com",
+		"problemContent":"你好",
+		"problemDealwith":0, //0表示未处理 //1表示已经处理
+		"problemId":"1566995385924727024"
+	},
+	"msg":"成功"
 }
 ```
 

@@ -106,4 +106,9 @@ public class ActivityServiceImpl implements ActivityService {
         log.info("[ActivityServiceImpl] activityInfoPage={}", activityInfoPage);
         return activityInfoPage;
     }
+
+    @Override
+    public Page<ActivityInfo> findAllByPage(PageRequest pageRequest) {
+        return activityInfoRepository.findAll(pageRequest);
+    }
 }

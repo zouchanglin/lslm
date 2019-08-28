@@ -62,4 +62,6 @@ public interface ActivityService {
      * @return 分页查询结果
      */
     Page<ActivityInfo> myAllActivity(String openid, PageRequest pageRequest);
+
+    Page<ActivityInfo> findAllByPage(PageRequest pageRequest);
 }
