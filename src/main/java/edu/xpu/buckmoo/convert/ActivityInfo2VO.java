@@ -31,9 +31,13 @@ public class ActivityInfo2VO {
         activityInfoVO.setActivityModeStr(activityModeEnum.getMessage());
 
         String activityOpenid = activityInfo.getActivityOpenid();
-        CompanyInfo companyInfo = companyInfoRepository.findOneByOpenid(activityOpenid);
-        activityInfoVO.setActivityOpenidStr(companyInfo.getCompanyName());
 
+        try {
+            CompanyInfo companyInfo = companyInfoRepository.findOneByOpenid(activityOpenid);
+            activityInfoVO.setActivityOpenidStr(companyInfo.getCompanyName());
+        }catch (Exception e){
+
+        }
         return activityInfoVO;
     }
 }

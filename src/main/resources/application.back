@@ -13,8 +13,8 @@ spring:
       initial-size: 5
   jpa:
     show-sql: true
-  #  jackson:
-  #    default-property-inclusion: non_null
+#  jackson:
+#    default-property-inclusion: non_null
   mvc:
     static-path-pattern: /**
   servlet:

@@ -24,16 +24,19 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/admin/login")
 @Slf4j
 public class AdminLoginController {
-    private static String my_code = "";
+    private static String my_code = "111111";
 
     @PostMapping("/verify")
-    public String adminLogin(@RequestParam("code") String code,
+    public String adminLogin(@RequestParam("verifyCode") String verifyCode,
                              @CookieValue(value = "error_count", required = false) String error_count,
                              HttpSession httpSession,
                              HttpServletResponse response){
-        if(my_code.equals(code)){
+        log.info("[AdminLoginController] 登录码为 verifyCode={}", verifyCode);
+
+        if(my_code.equals(verifyCode)){
             httpSession.setAttribute("BAIDU_ID_UX", "Admin");
-            return JsonUtil.toJson(ResultVOUtil.success());
+            String httpSessionId = httpSession.getId();
+            return JsonUtil.toJson(ResultVOUtil.success(httpSessionId));
         }else{
             if(error_count == null){
                 //第一次登陆错误

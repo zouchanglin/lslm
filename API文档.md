@@ -1453,7 +1453,7 @@ POST http://tim.natapp1.cc/buckmoo/admin/login/verify
 参数
 
 ```
-code : String 验证码
+verifyCode : String 验证码
 ```
 
 返回值

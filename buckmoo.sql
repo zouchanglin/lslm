@@ -11,7 +11,7 @@
  Target Server Version : 80017
  File Encoding         : 65001
 
- Date: 27/08/2019 22:39:04
+ Date: 28/08/2019 23:01:46
 */
 
 SET NAMES utf8mb4;
@@ -37,6 +37,7 @@ CREATE TABLE `activity_info`  (
 -- ----------------------------
 -- Records of activity_info
 -- ----------------------------
+INSERT INTO `activity_info` VALUES ('15660199930331126194', '活动名称3', '1567003803644576298', 0, 1000, 'http://xxx', '活动描述信息', 'http://a.png', 0);
 INSERT INTO `activity_info` VALUES ('1566214957280388602', 'AAAAAAA', 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 1, 10, 'AAAAAAA', 'AAAAAAA', 'AAAAAAAAAAA', 1);
 INSERT INTO `activity_info` VALUES ('1566217507597277422', '周二LOL（测试推广支付）', 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 1, 30, 'https://s2.ax1x.com/2019/08/21/mN5xSO.png', '高校总决赛', 'https://s2.ax1x.com/2019/08/21/mN5xSO.png', 1);
 INSERT INTO `activity_info` VALUES ('68942316487236470', '终南山9日游', 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY', 1, 3012, 'https://s2.ax1x.com/2019/08/21/mNICmd.png', '终南山一日游', 'http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=8b8357a7-c50c-4d07-84af-3d3219f9d432.jpg', 1);
@@ -80,6 +81,8 @@ INSERT INTO `collection_order` VALUES ('1566569286117347698', 0, 0.00, 'oxrwq0-p
 INSERT INTO `collection_order` VALUES ('1566569301645843207', 0, 0.10, 'oxrwq0-p0gfUUyej9KnqKGRkNQjs', '发布兼职信息付款', 0);
 INSERT INTO `collection_order` VALUES ('1566570395681258859', 0, 0.01, 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY', '发布兼职信息付款', 1);
 INSERT INTO `collection_order` VALUES ('1566717311749125376', 0, 0.01, 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY', '发布兼职信息付款', 1);
+INSERT INTO `collection_order` VALUES ('1566998488152167684', 2, 0.01, '1566998488153697941', '订单名称', 0);
+INSERT INTO `collection_order` VALUES ('1567003803815181197', 2, 0.01, '1567003803816441609', '订单名称', 0);
 
 -- ----------------------------
 -- Table structure for company_info
@@ -101,6 +104,8 @@ CREATE TABLE `company_info`  (
 -- Records of company_info
 -- ----------------------------
 INSERT INTO `company_info` VALUES ('1566022871029249125', '骊山鹿鸣教育科技有限公司', 'http://tim.natapp1.cc/buckmoo/file/fileDownload?fileUrl=f9664dc7-4351-4940-9e2a-62061549d538.jpeg', '15291418231', 1, 'oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk', 1, 1569160800507);
+INSERT INTO `company_info` VALUES ('1566998488527881283', '公司名称', 'http://sswsw.png', '电话', 0, '1566998488527799544', 0, 1566998488528);
+INSERT INTO `company_info` VALUES ('1567003804255278402', '公司名称', 'http://sswsw.png', '电话', 0, '1567003804255346651', 0, 1567003804256);
 INSERT INTO `company_info` VALUES ('8566022871029249123', '北京创新乐知网络技术有限公司', 'https://s2.ax1x.com/2019/08/21/mNZj2V.jpg', '15229720759', 1, 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY', 1, 1569160587790);
 INSERT INTO `company_info` VALUES ('8566022871029249125', '北京创新乐知网络技术有限公司B', 'https://s2.ax1x.com/2019/08/21/mNZj2V.jpg', '15229720759', 0, 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY2', 0, 0);
 
@@ -117,6 +122,12 @@ CREATE TABLE `company_order`  (
   `update_time` bigint(20) DEFAULT NULL COMMENT '信息更新时间',
   PRIMARY KEY (`order_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of company_order
+-- ----------------------------
+INSERT INTO `company_order` VALUES ('1566998488721709844', 0.01, '', 0, 1566998488721, 1566998488721);
+INSERT INTO `company_order` VALUES ('1567003804343596127', 0.01, '', 0, 1567003804343, 1567003804343);
 
 -- ----------------------------
 -- Table structure for member_order
@@ -148,6 +159,8 @@ INSERT INTO `member_order` VALUES ('1566568577694496535', '8566022871029249123',
 INSERT INTO `member_order` VALUES ('1566568580945731817', '8566022871029249123', 0.01, 1, 1);
 INSERT INTO `member_order` VALUES ('1566568766777498317', '1566022871029249125', 0.01, 0, 1);
 INSERT INTO `member_order` VALUES ('1566568767868381928', '1566022871029249125', 0.01, 1, 1);
+INSERT INTO `member_order` VALUES ('1566998488855545810', '1566998488855361061', 0.01, 0, NULL);
+INSERT INTO `member_order` VALUES ('1567003804397730569', '1567003804397332374', 0.01, 0, NULL);
 
 -- ----------------------------
 -- Table structure for part_category
@@ -169,6 +182,8 @@ INSERT INTO `part_category` VALUES (2, '代课', 1566023543861, 1566023543861);
 INSERT INTO `part_category` VALUES (3, '发单', 1566023579624, 1566023579624);
 INSERT INTO `part_category` VALUES (4, '辅导', 1566023616102, 1566023616102);
 INSERT INTO `part_category` VALUES (9, '辅导', 1566111230747, 1566111230747);
+INSERT INTO `part_category` VALUES (10, '辅导', 1566998488970, 1566998488970);
+INSERT INTO `part_category` VALUES (11, '辅导', 1567003804489, 1567003804489);
 
 -- ----------------------------
 -- Table structure for part_info
@@ -205,6 +220,28 @@ INSERT INTO `part_info` VALUES ('1566569286117347698', '1', 1, '1', '1', NULL, 1
 INSERT INTO `part_info` VALUES ('1566569301645843207', '1', 1, '1', '1', NULL, 1566569240310, '1', 0.10, 0.00, 0, 3, NULL, NULL, 'oxrwq0-p0gfUUyej9KnqKGRkNQjs');
 INSERT INTO `part_info` VALUES ('1566570395681258859', '我', 1, '我', '我', 1566570380547, 1566570380547, '我', 0.01, 0.00, 1, 1, NULL, NULL, 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY');
 INSERT INTO `part_info` VALUES ('1566717311749125376', '我', 1, '我', '我', 1566717282793, 1566717282793, '我', 0.01, 0.00, 1, 1, NULL, NULL, 'oxrwq0xrKKyqiAGE8O9TM3L1yaQY');
+INSERT INTO `part_info` VALUES ('1566998488912183891', '兼职名称', NULL, '兼职地址', '兼职描述信息', 1566998488912, 1566998488912, '兼职备注信息', 0.01, 0.01, 0, 3, NULL, NULL, '1566998488912617774');
+INSERT INTO `part_info` VALUES ('1567003804436448976', '兼职名称', NULL, '兼职地址', '兼职描述信息', 1567003804436, 1567003804436, '兼职备注信息', 0.01, 0.01, 0, 3, NULL, NULL, '1567003804436772366');
+
+-- ----------------------------
+-- Table structure for problem_feedback
+-- ----------------------------
+DROP TABLE IF EXISTS `problem_feedback`;
+CREATE TABLE `problem_feedback`  (
+  `problem_id` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '问题反馈Id',
+  `problem_content` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '反馈内容',
+  `problem_dealwith` tinyint(5) NOT NULL DEFAULT 0 COMMENT '是否已经处理',
+  `contact_way` varchar(30) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '反馈人联系方式',
+  PRIMARY KEY (`problem_id`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of problem_feedback
+-- ----------------------------
+INSERT INTO `problem_feedback` VALUES ('1566994174734782817', '内容', 0, '21783947891@qq.com');
+INSERT INTO `problem_feedback` VALUES ('1566995385924727024', '你好', 1, '126336871@QQ.com');
+INSERT INTO `problem_feedback` VALUES ('1566998489027307291', '内容', 0, NULL);
+INSERT INTO `problem_feedback` VALUES ('1567003804534857104', '内容', 0, NULL);
 
 -- ----------------------------
 -- Table structure for system_config
@@ -220,7 +257,7 @@ CREATE TABLE `system_config`  (
 -- ----------------------------
 -- Records of system_config
 -- ----------------------------
-INSERT INTO `system_config` VALUES ('activity_generalize', 0.01, '推广一个人多少钱');
+INSERT INTO `system_config` VALUES ('activity_generalize', 0.02, '推广一个人多少钱');
 INSERT INTO `system_config` VALUES ('member_forever_money', 0.05, '永久企业会员');
 INSERT INTO `system_config` VALUES ('member_month_money', 0.01, '月费企业会员');
 INSERT INTO `system_config` VALUES ('member_year_money', 0.02, '年费企业会员');
@@ -252,6 +289,7 @@ CREATE TABLE `user_info`  (
 -- ----------------------------
 INSERT INTO `user_info` VALUES ('oxrwq0-mSbTWiRjGXYU6DLhSq2rI', '薄命司', 'http://thirdwx.qlogo.cn/mmopen/vi_32/siaiaSLcF9HHqf2BM7FpxST8AzAClARQ51fQzmpmaV5AIJwU9qXwjv11etrzz5noFvtFIwTJm3ib3qFYE5HnnnTicg/132', 1, '中国', '', 0, 1566812285423, 1566812285423, 0, '');
 INSERT INTO `user_info` VALUES ('oxrwq0-p0gfUUyej9KnqKGRkNQjs', '一路有你永远幸福', 'http://thirdwx.qlogo.cn/mmopen/vi_32/BNb24Suew7m6Cl7QoG60UNiaWFg772BHf8mWXjJ9gldtTb4iae954atIiagibnTX8mnIYiccWjGAfbuPLTQiaXhUpCSw/132', 1, '', '15291418231', 0, 1566568918132, 1566569209831, 0, '');
+INSERT INTO `user_info` VALUES ('oxrwq01dDmT8aVIMcQj9R2qE53G8', '猫南北', 'http://thirdwx.qlogo.cn/mmopen/vi_32/oa1P4s8pvUAlb9De3FE2YoCrfLzcibylJa9vRQSvzJs3nVgxzQPcibpY6iaICrZibeGLODyUCVFzTMs53vf0ia9dibRQ/132', 1, '中国咸阳', '', 0, 1566994802868, 1566994802868, 0, '');
 INSERT INTO `user_info` VALUES ('oxrwq02nIOZ-S-VSpxP5M2j09wsE', '骊山鹿鸣-杨楠', 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTIvO0AGP9hMEN6jmeKtan6M9adKdBl2PxEia6DSzPCk6dVOffNwf3WPNgsm3ClNqenIFvyhXulk14Q/132', 1, '中国西安', '17795633226', 0, 1566471097232, 1566907827758, 0, '');
 INSERT INTO `user_info` VALUES ('oxrwq08zDY0smaxlZwysWvVAdvbI', 'vet', 'http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJBIw33uwqRBoTwOF0eA2Wa37H4rFSoibB4Oa6H4wYzRDNmkVfYibV4Vz9PMBtLMaicgKrVUrXvRGDgg/132', 2, '中国高雄市', '', 0, 1566297348589, 1566297348589, 0, '');
 INSERT INTO `user_info` VALUES ('oxrwq0xrKKyqiAGE8O9TM3L1yaQY', 'ahojcn', 'http://thirdwx.qlogo.cn/mmopen/vi_32/hyCfOptGJaWH4dYwqJNlCSBnPmJqJHBJ32FtxIjia3yQonGLHjQu1BYq9EBQ2BjM5icSrjojSV3QakvkSt9YJUkA/132', 1, '中国', '15229720759', 0, 1566220591642, 1566900617590, 0, '8566022871029249123');
