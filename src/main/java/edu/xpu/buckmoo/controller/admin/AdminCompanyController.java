@@ -45,10 +45,11 @@ public class AdminCompanyController {
     public String showCompanyAuditing(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex,
                                       Integer status,
                                       HttpSession httpSession){
-
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         if(status == null){
             return JsonUtil.toJson(ResultVOUtil.error(1, "缺少参数：status"));
@@ -73,10 +74,11 @@ public class AdminCompanyController {
     @GetMapping("/show_all")
     public String showAllCompany(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex,
                                  HttpSession httpSession){
-
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         Page<CompanyInfo> companyNew = companyService.findAll(PageRequest.of(pageindex, 10));
 
@@ -97,9 +99,11 @@ public class AdminCompanyController {
     @GetMapping("/delete")
     private String deleteCompany(String companyId,
                                  HttpSession httpSession){
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         companyService.delete(companyId);
         return JsonUtil.toJson(ResultVOUtil.success());
@@ -108,10 +112,11 @@ public class AdminCompanyController {
     @GetMapping("/show_detail")
     public String showCompanyInfoDetails(String companyId, Map<String, Object> map,
                                          HttpSession httpSession){
-
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         CompanyInfoVO companyInfoVO = CompanyInfo2VO.companyInfoToVO(companyService.findById(companyId));
         log.info("[AdminCompanyController] companyInfoVO={}", companyInfoVO);
@@ -121,9 +126,11 @@ public class AdminCompanyController {
     @PostMapping("/update_info")
     public String updateCompanyInfo(CompanyInfo companyInfo,
                                     HttpSession httpSession){
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
         CompanyInfo findResult = companyService.findById(companyInfo.getCompanyId());
         if(companyInfo.getCompanyMember().equals(0)) companyInfo.setMemberOverdue(0L);
         if(findResult != null){

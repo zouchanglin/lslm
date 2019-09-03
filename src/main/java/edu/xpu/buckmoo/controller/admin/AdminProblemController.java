@@ -28,10 +28,11 @@ public class AdminProblemController {
     public String show(@RequestParam(value = "pageIndex", defaultValue = "0") Integer pageIndex,
                        @RequestParam(value = "pageSize", defaultValue = "5")Integer pageSize,
                        HttpSession httpSession){
-
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         Page<ProblemFeedback> feedbackRepositoryAll = problemFeedbackRepository.findAll(PageRequest.of(pageIndex, pageSize));
         ProblemVOStruct problemVOStruct = new ProblemVOStruct();
@@ -49,9 +50,11 @@ public class AdminProblemController {
      */
     @GetMapping ("/dealWith")
     public String dealWith(String problemId, HttpSession httpSession){
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         Optional<ProblemFeedback> byId = problemFeedbackRepository.findById(problemId);
         if(byId.isPresent()){

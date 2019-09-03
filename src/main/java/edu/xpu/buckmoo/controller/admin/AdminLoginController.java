@@ -1,15 +1,11 @@
 package edu.xpu.buckmoo.controller.admin;
 
-import com.lly835.bestpay.rest.type.Get;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.aop.scope.ScopedObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -26,7 +22,7 @@ import javax.servlet.http.HttpSession;
 public class AdminLoginController {
     private static String my_code = "111111";
 
-    @PostMapping("/verify")
+    @RequestMapping("/verify")
     public String adminLogin(@RequestParam("verifyCode") String verifyCode,
                              @CookieValue(value = "error_count", required = false) String error_count,
                              HttpSession httpSession,
@@ -36,6 +32,9 @@ public class AdminLoginController {
         if(my_code.equals(verifyCode)){
             httpSession.setAttribute("BAIDU_ID_UX", "Admin");
             String httpSessionId = httpSession.getId();
+            Cookie cookie = new Cookie("SESSIONID", httpSessionId);
+            cookie.setPath("/");
+            response.addCookie(cookie);
             return JsonUtil.toJson(ResultVOUtil.success(httpSessionId));
         }else{
             if(error_count == null){

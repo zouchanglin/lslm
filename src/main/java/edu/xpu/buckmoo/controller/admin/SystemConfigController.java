@@ -22,9 +22,11 @@ public class SystemConfigController {
 
     @GetMapping("/show")
     public String show(HttpSession httpSession){
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
         return JsonUtil.toJson(ResultVOUtil.success(systemConfigRepository.findAll()));
     }
 
@@ -32,9 +34,11 @@ public class SystemConfigController {
     public String update(@RequestParam("configId") String configId,
                          @RequestParam("configValue") String configValue,
                          HttpSession httpSession){
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         Optional<SystemConfig> findConfigOpt = systemConfigRepository.findById(configId);
         if(findConfigOpt.isPresent()){

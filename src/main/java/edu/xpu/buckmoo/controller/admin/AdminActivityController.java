@@ -48,9 +48,11 @@ public class AdminActivityController {
     public String showActivityInfo(@RequestParam(value = "pageIndex", defaultValue = "0") Integer pageIndex,
                                    @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
                                    HttpSession httpSession){
+        if(SessionOpen.openSession){
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
 
         PageRequest pageRequest = PageRequest.of(pageIndex, pageSize);
         Page<ActivityInfo> activityInfoPage = activityService.findAllByPage(pageRequest);
@@ -80,10 +82,11 @@ public class AdminActivityController {
     public String audit(@RequestParam("activityId") String activityId,
                         @RequestParam("activityAudit") Integer activityAudit,
                         HttpSession httpSession){
-
-        String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
-        if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
-
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
 
         ActivityInfo findRet = activityService.findOne(activityId);
         if(findRet == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
