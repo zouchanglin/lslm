@@ -1474,6 +1474,43 @@ verifyCode : String 验证码
 }
 ```
 
+### 15、审核企业注册
+
+```
+http://tim.natapp1.cc/buckmoo/admin/company/audit 
+```
+
+参数
+
+```
+companyId:String 企业Id
+status: Integer 审核状态
+```
+
+参数
+
+```json
+{
+	"code":0,
+	"data":{
+		"companyId":"8566022871029249125",
+		"companyLicense":"https://s2.ax1x.com/2019/08/21/mNZj2V.jpg",
+		"companyMember":0,
+		"companyMemberStr":"非会员",
+		"companyName":"北京创新乐知网络技术有限公司B",
+		"companyPhone":"15229720759",
+		"companyStatus":1,
+		"companyStatusStr":"审核通过",
+		"memberOverdue":0,
+		"memberOverdueStr":"未注册会员",
+		"openid":"oxrwq0xrKKyqiAGE8O9TM3L1yaQY2"
+	},
+	"msg":"成功"
+}
+```
+
+### 16、
+
 
 
 ## 四、文件上传

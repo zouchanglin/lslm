@@ -3,6 +3,7 @@ package edu.xpu.buckmoo.service.impl;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
+import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
@@ -10,6 +11,7 @@ import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.service.CompanyService;
+import edu.xpu.buckmoo.utils.EnumUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -137,5 +139,21 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Integer companyCount() {
         return companyRep.findAll().size();
+    }
+
+    @Override
+    public CompanyInfo audit(String companyId, Integer companyStatus) {
+        Optional<CompanyInfo> byId = companyRep.findById(companyId);
+        if(byId.isPresent()){
+            CompanyInfo companyInfo = byId.get();
+            CompanyStatusEnum statusEnum = EnumUtil.getByCode(companyStatus, CompanyStatusEnum.class);
+            if(statusEnum == null){
+                throw new RuntimeException("参数状态不在企业中");
+            }
+            companyInfo.setCompanyStatus(companyStatus);
+            return companyRep.save(companyInfo);
+        }else{
+            throw new RuntimeException("企业信息不存在");
+        }
     }
 }

@@ -61,4 +61,6 @@ public interface CompanyService {
     Page<CompanyInfo> findAll(PageRequest of);
 
     Integer companyCount();
+
+    CompanyInfo audit(String companyId, Integer companyStatus);
 }

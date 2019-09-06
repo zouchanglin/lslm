@@ -1,5 +1,6 @@
 package edu.xpu.buckmoo.controller.admin;
 
+import com.lly835.bestpay.rest.type.Get;
 import edu.xpu.buckmoo.VO.CompanyInfoVO;
 import edu.xpu.buckmoo.VO.CompanyInfoVOStruct;
 import edu.xpu.buckmoo.convert.CompanyInfo2VO;
@@ -108,6 +109,21 @@ public class AdminCompanyController {
         companyService.delete(companyId);
         return JsonUtil.toJson(ResultVOUtil.success());
     }
+
+    @GetMapping("/audit")
+    private String auditCompany(String companyId,
+                                 Integer status,
+                                 HttpSession httpSession){
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
+        CompanyInfo auditResult = companyService.audit(companyId, status);
+        log.info("修改状态信息后 auditResult={}", auditResult);
+        return JsonUtil.toJson(ResultVOUtil.success(CompanyInfo2VO.companyInfoToVO(auditResult)));
+    }
+
 
     @GetMapping("/show_detail")
     public String showCompanyInfoDetails(String companyId, Map<String, Object> map,

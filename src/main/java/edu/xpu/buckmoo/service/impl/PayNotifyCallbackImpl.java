@@ -139,7 +139,8 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             CollectionOrder saveResult = collectionOrderRepository.save(collectionOrder);
             if(saveResult == null) log.error("[PayNotifyCallbackImpl] collectionOrder={}", collectionOrder);
         }else{
-            throw new BuckMooException(ErrorResultEnum.THIS_ORDER_NOT_EXITS);
+            //TODO ss
+            //throw new BuckMooException(ErrorResultEnum.THIS_ORDER_NOT_EXITS);
         }
     }
 }
