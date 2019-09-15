@@ -35,11 +35,11 @@ wechat:
   openAppSecret:
   mchId: 1545797881
   mchKey: lhl123456anxlhl123456anxlhl12345
-  mchPath: D:\develop\wechat_project\apiclient_cert.p12
+  mchPath: /Users/tim/develop/wechat_project/apiclient_cert.p12
   notifyUrl: http://tim.natapp1.cc/buckmoo/allpay/notify
 
 projecturl:
   wechatMpAuthorize: http://tim.natapp1.cc
   wechatOpenAuthorize: http://tim.natapp1.cc
   buckmoo: http://tim.natapp1.cc/buckmoo
-  imgPath: C:\Users\Tim\Desktop\FileServer
+  imgPath: /Users/tim/Desktop/FileServer

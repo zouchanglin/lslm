@@ -9,9 +9,12 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>edu.xpu</groupId>
+
     <artifactId>buckmoo</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+
     <name>buckmoo</name>
+
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -19,7 +22,6 @@
     </properties>
 
     <dependencies>
-
         <!-- https://mvnrepository.com/artifact/dom4j/dom4j -->
         <dependency>
             <groupId>dom4j</groupId>
@@ -69,6 +71,7 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
+
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
@@ -78,6 +81,7 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

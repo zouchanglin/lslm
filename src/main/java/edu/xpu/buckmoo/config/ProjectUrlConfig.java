@@ -26,7 +26,7 @@ public class ProjectUrlConfig {
     public String wechatOpenAuthorize;
 
     /**
-     * 项目的url
+     * 项目的Url
      */
     public String buckmoo;
 
