@@ -2,18 +2,30 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
+    # password: lhl123456an+
+    # url: jdbc:mysql://139.159.234.67:/buckmoo?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
     password: 123456
     url: jdbc:mysql://127.0.0.1/buckmoo?characterEncoding=utf-8&useSSL=false&serverTimezone=UTC
+    dbcp2:
+      max-idle: 10
+      max-wait-millis: 5000
+      min-idle: 5
+      initial-size: 5
   jpa:
     show-sql: true
-  jackson:
-    default-property-inclusion: non_null
+  #  jackson:
+  #    default-property-inclusion: non_null
   mvc:
     static-path-pattern: /**
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 server:
   servlet:
     context-path: /buckmoo
+
 
 
 wechat:
@@ -23,11 +35,11 @@ wechat:
   openAppSecret:
   mchId: 1545797881
   mchKey: lhl123456anxlhl123456anxlhl12345
-  mchPath: D:\develop\wechat_project\apiclient_cert.p12
-  notifyUrl: http://tim.natapp1.cc/buckmoo/user/pay/notify
+  mchPath: /Users/tim/develop/wechat_project/apiclient_cert.p12
+  notifyUrl: http://tim.natapp1.cc/buckmoo/allpay/notify
 
 projecturl:
   wechatMpAuthorize: http://tim.natapp1.cc
   wechatOpenAuthorize: http://tim.natapp1.cc
   buckmoo: http://tim.natapp1.cc/buckmoo
-  imgPath: C:\Users\Tim\Desktop\FileServer
+  imgPath: /Users/tim/Desktop/FileServer

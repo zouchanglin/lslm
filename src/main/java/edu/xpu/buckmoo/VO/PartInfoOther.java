@@ -1,12 +1,14 @@
 package edu.xpu.buckmoo.VO;
 
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
  * 向前台返回的关于兼职的数据
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 public class PartInfoOther extends PartInfo {
 

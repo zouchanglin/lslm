@@ -1,8 +1,9 @@
 package edu.xpu.buckmoo.service;
 
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 /**
@@ -55,5 +56,11 @@ public interface CompanyService {
      * @param companyId 公司的id
      * @return 成为会员的订单
      */
-    MemberOrder becomeMemberPay(String companyId);
+    MemberOrder becomeMemberPay(String companyId, Integer memberLevel);
+
+    Page<CompanyInfo> findAll(PageRequest of);
+
+    Integer companyCount();
+
+    CompanyInfo audit(String companyId, Integer companyStatus);
 }

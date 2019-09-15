@@ -21,14 +21,4 @@ public class CompanyForm {
      * 公司营业执照
      */
     private String companyLicense;
-
-    /**
-     * 公司法人联系方式
-     */
-    private String companyPhone;
-
-    /**
-     * 管理员密码
-     */
-    private String password;
 }

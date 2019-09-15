@@ -10,10 +10,10 @@ import javax.persistence.Id;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.2
  * @className CompanyInfo
  * @description 公司信息实体类
- * @date 2019-06-10 23:23
+ * @date 2019-08-17 10:23
  */
 @Data
 @Entity
@@ -41,16 +41,6 @@ public class CompanyInfo {
     private String companyPhone;
 
     /**
-     * 公司注册时间
-     */
-    private Long companyRegTime;
-
-    /**
-     * 信息更新时间
-     */
-    private Long companyUpdateTime;
-
-    /**
      * 公司审核情况
      */
     private Integer companyStatus = CompanyStatusEnum.NEW.getCode();
@@ -63,5 +53,10 @@ public class CompanyInfo {
     /**
      * 会员等级
      */
-    private Integer companyMember = MemberLevelEnum.COMMON.getCode();
+    private Integer companyMember;
+
+    /**
+     * 公司会员到期时间
+     */
+    private Long memberOverdue;
 }

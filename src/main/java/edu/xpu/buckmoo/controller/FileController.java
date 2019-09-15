@@ -2,9 +2,10 @@ package edu.xpu.buckmoo.controller;
 
 import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.config.ProjectUrlConfig;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ import java.util.UUID;
  */
 @Controller
 @RequestMapping("/file")
+@Slf4j
 public class FileController {
 
     private final ProjectUrlConfig projectUrlConfig;
@@ -33,22 +35,22 @@ public class FileController {
 
     @GetMapping("/fileDownload")
     public ResponseEntity<FileSystemResource> file(@RequestParam("fileUrl") String fileName) {
-        return export(new File(projectUrlConfig.getImgPath()+fileName));
+        return export(new File(projectUrlConfig.getImgPath()+File.separator+fileName));
     }
 
     @ResponseBody
     @PostMapping(value = "/fileUpload")
-    public ResultVO fileUpload(MultipartFile file) {
-        if (file.isEmpty()) {
-            System.out.println("文件为空");
-            throw new BuckMooException(ResultEnum.NULL_FILE);
+    public ResultVO fileUpload(@RequestParam(value = "file") MultipartFile file) {
+        if (file == null) {
+            log.error("[FileController] 文件为空");
+            //throw new BuckMooException(ErrorResultEnum.NULL_FILE);
         }
         String fileName = file.getOriginalFilename();  // 文件名
         assert fileName != null;
         String suffixName = fileName.substring(fileName.lastIndexOf("."));  // 后缀名
         String filePath = projectUrlConfig.getImgPath(); // 上传后的路径
         fileName = UUID.randomUUID() + suffixName; // 新文件名
-        File dest = new File(filePath + fileName);
+        File dest = new File(filePath + File.separator+ fileName);
         if (!dest.getParentFile().exists()) {
             boolean mkdirs = dest.getParentFile().mkdirs();
             assert mkdirs;

@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" href="../static/favicon.ico">
+    <title>后台管理</title>
+    <link th:href="@{/bootstrap/css/bootstrap.min.css}" href="../static/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link th:href="@{/bootstrap/css/dash-board.css}" href="../static/bootstrap/css/dash-board.css" rel="stylesheet"/>
+    <script th:src="@{/bootstrap/script/jquery-3.4.1.min.js}" src="../static/bootstrap/script/jquery-3.4.1.min.js"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.min.js}" src="../static/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<form action="/buckmoo/admin/login/verify" method="post">
+    <input name="verifyCode" value="11111" type="text"><input type="submit" value="提交">
+</form>
+</body>
+</html>

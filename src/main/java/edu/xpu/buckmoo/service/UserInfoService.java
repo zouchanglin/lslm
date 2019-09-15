@@ -13,4 +13,6 @@ public interface UserInfoService {
     UserInfo saveUser(UserInfo userInfo);
 
     UserInfo findById(String openId);
+
+    Integer userCount();
 }

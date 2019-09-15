@@ -3,10 +3,10 @@ package edu.xpu.buckmoo.service.impl;
 import edu.xpu.buckmoo.VO.PartInfoOther;
 import edu.xpu.buckmoo.VO.PartInfoVO;
 import edu.xpu.buckmoo.dataobject.PartCategory;
-import edu.xpu.buckmoo.dataobject.PartInfo;
 import edu.xpu.buckmoo.dataobject.UserInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
-import edu.xpu.buckmoo.enums.SexEnum;
+import edu.xpu.buckmoo.enums.UserSexEnum;
 import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartCategoryService;
 import edu.xpu.buckmoo.service.UserInfoService;
@@ -39,12 +39,12 @@ public class PageToPartInfoVOImpl implements PageToPartInfoVO {
 
             //性别
             Integer employSex = partInfo.getEmploySex();
-            if(employSex.equals(SexEnum.MAN.getCode())){
-                partInfoOther.setEmploySexStr(SexEnum.MAN.getMessage());
-            }else if(employSex.equals(SexEnum.WOMAN.getCode())){
-                partInfoOther.setEmploySexStr(SexEnum.WOMAN.getMessage());
+            if(employSex.equals(UserSexEnum.MAN.getCode())){
+                partInfoOther.setEmploySexStr(UserSexEnum.MAN.getMessage());
+            }else if(employSex.equals(UserSexEnum.WOMAN.getCode())){
+                partInfoOther.setEmploySexStr(UserSexEnum.WOMAN.getMessage());
             }else{
-                partInfoOther.setEmploySexStr(SexEnum.OTHER.getMessage());
+                partInfoOther.setEmploySexStr(UserSexEnum.OTHER.getMessage());
             }
 
             //分类

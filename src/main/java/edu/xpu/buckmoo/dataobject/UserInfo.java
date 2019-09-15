@@ -9,7 +9,7 @@ import javax.persistence.Id;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.2
  * @className UserInfo
  * @description 用户信息实体类
  * @date 2019-06-10 23:23
@@ -68,4 +68,10 @@ public class UserInfo {
      * 会员等级
      */
     private Integer userMember = MemberLevelEnum.COMMON.getCode();
+
+
+    /**
+     * 企业Id，为空或者为""都是普通用户
+     */
+    private String companyId;
 }

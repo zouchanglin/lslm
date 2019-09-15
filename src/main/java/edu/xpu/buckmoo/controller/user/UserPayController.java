@@ -2,8 +2,8 @@ package edu.xpu.buckmoo.controller.user;
 
 import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.model.RefundResponse;
-import edu.xpu.buckmoo.dataobject.PartInfo;
-import edu.xpu.buckmoo.enums.ResultEnum;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
+import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.service.UserPayService;
@@ -49,7 +49,7 @@ public class UserPayController {
         PartInfo oneById = partService.findOneById(partId);
         if(oneById == null) {
             log.info("partId={}", partId);
-            throw new BuckMooException(ResultEnum.PART_NOT_EXIT);
+            throw new BuckMooException(ErrorResultEnum.PART_NOT_EXIT);
         }
 
         //2、发起支付
@@ -61,19 +61,6 @@ public class UserPayController {
     }
 
     /**
-     * 微信的回支付成功的回调接口
-     * @param notifyData 来自微信服务器的字段
-     * @return 成功的XML数据
-     */
-    @PostMapping("notify")
-    public String payNotify(@RequestBody String notifyData){
-        payService.payNotify(notifyData);
-
-        //处理结果返回给微信
-        return "pay/success";
-    }
-
-    /**
      * 微信退款
      * @param partId 要退款的兼职信息单号
      * @return 退款申请提交成功
@@ -81,7 +68,7 @@ public class UserPayController {
     @GetMapping("/refund")
     public String refund(@RequestParam("partId") String partId){
         PartInfo partInfo = partService.findOneById(partId);
-        if(partInfo == null) throw new BuckMooException(ResultEnum.PART_NOT_EXIT);
+        if(partInfo == null) throw new BuckMooException(ErrorResultEnum.PART_NOT_EXIT);
         RefundResponse response = payService.refund(partInfo);
         log.info("[微信退款] response={}", response);
         return JsonUtil.toJson(ResultVOUtil.success());

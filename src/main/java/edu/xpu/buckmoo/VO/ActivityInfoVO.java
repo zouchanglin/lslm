@@ -4,72 +4,48 @@ import edu.xpu.buckmoo.enums.ActivityModeEnum;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
 import lombok.Data;
 
-import java.util.Date;
+import javax.persistence.Id;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.2
  * @className ActivityInfoVO
  * @description
  * @date 2019-06-20 22:12
  */
 @Data
 public class ActivityInfoVO {
+    @Id
     private String activityId;
-
     /**
      * 活动名称
      */
     private String activityName;
 
     /**
-     * 主办方Id
+     * 主办方Id（这个其实是企业管理员的openid）
      */
-    private String activityMain;
+    private String activityOpenid;
 
     /**
-     * 主办方公司/组织名称
+     * 企业名称（企业管理员的openid对应的企业名称）
      */
-    private String activityMainName;
+    private String activityOpenidStr;
 
     /**
-     * 协办方Id
-     */
-    private String activityUnmain;
-
-    /**
-     * 协办方公司/组织名称
-     */
-    private String activityUnMainName;
-
-    /**
-     * 活动地点
-     */
-    private String activityAddress;
-
-    /**
-     * 开始时间
-     */
-    private Date activityStart;
-    /**
-     * 结束时间
-     */
-    private Date activityEnd;
-
-    /**
-     * 最大人数
-     */
-    private Integer activityMax;
-
-    /**
-     * 活动模式：(0)学生社团活动  (1)企业组织的活动  (2) 其他
+     * 活动模式：(0)企业组织的活动 (1)学生社团活动 (2) 其他
      */
     private Integer activityMode = ActivityModeEnum.COMPANY.getCode();
 
     /**
+     * 活动模式
+     */
+    private String activityModeStr;
+
+    /**
      * 如果是100那就代表此活动100人左右的推广力度，学生社团活动可不选择
      */
-    private Integer activityGeneralize;
+    private Integer activityGeneralize = 0;
 
     /**
      * 活动链接：一个跳转链接，跳转至活动页面
@@ -86,13 +62,12 @@ public class ActivityInfoVO {
      */
     private String activityLogo;
 
+
     /**
      * 活动审核 （0）未审核 （1）通过（2）未通过 (3)已经结束
      */
     private Integer activityAudit = ActivityStatusEnum.NEW.getCode();
 
-    /**
-     * 活动已经报名人数
-     */
-    private Integer activityApply = 0;
+
+    private String activityAuditStr;
 }

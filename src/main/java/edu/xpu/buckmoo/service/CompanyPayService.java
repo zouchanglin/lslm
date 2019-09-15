@@ -1,34 +1,29 @@
 package edu.xpu.buckmoo.service;
 
 import com.lly835.bestpay.model.PayResponse;
-import com.lly835.bestpay.model.RefundResponse;
-import edu.xpu.buckmoo.dataobject.MemberOrder;
+import edu.xpu.buckmoo.dataobject.CompanyInfo;
+import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 
 /**
  * @author tim
- * @version 1.1
+ * @version 1.2
  * @className PayService
  * @description
- * @date 2019-08-16 00:02
+ * @date 2019-08-19 00:02
  */
 public interface CompanyPayService {
     /**
      * 支付策划能够为会员的费用
      * @param memberOrder 订单Id
-     * @return 支付结果
+     * @return 待支付订单对象
      */
     PayResponse memberPay(MemberOrder memberOrder);
 
     /**
-     * 支付回调接口
-     * @param notifyData 微信返回的数据
+     * 非会员企业发布活动支付费用
+     * @param companyInfo 非会员企业信息
+     * @param activityId 活动Id
+     * @return 待支付订单对象
      */
-    void payNotify(String notifyData);
-
-    /**
-     * 成为会员支付退款
-     * @param memberOrder 订单详情
-     * @return 退款订单详情
-     */
-    RefundResponse memberRefund(MemberOrder memberOrder);
+    PayResponse activityPay(CompanyInfo companyInfo, String activityId);
 }

@@ -13,5 +13,8 @@ import java.util.List;
 public interface CompanyInfoRepository extends JpaRepository<CompanyInfo, String> {
     Page<CompanyInfo> findAllByCompanyStatus(Integer status, Pageable pageable);
 
-    List<CompanyInfo> findAllByOpenid(String openid);
+    CompanyInfo findOneByOpenid(String openid);
+
+    @Override
+    Page<CompanyInfo> findAll(Pageable pageable);
 }

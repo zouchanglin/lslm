@@ -1,9 +1,9 @@
 package edu.xpu.buckmoo.controller.admin;
 
 import edu.xpu.buckmoo.VO.PartInfoVO;
-import edu.xpu.buckmoo.dataobject.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
-import edu.xpu.buckmoo.repository.PartInfoRepository;
+import edu.xpu.buckmoo.repository.order.PartInfoRepository;
 import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author tim
@@ -46,7 +48,13 @@ public class AdminPartController {
      * @return 查询结果列表
      */
     @GetMapping("/list")
-    public String list(@RequestParam("status") Integer status, Integer pageindex){
+    public String list(@RequestParam("status") Integer status, Integer pageindex,
+                       HttpSession httpSession){
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
         PageRequest pageRequest = PageRequest.of(pageindex, 10);
         Page<PartInfo> partInfoPage = partInfoRep.findAllByPartStatus(status, pageRequest);
         PartInfoVO partInfoVO = pageToPartInfoVO.partPageToPartInfoVO(partInfoPage);
@@ -59,9 +67,17 @@ public class AdminPartController {
      * @return 修改后的兼职信息
      */
     @GetMapping("/audit_success")
-    public String audit_success(@RequestParam("partId") String partId){
+    public String audit_success(@RequestParam("partId") String partId,
+                                HttpSession httpSession){
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
+
         PartInfo partInfo = partInfoService.modifyPartStatus(partId, PartTimeStatusEnum.PASS_PAY.getCode());
         return JsonUtil.toJson(ResultVOUtil.success(partInfo));
+
     }
 
     /**
@@ -70,7 +86,14 @@ public class AdminPartController {
      * @return 修改后的兼职信息
      */
     @GetMapping("/audit_failed")
-    public String audit_failed(@RequestParam("partId") String partId){
+    public String audit_failed(@RequestParam("partId") String partId,
+                               HttpSession httpSession){
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
+        }
+
         partInfoService.modifyPartStatus(partId, PartTimeStatusEnum.NOT_PASS.getCode());
         return JsonUtil.toJson(ResultVOUtil.error(1, "审核未通过，已退款"));
     }

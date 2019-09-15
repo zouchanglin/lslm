@@ -17,7 +17,6 @@ public enum CompanyStatusEnum implements CodeEnum {
     ;
 
     private Integer code;
-
     private String message;
 
     CompanyStatusEnum(Integer code, String message) {
