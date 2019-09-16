@@ -24,10 +24,10 @@ import java.util.List;
 
 /**
  * @author tim
- * @version 1.0
+ * @version 1.1
  * @className ActivityController
  * @description 活动管理模块
- * @date 2019-06-19 19:08
+ * @date 2019-08-20 19:08
  */
 @RestController
 @RequestMapping("/company/activity")
@@ -107,6 +107,7 @@ public class ComActivityController {
         //先判断openid
         if(openid == null || "".equals(openid))
             return JsonUtil.toJson(ResultVOUtil.error(1, "请先登录"));
+
         //通过openid查找企业信息
         CompanyInfo findResult = companyService.findByOpenid(openid);
 
