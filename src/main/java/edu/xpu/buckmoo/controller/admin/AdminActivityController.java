@@ -95,6 +95,7 @@ public class AdminActivityController {
             return JsonUtil.toJson(ResultVOUtil.error(1, "参数错误"));
         }
 
+
         findRet.setActivityAudit(activityAudit);
         ActivityInfo saveAudit = activityService.save(findRet);
         return JsonUtil.toJson(ResultVOUtil.success(activityInfo2VO.activityToVO(saveAudit)));
