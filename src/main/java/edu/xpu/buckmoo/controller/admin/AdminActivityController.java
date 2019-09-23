@@ -68,6 +68,7 @@ public class AdminActivityController {
         activityVOStruct.setCurrentPage(pageIndex);
         activityVOStruct.setCount(content.size());
 
+
         return JsonUtil.toJson(ResultVOUtil.success(activityVOStruct));
     }
 
