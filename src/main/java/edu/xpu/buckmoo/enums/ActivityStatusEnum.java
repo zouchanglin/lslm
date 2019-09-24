@@ -15,7 +15,6 @@ public enum ActivityStatusEnum implements CodeEnum {
     ;
 
     private Integer code;
-
     private String message;
 
     ActivityStatusEnum(Integer code, String message) {
