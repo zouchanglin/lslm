@@ -713,6 +713,8 @@ returnUrl:String 支付成功后的返回地址
 
 ### 1、发布活动
 
+v1.1更新：修复企业发布活动的BUG
+
 ```
 POST http://tim.natapp1.cc/buckmoo/company/activity/create
 ```
@@ -754,7 +756,15 @@ activityLogo：活动Logo
 
 {
 	"code":2,
-	"msg":"尚未注册公司"
+	"msg":"审核中暂时不能发布活动"
+}
+{
+	"code":3,
+	"msg":"审核未通过"
+}
+{
+	"code":4,
+	"msg":"尚未注册企业"
 }
 ```
 

@@ -101,8 +101,8 @@ public class WeChatController {
             String openId = wxMpOAuth2AccessToken.getOpenId();
             Cookie cookie = new Cookie("openid", openId);
             cookie.setPath("/");
-            //cookie有效时间为2小时
-            cookie.setMaxAge(7200);
+            //cookie有效时间为一个月
+            cookie.setMaxAge(2592000);
             response.addCookie(cookie);
             return "redirect:" + returnUrl + "?openid=" + openId;
         }

@@ -6,9 +6,11 @@ import edu.xpu.buckmoo.convert.ActivityInfo2VO;
 import edu.xpu.buckmoo.dataobject.ActivityInfo;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.enums.ActivityStatusEnum;
+import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import edu.xpu.buckmoo.form.ActivityForm;
 import edu.xpu.buckmoo.service.ActivityService;
 import edu.xpu.buckmoo.service.CompanyService;
+import edu.xpu.buckmoo.utils.EnumUtil;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
@@ -145,15 +147,28 @@ public class ComActivityController {
         //先判断openid
         if(openid == null || "".equals(openid))
             return JsonUtil.toJson(ResultVOUtil.error(1, "请先登录"));
-        //通过openid查找企业信息
-        CompanyInfo findResult = companyService.findByOpenid(openid);
 
-        //未找到企业信息进行错误码返回
-        if(findResult == null)
-            return JsonUtil.toJson(ResultVOUtil.error(2, "尚未注册公司"));
+        //通过openid查找企业信息
+        try{
+            CompanyInfo findResult = companyService.findByOpenid(openid);
+            log.info("findResult = {}", findResult);
+            if(!findResult.getCompanyStatus().equals(CompanyStatusEnum.PASS.getCode())){
+                Integer companyStatus = findResult.getCompanyStatus();
+                if(companyStatus.equals(CompanyStatusEnum.NEW.getCode())){
+                    return JsonUtil.toJson(ResultVOUtil.error(2, "审核中暂时不能发布活动"));
+                }else if(companyStatus.equals(CompanyStatusEnum.NOT_PASS.getCode())){
+                    return JsonUtil.toJson(ResultVOUtil.error(3, "审核未通过"));
+                }
+                return JsonUtil.toJson(ResultVOUtil.error(companyStatus, EnumUtil.getByCode(companyStatus, CompanyStatusEnum.class).getMessage()));
+            }
+        }catch (Exception e){
+            //未找到企业信息进行错误码返回
+            return JsonUtil.toJson(ResultVOUtil.error(4, "尚未注册企业"));
+        }
 
         //构建活动信息实体
         ActivityInfo activityInfo = new ActivityInfo();
+
         //表单信息到实体对象
         BeanUtils.copyProperties(activityForm, activityInfo);
         activityInfo.setActivityId(KeyUtil.genUniqueKey());

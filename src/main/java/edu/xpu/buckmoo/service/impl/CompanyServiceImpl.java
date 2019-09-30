@@ -1,6 +1,7 @@
 package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
+import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
@@ -11,6 +12,7 @@ import edu.xpu.buckmoo.repository.CompanyInfoRepository;
 import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.service.CompanyService;
+import edu.xpu.buckmoo.service.UserInfoService;
 import edu.xpu.buckmoo.utils.EnumUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -32,15 +34,15 @@ import java.util.Optional;
 @Slf4j
 public class CompanyServiceImpl implements CompanyService {
     private final CompanyInfoRepository companyRep;
-
     private final SystemConfigRepository systemConfigRep;
-
+    private final UserInfoService userInfoService;
 
     private final MemberOrderRepository memberOrderRep;
 
-    public CompanyServiceImpl(CompanyInfoRepository companyRep, SystemConfigRepository systemConfigRep, MemberOrderRepository memberOrderRep) {
+    public CompanyServiceImpl(CompanyInfoRepository companyRep, SystemConfigRepository systemConfigRep, UserInfoService userInfoService, MemberOrderRepository memberOrderRep) {
         this.companyRep = companyRep;
         this.systemConfigRep = systemConfigRep;
+        this.userInfoService = userInfoService;
         this.memberOrderRep = memberOrderRep;
     }
 
@@ -80,6 +82,10 @@ public class CompanyServiceImpl implements CompanyService {
             throw new BuckMooException(ErrorResultEnum.ALREADY_EXISTED);
         }else {
             companyInfo.setMemberOverdue(System.currentTimeMillis());
+            //
+            UserInfo userInfo = userInfoService.findById(companyInfo.getOpenid());
+            userInfo.setCompanyId(companyInfo.getCompanyId());
+            userInfoService.saveUser(userInfo);
             return companyRep.save(companyInfo);
         }
     }
