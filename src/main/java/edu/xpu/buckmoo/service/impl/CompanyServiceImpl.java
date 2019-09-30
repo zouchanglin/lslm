@@ -13,7 +13,6 @@ import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.service.CompanyService;
 import edu.xpu.buckmoo.utils.EnumUtil;
 import edu.xpu.buckmoo.utils.KeyUtil;
-import edu.xpu.buckmoo.utils.VerifyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -80,6 +79,7 @@ public class CompanyServiceImpl implements CompanyService {
             log.error("[公司信息注册] companyInfo={}", companyInfo);
             throw new BuckMooException(ErrorResultEnum.ALREADY_EXISTED);
         }else {
+            companyInfo.setMemberOverdue(System.currentTimeMillis());
             return companyRep.save(companyInfo);
         }
     }
@@ -98,7 +98,7 @@ public class CompanyServiceImpl implements CompanyService {
             memberOrder.setOrderCompany(companyInfo.getCompanyId());
             memberOrder.setPayStatus(0);
 
-            Optional<SystemConfig> member_money = null;
+            Optional<SystemConfig> member_money = Optional.empty();
             if(memberLevel.equals(MemberLevelEnum.ONE_LEVEL.getCode())){
                 //月费会员
                 member_money = systemConfigRep.findById("member_month_money");

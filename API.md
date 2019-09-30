@@ -568,6 +568,8 @@ verifykey: String 用户输入的验证码
 
 v1.2更新：取消输入手机号
 
+v1.3更新：修复数据库字段为null的BUG
+
 ```
 POST http://tim.natapp1.cc/buckmoo/company/info/register
 ```

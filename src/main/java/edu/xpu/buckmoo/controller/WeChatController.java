@@ -104,6 +104,7 @@ public class WeChatController {
             //cookie有效时间为2小时
             cookie.setMaxAge(7200);
             response.addCookie(cookie);
+            return "redirect:" + returnUrl + "?openid=" + openId;
         }
         return "redirect:" + returnUrl + "?openid=" + openid;
     }
