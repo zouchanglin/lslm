@@ -68,6 +68,7 @@ public class AdminActivityController {
         activityVOStruct.setCurrentPage(pageIndex);
         activityVOStruct.setCount(content.size());
 
+
         return JsonUtil.toJson(ResultVOUtil.success(activityVOStruct));
     }
 
@@ -94,6 +95,7 @@ public class AdminActivityController {
             log.error("ActivityType={}", activityAudit);
             return JsonUtil.toJson(ResultVOUtil.error(1, "参数错误"));
         }
+
 
         findRet.setActivityAudit(activityAudit);
         ActivityInfo saveAudit = activityService.save(findRet);

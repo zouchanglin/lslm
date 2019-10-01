@@ -27,11 +27,12 @@ import org.springframework.web.bind.annotation.*;
 public class CompanyInfoController {
     private final CompanyService companyService;
 
-    @Autowired
-    private UserInfoService userInfoService;
+    private final UserInfoService userInfoService;
 
-    public CompanyInfoController(CompanyService companyService) {
+    @Autowired
+    public CompanyInfoController(CompanyService companyService, UserInfoService userInfoService) {
         this.companyService = companyService;
+        this.userInfoService = userInfoService;
     }
 
 

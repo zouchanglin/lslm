@@ -452,6 +452,47 @@ partId : String 兼职信息Id
 }
 ```
 
+### 13、用户删除发布的兼职
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/part/delete_part
+```
+
+参数
+
+```
+partId : String 兼职的Id
+```
+
+返回值
+
+```json
+{
+    "code": 0,
+    "msg": "成功"
+}
+{
+    "code": 1,
+    "msg": "请先登录"
+}
+{
+    "code": 2,
+    "msg": "请完善参数"
+}
+{
+    "code": 3,
+    "msg": "不存在此兼职信息"
+}
+{
+    "code": 4,
+    "msg": "无此权限"
+}
+{
+    "code": 5,
+    "msg": "有人已经接单，无法删除"
+}
+```
+
 
 
 ## 账户相关
@@ -567,6 +608,8 @@ verifykey: String 用户输入的验证码
 ### 1、企业注册
 
 v1.2更新：取消输入手机号
+
+v1.3更新：修复数据库字段为null的BUG
 
 ```
 POST http://tim.natapp1.cc/buckmoo/company/info/register
@@ -711,6 +754,8 @@ returnUrl:String 支付成功后的返回地址
 
 ### 1、发布活动
 
+v1.1更新：修复企业发布活动的BUG
+
 ```
 POST http://tim.natapp1.cc/buckmoo/company/activity/create
 ```
@@ -752,7 +797,15 @@ activityLogo：活动Logo
 
 {
 	"code":2,
-	"msg":"尚未注册公司"
+	"msg":"审核中暂时不能发布活动"
+}
+{
+	"code":3,
+	"msg":"审核未通过"
+}
+{
+	"code":4,
+	"msg":"尚未注册企业"
 }
 ```
 
@@ -1509,7 +1562,38 @@ status: Integer 审核状态
 }
 ```
 
-### 16、
+### 16、增加分类信息
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/part/addPartCategory
+```
+
+参数
+
+```
+category_name : String 分类名称
+```
+
+返回值
+
+```json
+{
+    "code": 2,
+    "msg": "参数不完成"
+}
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "categoryId": 15,
+        "categoryName": "测试分类名称",
+        "createTime": 1569937503362,
+        "updateTime": 1569937503362
+    }
+}
+```
+
+
 
 
 

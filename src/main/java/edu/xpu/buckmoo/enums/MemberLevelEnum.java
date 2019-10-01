@@ -14,7 +14,6 @@ public enum MemberLevelEnum implements CodeEnum{
     ;
 
     private Integer code;
-
     private String message;
 
     MemberLevelEnum(Integer code, String message) {

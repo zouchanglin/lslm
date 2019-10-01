@@ -2,6 +2,7 @@ package edu.xpu.buckmoo.controller.user;
 
 import edu.xpu.buckmoo.VO.PartInfoOldVO;
 import edu.xpu.buckmoo.VO.PartInfoVO;
+import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.convert.PartTimeForm2Info;
 import edu.xpu.buckmoo.dataobject.PartCategory;
 import edu.xpu.buckmoo.dataobject.UserInfo;
@@ -23,7 +24,7 @@ import java.util.List;
 
 /**
  * @author tim
- * @version 1.1
+ * @version 1.3
  * @className UserPartController
  * @description 用户兼职模块控制器
  * @date 2019-06-20 21:37
@@ -185,5 +186,35 @@ public class UserPartController {
 
         PartInfoVO partInfoVO = pageToPartInfoVO.partPageToPartInfoVO(partInfoPage);
         return JsonUtil.toJson(ResultVOUtil.success(partInfoVO));
+    }
+
+    /**
+     * 用户删除兼职信息
+     * @param partId 兼职信息id
+     */
+    @GetMapping("/delete_part")
+    public ResultVO deleteMyPart(@CookieValue(value = "openid", required = false) String openid,
+                                 String partId){
+        if(openid == null) return ResultVOUtil.error(1, "请先登录");
+        if(partId == null) return ResultVOUtil.error(2, "请完善参数");
+        //判断兼职存在与否
+        PartInfo partInfo = partInfoService.findOneById(partId);
+
+        if(partInfo == null){
+            return ResultVOUtil.error(3, "不存在此兼职信息");
+        }
+
+        if(!openid.equals(partInfo.getPartCreator())) {
+            return ResultVOUtil.error(4, "无此权限");
+        }
+        //判断兼职的状态
+        Integer partStatus = partInfo.getPartStatus();
+        if(partStatus.equals(PartTimeStatusEnum.PASS_PAY.getCode())){
+            //别人已经接单，无法删除
+            return ResultVOUtil.error(5, "有人已经接单，无法删除");
+        }
+        //其他情况
+        partInfoService.deleteMyPart(openid, partId);
+        return ResultVOUtil.success();
     }
 }

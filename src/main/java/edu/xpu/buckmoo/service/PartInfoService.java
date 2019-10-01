@@ -71,4 +71,6 @@ public interface PartInfoService {
     PartInfo finishOnePart(String openid, String partId);
 
     PartInfo affirmFinishPart(String openid, String partId);
+
+    void deleteMyPart(String openid, String partId);
 }
