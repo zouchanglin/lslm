@@ -1,5 +1,6 @@
 package edu.xpu.buckmoo.VO;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
  * @date 2019-06-19 22:16
  */
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultVO<T> {
     /** 错误码. */
     private Integer code;

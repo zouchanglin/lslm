@@ -1,8 +1,11 @@
 package edu.xpu.buckmoo.controller.admin;
 
 import edu.xpu.buckmoo.VO.PartInfoVO;
+import edu.xpu.buckmoo.VO.ResultVO;
+import edu.xpu.buckmoo.dataobject.PartCategory;
 import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.PartTimeStatusEnum;
+import edu.xpu.buckmoo.repository.PartCategoryRepository;
 import edu.xpu.buckmoo.repository.order.PartInfoRepository;
 import edu.xpu.buckmoo.service.PageToPartInfoVO;
 import edu.xpu.buckmoo.service.PartInfoService;
@@ -30,15 +33,15 @@ import javax.servlet.http.HttpSession;
 @Slf4j
 public class AdminPartController {
     private final PartInfoRepository partInfoRep;
-
     private final PageToPartInfoVO pageToPartInfoVO;
-
     private final PartInfoService partInfoService;
+    private final PartCategoryRepository categoryRepository;
 
-    public AdminPartController(PartInfoRepository partInfoRep, PageToPartInfoVO pageToPartInfoVO, PartInfoService partInfoService) {
+    public AdminPartController(PartInfoRepository partInfoRep, PageToPartInfoVO pageToPartInfoVO, PartInfoService partInfoService, PartCategoryRepository categoryRepository) {
         this.partInfoRep = partInfoRep;
         this.pageToPartInfoVO = pageToPartInfoVO;
         this.partInfoService = partInfoService;
+        this.categoryRepository = categoryRepository;
     }
 
     /**
@@ -96,5 +99,26 @@ public class AdminPartController {
 
         partInfoService.modifyPartStatus(partId, PartTimeStatusEnum.NOT_PASS.getCode());
         return JsonUtil.toJson(ResultVOUtil.error(1, "审核未通过，已退款"));
+    }
+
+    @GetMapping("/addPartCategory")
+    public ResultVO addPartCategory(@RequestParam(value = "category_name", required = false) String category_name,
+                                            HttpSession httpSession){
+        if(SessionOpen.openSession) {
+            String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
+            if (BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin"))
+                return ResultVOUtil.error(1, "登录信息已经过期");
+        }
+        if(category_name == null){
+            return ResultVOUtil.error(2, "参数不完成");
+        }
+        PartCategory newPartCategory = new PartCategory();
+        newPartCategory.setCategoryName(category_name);
+        newPartCategory.setCreateTime(System.currentTimeMillis());
+        newPartCategory.setUpdateTime(System.currentTimeMillis());
+
+        PartCategory partCategory = categoryRepository.save(newPartCategory);
+        log.info("[AdminPartController] addPartCategory partCategory={}", partCategory);
+        return ResultVOUtil.success(partCategory);
     }
 }

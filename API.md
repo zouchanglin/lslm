@@ -452,6 +452,47 @@ partId : String 兼职信息Id
 }
 ```
 
+### 13、用户删除发布的兼职
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/part/delete_part
+```
+
+参数
+
+```
+partId : String 兼职的Id
+```
+
+返回值
+
+```json
+{
+    "code": 0,
+    "msg": "成功"
+}
+{
+    "code": 1,
+    "msg": "请先登录"
+}
+{
+    "code": 2,
+    "msg": "请完善参数"
+}
+{
+    "code": 3,
+    "msg": "不存在此兼职信息"
+}
+{
+    "code": 4,
+    "msg": "无此权限"
+}
+{
+    "code": 5,
+    "msg": "有人已经接单，无法删除"
+}
+```
+
 
 
 ## 账户相关
@@ -1520,6 +1561,41 @@ status: Integer 审核状态
 	"msg":"成功"
 }
 ```
+
+### 16、增加分类信息
+
+```
+GET http://tim.natapp1.cc/buckmoo/admin/part/addPartCategory
+```
+
+参数
+
+```
+category_name : String 分类名称
+```
+
+返回值
+
+```json
+{
+    "code": 2,
+    "msg": "参数不完成"
+}
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "categoryId": 15,
+        "categoryName": "测试分类名称",
+        "createTime": 1569937503362,
+        "updateTime": 1569937503362
+    }
+}
+```
+
+
+
+
 
 ## 四、文件上传
 

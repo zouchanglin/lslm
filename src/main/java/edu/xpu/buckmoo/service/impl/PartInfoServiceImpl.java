@@ -17,6 +17,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 /**
  * @author tim
  * @version 1.2
@@ -128,5 +130,20 @@ public class PartInfoServiceImpl implements PartInfoService {
 
         findRet.setPartStatus(PartTimeStatusEnum.FINISH_CREATE.getCode());
         return partInfoRepository.save(findRet);
+    }
+
+    @Override
+    public void deleteMyPart(String openid, String partId) {
+        Optional<PartInfo> partInfoOp = partInfoRepository.findById(partId);
+        if(!partInfoOp.isPresent()){
+            log.error("删除兼职信息不存在");
+        }else{
+            if(!partInfoOp.get().getPartCreator().equals(openid)){
+                log.error("兼职信息与openid不符合");
+            }else{
+                partInfoRepository.deleteById(partId);
+            }
+        }
+
     }
 }
