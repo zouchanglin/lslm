@@ -1,12 +1,10 @@
 package edu.xpu.buckmoo.controller.admin;
 
-import com.lly835.bestpay.rest.type.Get;
 import edu.xpu.buckmoo.VO.CompanyInfoVO;
 import edu.xpu.buckmoo.VO.CompanyInfoVOStruct;
 import edu.xpu.buckmoo.convert.CompanyInfo2VO;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
 import edu.xpu.buckmoo.service.CompanyService;
-import edu.xpu.buckmoo.service.UserInfoService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +30,6 @@ public class AdminCompanyController {
     private final CompanyService companyService;
 
     @Autowired
-    private UserInfoService userInfoService;
-
     public AdminCompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
@@ -98,7 +94,7 @@ public class AdminCompanyController {
     }
 
     @GetMapping("/delete")
-    private String deleteCompany(String companyId,
+    public String deleteCompany(String companyId,
                                  HttpSession httpSession){
         if(SessionOpen.openSession) {
             String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
@@ -111,7 +107,7 @@ public class AdminCompanyController {
     }
 
     @GetMapping("/audit")
-    private String auditCompany(String companyId,
+    public String auditCompany(String companyId,
                                  Integer status,
                                  HttpSession httpSession){
         if(SessionOpen.openSession) {
@@ -126,7 +122,7 @@ public class AdminCompanyController {
 
 
     @GetMapping("/show_detail")
-    public String showCompanyInfoDetails(String companyId, Map<String, Object> map,
+    public String showCompanyInfoDetails(String companyId,
                                          HttpSession httpSession){
         if(SessionOpen.openSession) {
             String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");

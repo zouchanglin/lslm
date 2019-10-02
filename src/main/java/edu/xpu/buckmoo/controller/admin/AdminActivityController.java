@@ -32,7 +32,6 @@ import java.util.List;
 @Slf4j
 public class AdminActivityController {
     private final ActivityService activityService;
-
     private final ActivityInfo2VO activityInfo2VO;
 
     public AdminActivityController(ActivityService activityService, ActivityInfo2VO activityInfo2VO) {
@@ -93,7 +92,7 @@ public class AdminActivityController {
         if(findRet == null) throw new BuckMooException(ErrorResultEnum.ACTIVITY_ERROR);
         if(EnumUtil.getByCode(activityAudit, ActivityStatusEnum.class) == null){
             log.error("ActivityType={}", activityAudit);
-            return JsonUtil.toJson(ResultVOUtil.error(1, "参数错误"));
+            return JsonUtil.toJson(ResultVOUtil.error(1, "参数错误 "));
         }
 
 
