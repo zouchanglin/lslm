@@ -77,7 +77,7 @@ public class WeChatController {
      * 用户登录时获取用户信息
      * @param code 获取信息时的code字段
      * @param returnUrl 返回的链接
-     * @param openid Cookie里面存储的useropenid
+     * @param openid Cookie里面存储的openid
      * @return 重新向和并连接
      */
     @GetMapping("/userInfo")
@@ -101,10 +101,26 @@ public class WeChatController {
             String openId = wxMpOAuth2AccessToken.getOpenId();
             Cookie cookie = new Cookie("openid", openId);
             cookie.setPath("/");
-            //cookie有效时间为一个月
-            cookie.setMaxAge(2592000);
+            //cookie有效时间为一周
+            cookie.setMaxAge(604800);
             response.addCookie(cookie);
             return "redirect:" + returnUrl + "?openid=" + openId;
+        }else{
+            //openid不为空也需要检测数据库里面是否存在
+            UserInfo findUserInfo = userInfoService.findById(openid);
+            if(findUserInfo == null){
+                WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+                try {
+                    wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
+                    WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+                    UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
+                    //判断是否需要增加用户
+                    UserInfo saveOrUpdate = userInfoService.saveUser(userInfo);
+                    log.info("saveOrUpdate = {}", saveOrUpdate);
+                } catch (WxErrorException e) {
+                    log.error("【微信网页授权】{}", e.toString());
+                }
+            }
         }
         return "redirect:" + returnUrl + "?openid=" + openid;
     }

@@ -24,8 +24,10 @@ public class UserInfoController {
     private static Map<String, String> verifyKeyMap = new HashMap<>();
 
     private final UserInfoService userInfoService;
-    public UserInfoController(UserInfoService userInfoService) {
+    private final UserInfo2VO userInfo2VO;
+    public UserInfoController(UserInfoService userInfoService, UserInfo2VO userInfo2VO) {
         this.userInfoService = userInfoService;
+        this.userInfo2VO = userInfo2VO;
     }
 
     @GetMapping("/show")
@@ -36,7 +38,7 @@ public class UserInfoController {
         }
         UserInfo findRet = userInfoService.findById(openid);
         if(findRet != null){
-            return JsonUtil.toJson(ResultVOUtil.success(UserInfo2VO.userInfoToUserInfoVO(findRet)));
+            return JsonUtil.toJson(ResultVOUtil.success(userInfo2VO.userInfoToUserInfoVO(findRet)));
         }
         return JsonUtil.toJson(ResultVOUtil.error(2, "当前人数过多，请客观稍后再来~"));
     }

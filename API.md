@@ -561,6 +561,8 @@ GET http://tim.natapp1.cc/buckmoo/user/info/show
 {
 	"code":0,
 	"data":{
+        "communityId":1, //如果是社团用户这里是社团Id，否则无此字段
+		"companyId":"12389083901", //如果是企业用户，此处为企业Id，否则无此字段
 		"createTime":1563307248000, //用户注册时间
 		"openId":"oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk", //用户openid
 		"updateTime":1563307248000,	//最后更新时间
@@ -1032,7 +1034,86 @@ pageindex: 分页索引，不传默认是0
 
 
 
-# 三、超级管理员
+# 三、社团相关
+
+### 1、社团注册
+
+```
+POST http://tim.natapp1.cc/buckmoo/community/info/register
+```
+
+参数
+
+```
+name : 社团名称
+school : 社团学校
+icon ： 社团图徽
+des : 描述
+```
+
+返回值
+
+```json
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "id": 2, 社团的id
+        "name": "111", 名称
+        "school": "122", 学校
+        "icon": "132", 图徽
+        "des": "222", 描述
+        "openid": "oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk", 管理者openid
+        "member": 0 会员等级
+    }
+}
+
+{
+    "code": 1,
+    "msg": "请授权登录后使用"
+}
+
+{
+    "code": 2,
+    "msg": "已经注册过"
+}
+```
+
+
+
+### 2、社团信息获取
+
+```
+GET http://tim.natapp1.cc/buckmoo/community/info/show
+```
+
+参数
+
+```
+无
+```
+
+返回值
+
+```json
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "id": 1,
+        "name": "11",
+        "school": "12",
+        "icon": "13",
+        "des": "14",
+        "openid": "oxrwq0zPbgTB-gV9Y4Q-hN4g25Fk",
+        "member": 0
+    }
+}
+```
+
+
+
+# 四、超级管理员
 
 ### 1、查看企业会员
 
@@ -1640,7 +1721,7 @@ category_name : String 分类名称
 
 
 
-## 四、文件上传
+## 五、文件上传
 
 ```
 POST http://tim.natapp1.cc/buckmoo/file/fileUpload
@@ -1660,7 +1741,7 @@ POST http://tim.natapp1.cc/buckmoo/file/fileUpload
 }
 ```
 
-## 五、问题反馈
+## 六、问题反馈
 
 ```
 POST http://tim.natapp1.cc/buckmoo/problem/feedback

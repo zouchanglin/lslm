@@ -68,4 +68,9 @@ public class UserInfoVO {
      * 如果是管理员：企业Id
      */
     private String companyId;
+
+    /**
+     * 如果是社团：社团Id
+     */
+    private Integer communityId;
 }
