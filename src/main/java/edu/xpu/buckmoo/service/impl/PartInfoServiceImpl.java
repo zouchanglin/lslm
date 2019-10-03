@@ -144,6 +144,10 @@ public class PartInfoServiceImpl implements PartInfoService {
                 partInfoRepository.deleteById(partId);
             }
         }
+    }
 
+    @Override
+    public Page<PartInfo> listByStatus(Integer status, Pageable pageable) {
+        return partInfoRepository.findAllByPartStatus(status, pageable);
     }
 }

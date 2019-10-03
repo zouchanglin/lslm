@@ -34,6 +34,8 @@ public interface PartInfoService {
      */
     Page<PartInfo> listByCategoryAndStatus(Integer category, Integer status, Pageable pageable);
 
+    Page<PartInfo> listByStatus(Integer status, Pageable pageable);
+
     /**
      * 新增/保存一条兼职信息
      * @param partInfo 兼职信息实体

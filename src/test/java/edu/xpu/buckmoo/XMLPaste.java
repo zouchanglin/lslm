@@ -45,10 +45,4 @@ public class XMLPaste {
         Node out_trade_no = document.selectSingleNode("//out_trade_no");
         log.info("解析结果={}", out_trade_no.getText());
     }
-
-    @Test
-    public void s() {
-        System.out.println(-1>>>1&2
-        );
-    }
 }

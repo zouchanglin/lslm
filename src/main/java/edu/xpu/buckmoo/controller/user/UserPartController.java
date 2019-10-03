@@ -217,4 +217,15 @@ public class UserPartController {
         partInfoService.deleteMyPart(openid, partId);
         return ResultVOUtil.success();
     }
+
+
+    @GetMapping("/all_part")
+    public ResultVO allPart(@RequestParam(value = "pageindex", defaultValue = "0") Integer pageindex){
+        PageRequest pageRequest = PageRequest.of(pageindex, 4);
+        Page<PartInfo> partInfoPage = partInfoService.listByStatus(PartTimeStatusEnum.PASS_PAY.getCode(), pageRequest);
+        PartInfoOldVO partInfoVO = new PartInfoOldVO();
+        partInfoVO.setPageCount(partInfoPage.getTotalPages());
+        partInfoVO.setPartInfoList(partInfoPage.getContent());
+        return ResultVOUtil.success(partInfoVO);
+    }
 }

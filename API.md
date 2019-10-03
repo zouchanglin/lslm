@@ -493,6 +493,49 @@ partId : String 兼职的Id
 }
 ```
 
+### 14、获取所有已经通过的兼职
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/part/all_part
+```
+
+参数
+
+```
+pageindex : 分页参数，默认为0
+```
+
+返回值 (参考之前的API)
+
+```json
+{
+    "code": 0,
+    "msg": "成功",
+    "data": {
+        "partInfoList": [
+            {
+                "partId": "1",
+                "partName": "1",
+                "partCategory": 1,
+                "partAddress": "1",
+                "partOverview": "1",
+                "partStart": 1,
+                "partEnd": 1,
+                "partTime": "1",
+                "partMoney": 1.00,
+                "partMoneyShow": 1.00,
+                "partStatus": 3,
+                "employSex": 1,
+                "partEmploy": "1",
+                "employPhone": "1",
+                "partCreator": "1"
+            }
+        ],
+        "pageCount": 1
+    }
+}
+```
+
 
 
 ## 账户相关
