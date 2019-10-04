@@ -6,10 +6,8 @@ import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.service.CommunityService;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Member;
 
 /**
  * 社团信息控制器
@@ -18,8 +16,11 @@ import java.lang.reflect.Member;
 @Slf4j
 @RequestMapping("/community/info")
 public class CommunityInfoController {
-    @Autowired
-    private CommunityService communityService;
+    private final CommunityService communityService;
+
+    public CommunityInfoController(CommunityService communityService) {
+        this.communityService = communityService;
+    }
 
     @PostMapping("/register")
     public ResultVO register(@CookieValue(value = "openid", required = false) String openid,
