@@ -1,5 +1,6 @@
 package edu.xpu.buckmoo.controller.user;
 
+import edu.xpu.buckmoo.VO.ResultVO;
 import edu.xpu.buckmoo.convert.UserInfo2VO;
 import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.service.UserInfoService;
@@ -29,6 +30,8 @@ public class UserInfoController {
         this.userInfoService = userInfoService;
         this.userInfo2VO = userInfo2VO;
     }
+
+
 
     @GetMapping("/show")
     public String getUserInfo(@CookieValue(value = "openid", required = false)
@@ -72,5 +75,30 @@ public class UserInfoController {
         return JsonUtil.toJson(ResultVOUtil.error(1, "验证码错误"));
     }
 
+    /**
+     * 获取修改手机号码的权限
+     * @param oldPhone 旧电话号码
+     * @param newPhone 新电话号码
+     */
+    @GetMapping("/change_phone")
+    public ResultVO changePhone(@CookieValue(value = "openid", required = false)
+                                      String openid, String oldPhone, String newPhone){
+        if(openid == null) return ResultVOUtil.error(1, "请授权登录后使用");
+        UserInfo userInfo = userInfoService.findById(openid);
+        if(userInfo.getUserPhone() == null)
+            return ResultVOUtil.error(2, "未绑定手机");
 
+        if(oldPhone.equals(newPhone)) return ResultVOUtil.error(4, "无需更改");
+
+        if(!userInfo.getUserPhone().equals(oldPhone)){
+            return ResultVOUtil.error(3, "旧手机号码不正确");
+        }
+
+        //生成验证码
+        String verifyKey = KeyUtil.genVerifyKey();
+        SendMessageUtil.sendMsg(newPhone, verifyKey);
+        verifyKeyMap.put(newPhone, verifyKey);
+
+        return ResultVOUtil.success();
+    }
 }

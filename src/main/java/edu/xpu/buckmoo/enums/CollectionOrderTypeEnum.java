@@ -10,7 +10,8 @@ public enum CollectionOrderTypeEnum implements CodeEnum {
     USER_PART_PAY(0, "用户兼职支付"),
     COMPANY_ACTIVITY_PAY(1, "企业活动支付"),
     COMPANY_MEMBER_PAY(2, "企业会员支付"),
-    OTHER_PAY(3, "其他支付")
+    USER_MEMBER_PAY(3, "用户会员支付"),
+    OTHER_PAY(4, "其他支付")
     ;
 
     private Integer code;

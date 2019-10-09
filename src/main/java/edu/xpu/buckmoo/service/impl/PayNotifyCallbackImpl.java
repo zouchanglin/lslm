@@ -139,8 +139,9 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             CollectionOrder saveResult = collectionOrderRepository.save(collectionOrder);
             if(saveResult == null) log.error("[PayNotifyCallbackImpl] collectionOrder={}", collectionOrder);
         }else{
-            //TODO ss
+            //TODO
             //throw new BuckMooException(ErrorResultEnum.THIS_ORDER_NOT_EXITS);
         }
+        //TODO 用户升级为会员的支付回调
     }
 }

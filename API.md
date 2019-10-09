@@ -544,6 +544,8 @@ pageindex : 分页参数，默认为0
 
 v1.1 更新：如果没有用户电话信息说明用户并未绑定手机号码，后面会提供接口绑定号码！
 
+v1.2 更新：新增了用户会员到期时间
+
 ```
 GET http://tim.natapp1.cc/buckmoo/user/info/show
 ```
@@ -572,7 +574,8 @@ GET http://tim.natapp1.cc/buckmoo/user/info/show
 		"userIcon":"http://thirdwx.qlogo.cn/mmopen/vi_32/bxVEQxwmO32", 	//用户头像
 		"userMember":0,	//会员级别
 		"userName":"Tim",	//用户昵称
-		"userSex":1	//性别
+		"userSex":1,	//性别
+    "memberPast":1570624673111 // 会员到期时间（如果是会员的话）
 	},
 	"msg":"成功"
 } 
@@ -645,6 +648,45 @@ verifykey: String 用户输入的验证码
 ```
 
 
+
+### 4、修改手机号码
+
+```
+GET http://tim.natapp1.cc/buckmoo/user/info/change_phone
+```
+
+参数
+
+```
+oldPhone ： String 旧手机号码
+newPhone ： String 新手机号码
+```
+
+返回值
+
+```json
+{
+    "code": 0,
+    "msg": "成功"
+}
+
+{
+    "code": 1,
+    "msg": "请登录后使用"
+}
+
+{
+    "code": 2,
+    "msg": "未绑定手机"
+}
+
+{
+    "code": 3,
+    "msg": "旧手机号码不正确"
+}
+```
+
+收到验证码之后使用 3、提交获取手机号的表单即可完成修改 这个接口即可
 
 # 二、活动发布方
 

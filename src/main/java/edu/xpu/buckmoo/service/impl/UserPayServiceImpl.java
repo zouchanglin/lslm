@@ -6,6 +6,7 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.model.RefundRequest;
 import com.lly835.bestpay.model.RefundResponse;
 import com.lly835.bestpay.service.impl.BestPayServiceImpl;
+import edu.xpu.buckmoo.dataobject.CollectionOrder;
 import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.service.UserPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
@@ -55,5 +56,20 @@ public class UserPayServiceImpl implements UserPayService{
         RefundResponse refundResponse = bestPayService.refund(refundRequest);
         log.info("[UserPayServiceImpl] 微信退款 refundResponse={}", JsonUtil.toJson(refundResponse));
         return refundResponse;
+    }
+
+    @Override
+    public PayResponse memberPay(CollectionOrder collectionOrder) {
+        PayRequest payRequest = new PayRequest();
+        payRequest.setOpenid(collectionOrder.getOrderOpenid());
+        payRequest.setOrderId(collectionOrder.getOrderId());
+        payRequest.setOrderAmount(collectionOrder.getOrderMoney().doubleValue());
+        payRequest.setOrderName(collectionOrder.getOrderName());
+        payRequest.setPayTypeEnum(BestPayTypeEnum.WXPAY_H5);
+
+        log.info("[UserPayServiceImpl] payRequest={}", JsonUtil.toJson(payRequest));
+        PayResponse payResponse = bestPayService.pay(payRequest);
+        log.info("[UserPayServiceImpl] payResponse={}", JsonUtil.toJson(payResponse));
+        return payResponse;
     }
 }

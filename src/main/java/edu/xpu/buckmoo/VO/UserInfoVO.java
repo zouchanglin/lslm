@@ -73,4 +73,9 @@ public class UserInfoVO {
      * 如果是社团：社团Id
      */
     private Integer communityId;
+
+    /**
+     * 会员过期时间
+     */
+    private Long memberPast;
 }

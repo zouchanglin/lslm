@@ -69,9 +69,13 @@ public class UserInfo {
      */
     private Integer userMember = MemberLevelEnum.COMMON.getCode();
 
-
     /**
      * 企业Id，为空或者为""都是普通用户
      */
     private String companyId;
+
+    /**
+     * 会员过期时间
+     */
+    private Long memberPast = System.currentTimeMillis();
 }

@@ -33,6 +33,7 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfo.setUserMember(MemberLevelEnum.COMMON.getCode());
             userInfo.setCompanyId("");
             userInfo.setUserPhone("");
+            userInfo.setMemberPast(System.currentTimeMillis());
         }else{
             //排除其他信息，先弄过来
             UserInfo info = findResult.get();
@@ -41,6 +42,11 @@ public class UserInfoServiceImpl implements UserInfoService {
             userInfo.setCompanyId(info.getCompanyId());
             userInfo.setUserMember(info.getUserMember());
             userInfo.setUserGrade(info.getUserGrade());
+            if(!MemberLevelEnum.COMMON.getCode().equals(userInfo.getUserMember())){
+                userInfo.setMemberPast(info.getMemberPast());
+            }else{
+                userInfo.setMemberPast(System.currentTimeMillis());
+            }
         }
         userInfo.setUpdateTime(System.currentTimeMillis());
         return userRep.save(userInfo);
