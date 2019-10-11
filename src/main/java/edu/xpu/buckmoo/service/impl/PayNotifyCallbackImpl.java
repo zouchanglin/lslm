@@ -2,20 +2,22 @@ package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.CollectionOrder;
 import edu.xpu.buckmoo.dataobject.CompanyInfo;
-import edu.xpu.buckmoo.dataobject.config.SystemConfig;
+import edu.xpu.buckmoo.dataobject.UserInfo;
 import edu.xpu.buckmoo.dataobject.order.CompanyOrder;
 import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.dataobject.order.PartInfo;
+import edu.xpu.buckmoo.dataobject.order.UserMemberOrder;
 import edu.xpu.buckmoo.enums.*;
 import edu.xpu.buckmoo.exception.BuckMooException;
 import edu.xpu.buckmoo.repository.CollectionOrderRepository;
 import edu.xpu.buckmoo.repository.CompanyInfoRepository;
-import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
 import edu.xpu.buckmoo.repository.order.CompanyOrderRepository;
 import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.repository.order.PartInfoRepository;
+import edu.xpu.buckmoo.repository.order.UserMemberOrderRepository;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.service.PayNotifyCallback;
+import edu.xpu.buckmoo.service.UserInfoService;
 import lombok.extern.slf4j.Slf4j;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
@@ -31,27 +33,28 @@ import java.util.Optional;
 public class PayNotifyCallbackImpl implements PayNotifyCallback {
 
     private final PartInfoService partInfoService;
+    private final UserInfoService userInfoService;
     private final PartInfoRepository partInfoRepository;
-    private final MemberOrderRepository memberOrderRepository;
+    private final UserMemberOrderRepository userMemberOrderRepository;
     private final CompanyOrderRepository companyOrderRepository;
     private final CompanyInfoRepository companyInfoRepository;
     private final CollectionOrderRepository collectionOrderRepository;
-    private final SystemConfigRepository systemConfigRepository;
+    private final MemberOrderRepository memberOrderRepository;
 
     public PayNotifyCallbackImpl(PartInfoService partInfoService,
-                                 PartInfoRepository partInfoRepository,
-                                 MemberOrderRepository memberOrderRepository,
+                                 UserInfoService userInfoService, PartInfoRepository partInfoRepository,
+                                 UserMemberOrderRepository userMemberOrderRepository,
                                  CompanyOrderRepository companyOrderRepository,
                                  CompanyInfoRepository companyInfoRepository,
-                                 CollectionOrderRepository collectionOrderRepository,
-                                 SystemConfigRepository systemConfigRepository) {
+                                 CollectionOrderRepository collectionOrderRepository, MemberOrderRepository memberOrderRepository) {
         this.partInfoService = partInfoService;
+        this.userInfoService = userInfoService;
         this.partInfoRepository = partInfoRepository;
-        this.memberOrderRepository = memberOrderRepository;
+        this.userMemberOrderRepository = userMemberOrderRepository;
         this.companyOrderRepository = companyOrderRepository;
         this.companyInfoRepository = companyInfoRepository;
         this.collectionOrderRepository = collectionOrderRepository;
-        this.systemConfigRepository = systemConfigRepository;
+        this.memberOrderRepository = memberOrderRepository;
     }
 
     @Override
@@ -89,10 +92,12 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
         Optional<CompanyOrder> companyOrder = companyOrderRepository.findById(orderId);
         Optional<MemberOrder> memberOrder = memberOrderRepository.findById(orderId);
         Optional<PartInfo> partOrder = partInfoRepository.findById(orderId);
+
         if(companyOrder.isPresent()){
-            //TODO 修改企业订单表
+            //修改企业发布活动的订单表
             CompanyOrder companyOrderReally = companyOrder.get();
             companyOrderReally.setActivityStatus(ActivityStatusEnum.NEW.getCode());
+            companyOrderRepository.save(companyOrderReally);
         }else if(memberOrder.isPresent()){
             //修改企业会员的表
             //修改订单的状态
@@ -125,8 +130,8 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
         }else if(partOrder.isPresent()){
             //修改用户发布兼职表
             PartInfo partInfo = partInfoService.modifyPartStatus(partOrder.get().getPartId(), PartTimeStatusEnum.NEW_PART.getCode());
-            //抽取5%佣金
-            partInfo.setPartMoneyShow(partInfo.getPartMoney().multiply(new BigDecimal(0.05)));
+            //抽取 10% 佣金
+            partInfo.setPartMoneyShow(partInfo.getPartMoney().multiply(new BigDecimal(0.90)));
             PartInfo updateResult = partInfoService.addOnePartTime(partInfo);
             log.info("[PayNotifyCallbackImpl] updateResult={}", updateResult);
         }
@@ -138,10 +143,14 @@ public class PayNotifyCallbackImpl implements PayNotifyCallback {
             collectionOrder.setOrderPayStatus(PayStatusEnum.PAY_FINISH.getCode());
             CollectionOrder saveResult = collectionOrderRepository.save(collectionOrder);
             if(saveResult == null) log.error("[PayNotifyCallbackImpl] collectionOrder={}", collectionOrder);
-        }else{
-            //TODO
-            //throw new BuckMooException(ErrorResultEnum.THIS_ORDER_NOT_EXITS);
+
+            Integer orderType = collectionOrder.getOrderType();
+            if(CollectionOrderTypeEnum.USER_MEMBER_PAY.getCode().equals(orderType)){
+                //说明是用户开通会员，修改用户信息表
+                UserMemberOrder findRet = userMemberOrderRepository.findFirstByOrderCollection(collectionOrder.getOrderId());
+                UserInfo saveUserInfo = userInfoService.updateUserToMember(findRet.getMemberType(), findRet.getOpenid());
+                log.info("[PayNotifyCallbackImpl] saveUserInfo={}", saveUserInfo);
+            }
         }
-        //TODO 用户升级为会员的支付回调
     }
 }

@@ -4,21 +4,15 @@ import com.lly835.bestpay.model.PayResponse;
 import com.lly835.bestpay.model.RefundResponse;
 import edu.xpu.buckmoo.dataobject.CollectionOrder;
 import edu.xpu.buckmoo.dataobject.UserInfo;
-import edu.xpu.buckmoo.dataobject.config.SystemConfig;
-import edu.xpu.buckmoo.dataobject.order.MemberOrder;
 import edu.xpu.buckmoo.dataobject.order.PartInfo;
 import edu.xpu.buckmoo.enums.ErrorResultEnum;
 import edu.xpu.buckmoo.enums.MemberLevelEnum;
-import edu.xpu.buckmoo.enums.PayStatusEnum;
 import edu.xpu.buckmoo.exception.BuckMooException;
-import edu.xpu.buckmoo.repository.config.SystemConfigRepository;
-import edu.xpu.buckmoo.repository.order.MemberOrderRepository;
 import edu.xpu.buckmoo.service.MemberService;
 import edu.xpu.buckmoo.service.PartInfoService;
 import edu.xpu.buckmoo.service.UserInfoService;
 import edu.xpu.buckmoo.service.UserPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
-import edu.xpu.buckmoo.utils.KeyUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -40,18 +34,15 @@ public class UserPayController {
     private final PartInfoService partService;
     private final UserPayService payService;
     private final UserInfoService userInfoService;
-    private final SystemConfigRepository systemConfigRepository;
     private final MemberService memberService;
 
     public UserPayController(PartInfoService partService,
                              UserPayService payService,
                              UserInfoService userInfoService,
-                             SystemConfigRepository systemConfigRepository,
                              MemberService memberService) {
         this.partService = partService;
         this.payService = payService;
         this.userInfoService = userInfoService;
-        this.systemConfigRepository = systemConfigRepository;
         this.memberService = memberService;
     }
 
@@ -102,23 +93,10 @@ public class UserPayController {
         if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(1, "请授权登录后使用"));
         UserInfo userInfo = userInfoService.findById(openid);
         if(!MemberLevelEnum.COMMON.getCode().equals(userInfo.getUserMember())){
-            //TODO 升级或者续费
+            //TODO 用户会员升级或者续费
+            System.out.println("TODO 用户会员升级或者续费");
         }else{
-            SystemConfig memberForever;
-            //开通会员
-            if(memberLevel == 3) {
-                memberForever = systemConfigRepository.findOneByParamsId("member_forever_user");
-            }else if(memberLevel == 2){
-                memberForever = systemConfigRepository.findOneByParamsId("member_year_user");
-            }else if(memberLevel == 1){
-                memberForever = systemConfigRepository.findOneByParamsId("member_month_user");
-            }else{
-                log.error("[UserPayController] 参数错误");
-                throw new RuntimeException("参数传递错误");
-            }
-
-            CollectionOrder collectionOrder = memberService.addNewMember(memberLevel, memberForever.getParamsValue(), openid);
-
+            CollectionOrder collectionOrder = memberService.addNewUserMember(memberLevel, openid);
             PayResponse payResponse = payService.memberPay(collectionOrder);
             map.put("payResponse", payResponse);
             map.put("returnUrl", returnUrl);

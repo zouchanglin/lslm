@@ -1,9 +1,12 @@
 package edu.xpu.buckmoo.service.impl;
 
 import edu.xpu.buckmoo.dataobject.UserInfo;
+import edu.xpu.buckmoo.dataobject.config.SystemConfig;
 import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import edu.xpu.buckmoo.repository.UserInfoRepository;
 import edu.xpu.buckmoo.service.UserInfoService;
+import edu.xpu.buckmoo.utils.EnumUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,11 +19,37 @@ import java.util.Optional;
  * @date 2019-06-21 21:51
  */
 @Service
+@Slf4j
 public class UserInfoServiceImpl implements UserInfoService {
     private final UserInfoRepository userRep;
 
     public UserInfoServiceImpl(UserInfoRepository userRep) {
         this.userRep = userRep;
+    }
+
+    @Override
+    public UserInfo updateUserToMember(Integer memberLevel, String openid) {
+        Optional<UserInfo> findResult = userRep.findById(openid);
+        if(!findResult.isPresent()) throw new RuntimeException("参数错误(用户不存在)");
+        MemberLevelEnum levelEnum = EnumUtil.getByCode(memberLevel, MemberLevelEnum.class);
+        if(levelEnum == null) throw new RuntimeException("参数错误(会员等级信息不存在)");
+        Integer levelEnumCode = levelEnum.getCode();
+
+        UserInfo userInfo = findResult.get();
+        userInfo.setUserMember(levelEnumCode);
+
+        //根据等级确定到期时间
+        if(MemberLevelEnum.ONE_LEVEL.getCode().equals(memberLevel)){
+            userInfo.setMemberPast(System.currentTimeMillis() + 30L * 24L * 3600L * 1000L);
+        }else if(MemberLevelEnum.TWO_LEVEL.getCode().equals(memberLevel)){
+            userInfo.setMemberPast(System.currentTimeMillis() + 30L * 12 * 24L * 3600L * 1000L);
+        }else if(MemberLevelEnum.THREE_LEVEL.getCode().equals(memberLevel)){
+            userInfo.setMemberPast(System.currentTimeMillis() + Long.MAX_VALUE);
+        }
+
+        UserInfo saveInfoResult = userRep.save(userInfo);
+        log.info("[UserInfoServiceImpl] saveInfoResult={}", saveInfoResult);
+        return saveInfoResult;
     }
 
     @Override
