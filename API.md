@@ -688,6 +688,42 @@ newPhone ： String 新手机号码
 
 收到验证码之后使用 3、提交获取手机号的表单即可完成修改 这个接口即可
 
+### 5、用户成为会员
+
+```
+GET http://lslm.live/buckmoo/user/pay/tobe_member
+```
+
+参数
+
+```
+memberLevel ：会员等级（参考代码）
+returnUrl：支付后返回的地址
+```
+
+```java
+@Getter
+public enum MemberLevelEnum implements CodeEnum{
+    COMMON(0, "非会员"),
+    ONE_LEVEL(1, "白银会员"),
+    TWO_LEVEL(2, "黄金会员"),
+    THREE_LEVEL(3, "钻石会员")
+    ;
+
+    private Integer code;
+    private String message;
+
+    MemberLevelEnum(Integer code, String message) {
+        this.code = code;
+        this.message = message;
+    }
+}
+```
+
+返回值
+
+支付页面
+
 # 二、活动发布方
 
 ## 账户相关

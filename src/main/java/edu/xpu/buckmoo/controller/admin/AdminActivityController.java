@@ -14,11 +14,13 @@ import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author tim
@@ -34,7 +36,8 @@ public class AdminActivityController {
     private final ActivityService activityService;
     private final ActivityInfo2VO activityInfo2VO;
 
-    public AdminActivityController(ActivityService activityService, ActivityInfo2VO activityInfo2VO) {
+    public AdminActivityController(ActivityService activityService,
+                                   ActivityInfo2VO activityInfo2VO) {
         this.activityService = activityService;
         this.activityInfo2VO = activityInfo2VO;
     }
@@ -46,7 +49,8 @@ public class AdminActivityController {
     @GetMapping("/show")
     public String showActivityInfo(@RequestParam(value = "pageIndex", defaultValue = "0") Integer pageIndex,
                                    @RequestParam(value = "pageSize", defaultValue = "5") Integer pageSize,
-                                   HttpSession httpSession){
+                                   HttpSession httpSession,
+                                   Map<String, Object> map){
         if(SessionOpen.openSession){
             String BAIDU_ID_UX = (String) httpSession.getAttribute("BAIDU_ID_UX");
             if(BAIDU_ID_UX == null || !BAIDU_ID_UX.equals("Admin")) return JsonUtil.toJson(ResultVOUtil.error(1, "登录信息已经过期"));
@@ -67,10 +71,10 @@ public class AdminActivityController {
         activityVOStruct.setCurrentPage(pageIndex);
         activityVOStruct.setCount(content.size());
 
-
+        map.put("activityVOStruct", activityVOStruct);
         return JsonUtil.toJson(ResultVOUtil.success(activityVOStruct));
+        //return "AdminActivity";
     }
-
 
     /**
      * 审核活动信息

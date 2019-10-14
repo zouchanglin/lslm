@@ -15,6 +15,7 @@ import edu.xpu.buckmoo.service.UserPayService;
 import edu.xpu.buckmoo.utils.JsonUtil;
 import edu.xpu.buckmoo.utils.ResultVOUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.lang.NonNullApi;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -85,23 +86,31 @@ public class UserPayController {
         return JsonUtil.toJson(ResultVOUtil.success());
     }
 
+    
     @GetMapping("/tobe_member")
     public String tobe_member(@CookieValue(value = "openid", required = false) String openid,
                               @RequestParam("memberLevel") Integer memberLevel,
                               @RequestParam("returnUrl") String returnUrl,
-                              Map<String, Object> map){
-        if(openid == null) return JsonUtil.toJson(ResultVOUtil.error(1, "请授权登录后使用"));
+                              Map<String, Object> map) {
+        if (openid == null) return JsonUtil.toJson(ResultVOUtil.error(1, "请授权登录后使用"));
         UserInfo userInfo = userInfoService.findById(openid);
-        if(!MemberLevelEnum.COMMON.getCode().equals(userInfo.getUserMember())){
-            //TODO 用户会员升级或者续费
-            System.out.println("TODO 用户会员升级或者续费");
-        }else{
-            CollectionOrder collectionOrder = memberService.addNewUserMember(memberLevel, openid);
-            PayResponse payResponse = payService.memberPay(collectionOrder);
-            map.put("payResponse", payResponse);
-            map.put("returnUrl", returnUrl);
-            return "pay";
+
+        CollectionOrder collectionOrder = null;
+        try{
+            if (!MemberLevelEnum.COMMON.getCode().equals(userInfo.getUserMember())) {
+                //会员用户升级或者续费
+                collectionOrder = memberService.addNewUserMember(memberLevel, openid);
+            } else {
+                //普通用户变成会员
+                collectionOrder = memberService.addNewUserMember(memberLevel, openid);
+            }
+        }catch (Exception e){
+            log.error("[UserPayController] error={}", e.getMessage());
         }
-        return null;
+
+        PayResponse payResponse = payService.memberPay(collectionOrder);
+        map.put("payResponse", payResponse);
+        map.put("returnUrl", returnUrl);
+        return "pay";
     }
 }
