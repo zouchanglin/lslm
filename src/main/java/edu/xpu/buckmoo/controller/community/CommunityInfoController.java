@@ -35,7 +35,7 @@ public class CommunityInfoController {
         return ResultVOUtil.success(addResult);
     }
 
-    @PostMapping("/show")
+    @GetMapping("/show")
     public ResultVO show(@CookieValue(value = "openid", required = false) String openid){
         if(openid == null) return ResultVOUtil.error(1, "请授权登录后使用");
         CommunityInfo communityInfo = communityService.findByOpenid(openid);
