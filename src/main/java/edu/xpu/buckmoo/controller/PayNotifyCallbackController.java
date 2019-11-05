@@ -23,7 +23,7 @@ public class PayNotifyCallbackController {
     public String payNotify(@RequestBody String notifyData){
         log.info("[PayNotifyCallbackController] notifyData={}", notifyData);
 
-        //拿到了OrderId、分别处理
+        //拿到了OrderId、分别处理。经过测试，还就是这样的
         payNotifyCallback.payNotify(notifyData);
         //处理结果返回给微信
         return "pay/success";

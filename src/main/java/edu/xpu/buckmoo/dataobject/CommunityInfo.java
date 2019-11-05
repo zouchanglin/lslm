@@ -1,5 +1,6 @@
 package edu.xpu.buckmoo.dataobject;
 
+import edu.xpu.buckmoo.enums.CompanyStatusEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
@@ -27,4 +28,6 @@ public class CommunityInfo {
     private String openid;
 
     private Integer member;
+
+    private Integer status = CompanyStatusEnum.NEW.getCode();
 }
