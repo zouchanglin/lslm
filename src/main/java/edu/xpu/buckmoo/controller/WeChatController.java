@@ -86,10 +86,10 @@ public class WeChatController {
                            HttpServletResponse response,
                            @CookieValue(value = "openid", required = false) String openid){
         if(openid == null){
-            WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+            WxMpOAuth2AccessToken accessToken;
             try {
-                wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-                WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+                accessToken = wxMpService.oauth2getAccessToken(code);
+                WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(accessToken, null);
                 UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
                 //判断是否需要增加用户
                 UserInfo saveOrUpdate = userInfoService.saveUser(userInfo);
@@ -98,7 +98,7 @@ public class WeChatController {
                 log.error("【微信网页授权】{}", e.toString());
                 throw new BuckMooException(ErrorResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
             }
-            String openId = wxMpOAuth2AccessToken.getOpenId();
+            String openId = accessToken.getOpenId();
             Cookie cookie = new Cookie("openid", openId);
             cookie.setPath("/");
             //cookie有效时间为一周
@@ -109,10 +109,10 @@ public class WeChatController {
             //openid不为空也需要检测数据库里面是否存在
             UserInfo findUserInfo = userInfoService.findById(openid);
             if(findUserInfo == null){
-                WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+                WxMpOAuth2AccessToken accessToken;
                 try {
-                    wxMpOAuth2AccessToken = wxMpService.oauth2getAccessToken(code);
-                    WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(wxMpOAuth2AccessToken, null);
+                    accessToken = wxMpService.oauth2getAccessToken(code);
+                    WxMpUser wxMpUser = wxMpService.oauth2getUserInfo(accessToken, null);
                     UserInfo userInfo = WxMpUser2UserInfo.WechatMpUser2UserInfo(wxMpUser);
                     //判断是否需要增加用户
                     UserInfo saveOrUpdate = userInfoService.saveUser(userInfo);
@@ -152,15 +152,15 @@ public class WeChatController {
     public String qrUserInfo(@RequestParam("code") String code,
                            @RequestParam("state") String returnUrl){
 
-        WxMpOAuth2AccessToken wxMpOAuth2AccessToken;
+        WxMpOAuth2AccessToken accessToken;
         try {
-            wxMpOAuth2AccessToken = wxOpenService.oauth2getAccessToken(code);
-            log.info("wxMpOAuth2AccessToken={}", wxMpOAuth2AccessToken);
+            accessToken = wxOpenService.oauth2getAccessToken(code);
+            log.info("wxMpOAuth2AccessToken={}", accessToken);
         } catch (WxErrorException e) {
             log.error("【微信网页授权】{}", e.toString());
             throw new BuckMooException(ErrorResultEnum.WECHAT_MP_ERROR.getCode(), e.getError().getErrorMsg());
         }
-        return "redirect:" + returnUrl + "?openid=" + wxMpOAuth2AccessToken.getOpenId();
+        return "redirect:" + returnUrl + "?openid=" + accessToken.getOpenId();
     }
 
     /**

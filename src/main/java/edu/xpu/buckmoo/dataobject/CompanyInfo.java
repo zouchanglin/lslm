@@ -1,7 +1,6 @@
 package edu.xpu.buckmoo.dataobject;
 
 import edu.xpu.buckmoo.enums.CompanyStatusEnum;
-import edu.xpu.buckmoo.enums.MemberLevelEnum;
 import lombok.Data;
 import org.hibernate.annotations.DynamicUpdate;
 
